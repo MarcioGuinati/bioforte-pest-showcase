@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Shield, Users, Award, Clock } from "lucide-react";
+import { ChevronLeft, ChevronRight, Shield, Users, Award, Clock, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import heroSpecialist from "@/assets/hero-specialist.jpg";
 import companyBuilding from "@/assets/company-building.jpg";
@@ -95,34 +95,38 @@ const HeroSlider = () => {
             <img
               src={slide.image}
               alt={slide.title}
-              className="w-full h-full object-cover object-center"
+              className="w-full h-full object-cover object-center parallax"
             />
+            {/* Floating Elements */}
+            <div className="absolute top-10 right-10 w-32 h-32 bg-primary/20 rounded-full blur-3xl animate-float"></div>
+            <div className="absolute bottom-20 left-20 w-24 h-24 bg-accent/20 rounded-full blur-2xl animate-float" style={{animationDelay: "2s"}}></div>
           </div>
         ))}
       </div>
 
       {/* Content */}
       <div className="relative z-20 container mx-auto px-4 h-full min-h-[90vh] flex items-center">
-        <div className="max-w-2xl animate-fade-in">
+        <div className="max-w-2xl animate-fade-in-up">
           <div className="mb-6">
-            <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
+            <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4 animate-bounce-slow hover-glow">
               {slides[currentSlide].subtitle}
             </span>
-            <h1 className="text-4xl md:text-6xl font-bold text-foreground leading-tight mb-6">
-              {slides[currentSlide].title}
+            <h1 className="text-4xl md:text-6xl font-bold text-foreground leading-tight mb-6 animate-zoom-in">
+              <span className="text-shimmer">{slides[currentSlide].title}</span>
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
+            <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed animate-blur-in">
               {slides[currentSlide].description}
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
             <Link to={slides[currentSlide].ctaLink}>
-              <Button variant="hero" size="lg" className="font-semibold">
+              <Button variant="hero" size="lg" className="font-semibold hover-shine pulse-ring animate-glow group">
                 {slides[currentSlide].cta}
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
-            <Button variant="outline" size="lg" className="font-semibold">
+            <Button variant="outline" size="lg" className="font-semibold hover-glow animate-float">
               (11) 99999-9999
             </Button>
           </div>
@@ -130,12 +134,12 @@ const HeroSlider = () => {
           {/* Features Grid */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {features.map((feature, index) => (
-              <div key={index} className="flex flex-col items-center text-center p-4 glass rounded-lg hover-lift">
-                <div className="gradient-primary p-3 rounded-full mb-3">
+              <div key={index} className={`flex flex-col items-center text-center p-4 glass-strong rounded-lg hover-lift animate-scale-bounce animate-stagger-${index + 1} group effect-3d-hover`}>
+                <div className="gradient-animated p-3 rounded-full mb-3 group-hover:animate-wiggle">
                   <feature.icon className="h-6 w-6 text-primary-foreground" />
                 </div>
-                <h3 className="font-semibold text-sm mb-1">{feature.title}</h3>
-                <p className="text-xs text-muted-foreground">{feature.description}</p>
+                <h3 className="font-semibold text-sm mb-1 group-hover:text-primary transition-colors">{feature.title}</h3>
+                <p className="text-xs text-muted-foreground group-hover:text-foreground transition-colors">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -146,7 +150,7 @@ const HeroSlider = () => {
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30 flex items-center gap-4">
         <button
           onClick={prevSlide}
-          className="p-2 glass rounded-full hover:bg-primary/20 transition-colors"
+          className="p-2 glass-strong rounded-full hover:bg-primary/20 transition-colors hover-glow animate-pulse-slow"
         >
           <ChevronLeft className="h-5 w-5" />
         </button>
@@ -156,10 +160,10 @@ const HeroSlider = () => {
             <button
               key={index}
               onClick={() => setCurrentSlide(index)}
-              className={`w-2 h-2 rounded-full transition-all ${
+              className={`h-2 rounded-full transition-all hover-glow ${
                 index === currentSlide 
-                  ? "bg-primary w-8" 
-                  : "bg-muted-foreground/40"
+                  ? "bg-primary w-8 animate-glow" 
+                  : "bg-muted-foreground/40 w-2 hover:bg-primary/60"
               }`}
             />
           ))}
@@ -167,7 +171,7 @@ const HeroSlider = () => {
 
         <button
           onClick={nextSlide}
-          className="p-2 glass rounded-full hover:bg-primary/20 transition-colors"
+          className="p-2 glass-strong rounded-full hover:bg-primary/20 transition-colors hover-glow animate-pulse-slow"
         >
           <ChevronRight className="h-5 w-5" />
         </button>

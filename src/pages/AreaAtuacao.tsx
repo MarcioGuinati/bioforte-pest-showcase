@@ -159,17 +159,22 @@ const AreaAtuacao = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="py-20 lg:py-32 gradient-hero">
-        <div className="container mx-auto px-4 text-center">
-          <Badge variant="outline" className="mb-6 border-primary-foreground text-primary-foreground">
+      <section className="py-20 lg:py-32 gradient-hero relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-10 left-10 w-48 h-48 bg-white/10 rounded-full blur-3xl animate-float"></div>
+          <div className="absolute bottom-10 right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl animate-float" style={{animationDelay: "2s"}}></div>
+          <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 w-96 h-96 bg-white/5 rounded-full blur-3xl animate-pulse-slow"></div>
+        </div>
+        <div className="container mx-auto px-4 text-center relative">
+          <Badge variant="outline" className="mb-6 border-primary-foreground text-primary-foreground animate-bounce-slow">
             Área de Atuação
           </Badge>
-          <h1 className="text-4xl lg:text-6xl font-bold text-primary-foreground mb-6 animate-fade-in">
+          <h1 className="text-4xl lg:text-6xl font-bold text-primary-foreground mb-6 animate-fade-in-up">
             Soluções Completas em
             <br />
-            <span className="text-accent"> Controle de Pragas</span>
+            <span className="text-shimmer text-accent"> Controle de Pragas</span>
           </h1>
-          <p className="text-lg lg:text-xl text-primary-foreground/90 leading-relaxed max-w-3xl mx-auto animate-fade-in">
+          <p className="text-lg lg:text-xl text-primary-foreground/90 leading-relaxed max-w-3xl mx-auto animate-blur-in">
             Atendemos todos os segmentos com soluções personalizadas, 
             garantindo máxima eficiência e segurança para seu ambiente.
           </p>
@@ -177,20 +182,23 @@ const AreaAtuacao = () => {
       </section>
 
       {/* Stats */}
-      <section className="py-16 bg-background border-y border-border">
-        <div className="container mx-auto px-4">
+      <section className="py-16 bg-background border-y border-border relative overflow-hidden">
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-5 right-5 w-40 h-40 bg-primary rounded-full blur-3xl animate-float"></div>
+        </div>
+        <div className="container mx-auto px-4 relative">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
-              <div key={index} className="text-center animate-scale-in">
+              <div key={index} className="text-center animate-scale-bounce hover-float group">
                 <div className="flex items-center justify-center mb-4">
-                  <div className="gradient-primary p-3 rounded-full">
+                  <div className="gradient-animated p-3 rounded-full group-hover:animate-wiggle">
                     <stat.icon className="h-6 w-6 text-primary-foreground" />
                   </div>
                 </div>
-                <div className="text-3xl font-bold text-foreground mb-2">
+                <div className="text-3xl font-bold text-foreground mb-2 text-shimmer">
                   {stat.number}
                 </div>
-                <div className="text-muted-foreground font-medium">
+                <div className="text-muted-foreground font-medium group-hover:text-primary transition-colors">
                   {stat.label}
                 </div>
               </div>
@@ -200,12 +208,16 @@ const AreaAtuacao = () => {
       </section>
 
       {/* Services Grid */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <Badge variant="outline" className="mb-4">Nossos Serviços</Badge>
+      <section className="py-20 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-20 left-20 w-64 h-64 bg-accent rounded-full blur-3xl animate-float"></div>
+          <div className="absolute bottom-20 right-20 w-48 h-48 bg-primary rounded-full blur-3xl animate-float" style={{animationDelay: "3s"}}></div>
+        </div>
+        <div className="container mx-auto px-4 relative">
+          <div className="text-center mb-16 animate-fade-in-down">
+            <Badge variant="outline" className="mb-4 animate-bounce-slow">Nossos Serviços</Badge>
             <h2 className="text-3xl lg:text-4xl font-bold mb-6">
-              Especialistas em <span className="text-primary">todos os segmentos</span>
+              Especialistas em <span className="text-gradient">todos os segmentos</span>
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Cada segmento tem suas particularidades. Nossa experiência garante 
@@ -215,18 +227,18 @@ const AreaAtuacao = () => {
 
           <div className="grid lg:grid-cols-2 gap-8">
             {services.map((service, index) => (
-              <Card key={index} className="hover-lift glass border-0 overflow-hidden">
+              <Card key={index} className="hover-lift glass-strong border-0 overflow-hidden animate-scale-bounce hover-glow group effect-3d-hover" style={{animationDelay: `${index * 0.1}s`}}>
                 <CardContent className="p-0">
                   <div className="flex">
                     {/* Icon Section */}
-                    <div className={`${service.bgColor} p-8 flex items-center justify-center min-w-[120px]`}>
-                      <service.icon className={`h-12 w-12 ${service.color}`} />
+                    <div className={`${service.bgColor} p-8 flex items-center justify-center min-w-[120px] group-hover:animate-wiggle`}>
+                      <service.icon className={`h-12 w-12 ${service.color} hover-scale`} />
                     </div>
 
                     {/* Content */}
                     <div className="flex-1 p-8">
-                      <h3 className="text-2xl font-bold mb-2">{service.category}</h3>
-                      <p className="text-muted-foreground mb-6">{service.description}</p>
+                      <h3 className="text-2xl font-bold mb-2 group-hover:text-primary transition-colors">{service.category}</h3>
+                      <p className="text-muted-foreground mb-6 group-hover:text-foreground transition-colors">{service.description}</p>
 
                       {/* Services List */}
                       <div className="mb-6">
@@ -235,8 +247,8 @@ const AreaAtuacao = () => {
                         </h4>
                         <div className="grid grid-cols-2 gap-2">
                           {service.services.map((item, idx) => (
-                            <div key={idx} className="flex items-center gap-2 text-sm">
-                              <CheckCircle className="h-3 w-3 text-primary flex-shrink-0" />
+                            <div key={idx} className="flex items-center gap-2 text-sm hover:text-primary transition-colors">
+                              <CheckCircle className="h-3 w-3 text-primary flex-shrink-0 animate-pulse-slow" />
                               <span>{item}</span>
                             </div>
                           ))}
@@ -250,17 +262,17 @@ const AreaAtuacao = () => {
                         </h4>
                         <div className="space-y-2">
                           {service.features.map((feature, idx) => (
-                            <div key={idx} className="flex items-center gap-2 text-sm text-muted-foreground">
-                              <div className="w-1 h-1 bg-primary rounded-full" />
+                            <div key={idx} className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
+                              <div className="w-1 h-1 bg-primary rounded-full animate-pulse-slow" />
                               <span>{feature}</span>
                             </div>
                           ))}
                         </div>
                       </div>
 
-                      <Button variant="hero" size="sm" className="w-full">
+                      <Button variant="hero" size="sm" className="w-full hover-shine pulse-ring group-hover:animate-glow">
                         Solicitar Orçamento
-                        <ArrowRight className="ml-2 h-4 w-4" />
+                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                       </Button>
                     </div>
                   </div>

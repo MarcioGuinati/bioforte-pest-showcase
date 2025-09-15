@@ -74,19 +74,22 @@ const QuemSomos = () => {
           <img
             src={companyBuilding}
             alt="Bioforte"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover parallax"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/70 to-background/50" />
+          {/* Floating elements */}
+          <div className="absolute top-20 right-20 w-40 h-40 bg-primary/20 rounded-full blur-3xl animate-float"></div>
+          <div className="absolute bottom-20 left-10 w-32 h-32 bg-accent/20 rounded-full blur-2xl animate-float" style={{animationDelay: "2s"}}></div>
         </div>
         
         <div className="relative container mx-auto px-4">
           <div className="max-w-3xl">
-            <Badge variant="outline" className="mb-6">Sobre a Bioforte</Badge>
-            <h1 className="text-4xl lg:text-6xl font-bold mb-6 animate-fade-in">
+            <Badge variant="outline" className="mb-6 animate-bounce-slow hover-glow">Sobre a Bioforte</Badge>
+            <h1 className="text-4xl lg:text-6xl font-bold mb-6 animate-fade-in-up">
               15 Anos Protegendo
-              <span className="text-primary"> Seu Ambiente</span>
+              <span className="text-gradient"> Seu Ambiente</span>
             </h1>
-            <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed animate-fade-in">
+            <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed animate-blur-in">
               Somos uma empresa especializada em controle integrado de pragas urbanas, 
               comprometida em oferecer soluções eficazes e sustentáveis para proteger 
               a saúde e o bem-estar de nossos clientes.
@@ -96,17 +99,21 @@ const QuemSomos = () => {
       </section>
 
       {/* Mission, Vision, Values */}
-      <section className="py-20 bg-muted/30">
-        <div className="container mx-auto px-4">
+      <section className="py-20 bg-muted/30 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-10 left-10 w-48 h-48 bg-primary rounded-full blur-3xl animate-float"></div>
+          <div className="absolute bottom-10 right-10 w-64 h-64 bg-accent rounded-full blur-3xl animate-float" style={{animationDelay: "3s"}}></div>
+        </div>
+        <div className="container mx-auto px-4 relative">
           <div className="grid lg:grid-cols-3 gap-12">
             {/* Mission */}
-            <Card className="hover-lift glass border-0">
+            <Card className="hover-lift glass-strong border-0 animate-scale-bounce animate-stagger-1 group effect-3d-hover">
               <CardContent className="p-8 text-center">
-                <div className="gradient-primary p-4 rounded-full w-16 h-16 mx-auto mb-6 flex items-center justify-center">
+                <div className="gradient-animated p-4 rounded-full w-16 h-16 mx-auto mb-6 flex items-center justify-center group-hover:animate-wiggle">
                   <Target className="h-8 w-8 text-primary-foreground" />
                 </div>
-                <h3 className="text-2xl font-bold mb-4">Nossa Missão</h3>
-                <p className="text-muted-foreground leading-relaxed">
+                <h3 className="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">Nossa Missão</h3>
+                <p className="text-muted-foreground leading-relaxed group-hover:text-foreground transition-colors">
                   Proteger a saúde e o bem-estar das pessoas através de soluções 
                   inovadoras e sustentáveis em controle de pragas, sempre priorizando 
                   a segurança e a qualidade.
@@ -115,13 +122,13 @@ const QuemSomos = () => {
             </Card>
 
             {/* Vision */}
-            <Card className="hover-lift glass border-0">
+            <Card className="hover-lift glass-strong border-0 animate-scale-bounce animate-stagger-2 group effect-3d-hover">
               <CardContent className="p-8 text-center">
-                <div className="gradient-primary p-4 rounded-full w-16 h-16 mx-auto mb-6 flex items-center justify-center">
+                <div className="gradient-animated p-4 rounded-full w-16 h-16 mx-auto mb-6 flex items-center justify-center group-hover:animate-wiggle">
                   <Eye className="h-8 w-8 text-primary-foreground" />
                 </div>
-                <h3 className="text-2xl font-bold mb-4">Nossa Visão</h3>
-                <p className="text-muted-foreground leading-relaxed">
+                <h3 className="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">Nossa Visão</h3>
+                <p className="text-muted-foreground leading-relaxed group-hover:text-foreground transition-colors">
                   Ser reconhecida como a empresa líder em controle de pragas na região, 
                   referência em inovação, sustentabilidade e excelência no atendimento 
                   ao cliente.
@@ -130,13 +137,13 @@ const QuemSomos = () => {
             </Card>
 
             {/* Values */}
-            <Card className="hover-lift glass border-0">
+            <Card className="hover-lift glass-strong border-0 animate-scale-bounce animate-stagger-3 group effect-3d-hover">
               <CardContent className="p-8 text-center">
-                <div className="gradient-primary p-4 rounded-full w-16 h-16 mx-auto mb-6 flex items-center justify-center">
+                <div className="gradient-animated p-4 rounded-full w-16 h-16 mx-auto mb-6 flex items-center justify-center group-hover:animate-wiggle">
                   <Heart className="h-8 w-8 text-primary-foreground" />
                 </div>
-                <h3 className="text-2xl font-bold mb-4">Nossos Valores</h3>
-                <p className="text-muted-foreground leading-relaxed">
+                <h3 className="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">Nossos Valores</h3>
+                <p className="text-muted-foreground leading-relaxed group-hover:text-foreground transition-colors">
                   Integridade, transparência, compromisso com a qualidade, 
                   respeito ao meio ambiente e dedicação total à satisfação 
                   dos nossos clientes.
@@ -148,12 +155,15 @@ const QuemSomos = () => {
       </section>
 
       {/* Values Grid */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <Badge variant="outline" className="mb-4">Nossos Valores</Badge>
+      <section className="py-20 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-20 left-20 w-56 h-56 bg-accent rounded-full blur-3xl animate-pulse-slow"></div>
+        </div>
+        <div className="container mx-auto px-4 relative">
+          <div className="text-center mb-16 animate-fade-in-down">
+            <Badge variant="outline" className="mb-4 animate-bounce-slow">Nossos Valores</Badge>
             <h2 className="text-3xl lg:text-4xl font-bold mb-6">
-              O que nos <span className="text-primary">move</span>
+              O que nos <span className="text-gradient">move</span>
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Nossos valores fundamentais orientam cada decisão e ação, 
@@ -163,13 +173,13 @@ const QuemSomos = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {values.map((value, index) => (
-              <Card key={index} className="hover-lift glass border-0 animate-scale-in">
+              <Card key={index} className={`hover-lift glass-strong border-0 animate-scale-bounce animate-stagger-${index + 1} group effect-3d-hover`}>
                 <CardContent className="p-6 text-center">
-                  <div className="gradient-primary p-3 rounded-full w-12 h-12 mx-auto mb-4 flex items-center justify-center">
+                  <div className="gradient-animated p-3 rounded-full w-12 h-12 mx-auto mb-4 flex items-center justify-center group-hover:animate-wiggle">
                     <value.icon className="h-6 w-6 text-primary-foreground" />
                   </div>
-                  <h3 className="font-bold text-lg mb-3">{value.title}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
+                  <h3 className="font-bold text-lg mb-3 group-hover:text-primary transition-colors">{value.title}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed group-hover:text-foreground transition-colors">
                     {value.description}
                   </p>
                 </CardContent>
@@ -180,29 +190,32 @@ const QuemSomos = () => {
       </section>
 
       {/* Timeline */}
-      <section className="py-20 bg-muted/30">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <Badge variant="outline" className="mb-4">Nossa História</Badge>
+      <section className="py-20 bg-muted/30 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute bottom-0 left-1/3 w-72 h-72 bg-primary rounded-full blur-3xl animate-float"></div>
+        </div>
+        <div className="container mx-auto px-4 relative">
+          <div className="text-center mb-16 animate-fade-in-up">
+            <Badge variant="outline" className="mb-4 animate-bounce-slow">Nossa História</Badge>
             <h2 className="text-3xl lg:text-4xl font-bold mb-6">
-              Trajetória de <span className="text-primary">crescimento</span>
+              Trajetória de <span className="text-gradient">crescimento</span>
             </h2>
           </div>
 
           <div className="max-w-4xl mx-auto">
             <div className="space-y-8">
               {timeline.map((item, index) => (
-                <div key={index} className="flex items-start gap-6 animate-fade-in">
+                <div key={index} className={`flex items-start gap-6 animate-slide-in-left animate-stagger-${(index % 4) + 1} hover-lift group`}>
                   <div className="flex-shrink-0">
-                    <div className="gradient-primary p-3 rounded-full">
+                    <div className="gradient-animated p-3 rounded-full group-hover:animate-wiggle">
                       <span className="text-primary-foreground font-bold text-sm">
                         {item.year}
                       </span>
                     </div>
                   </div>
-                  <div className="flex-grow">
-                    <h3 className="font-bold text-lg mb-2">{item.title}</h3>
-                    <p className="text-muted-foreground">{item.description}</p>
+                  <div className="flex-grow glass-minimal p-4 rounded-lg hover-glow">
+                    <h3 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors">{item.title}</h3>
+                    <p className="text-muted-foreground group-hover:text-foreground transition-colors">{item.description}</p>
                   </div>
                 </div>
               ))}
