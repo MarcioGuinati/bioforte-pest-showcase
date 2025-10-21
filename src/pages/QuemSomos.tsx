@@ -75,6 +75,7 @@ const QuemSomos = () => {
             src={companyBuilding}
             alt="Bioforte"
             className="w-full h-full object-cover parallax"
+            loading="lazy"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/70 to-background/50" />
           {/* Floating elements */}

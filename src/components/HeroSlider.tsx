@@ -96,6 +96,8 @@ const HeroSlider = () => {
               src={slide.image}
               alt={`${slide.title} - ${slide.description}`}
               className="w-full h-full object-cover object-center parallax"
+              fetchPriority={index === 0 ? "high" : "low"}
+              loading={index === 0 ? "eager" : "lazy"}
             />
             {/* Floating Elements */}
             <div className="absolute top-10 right-10 w-32 h-32 bg-primary/20 rounded-full blur-3xl animate-float"></div>

@@ -86,6 +86,7 @@ const BiologiaPragas = () => {
             src={pestBiology}
             alt="Biologia das Pragas"
             className="w-full h-full object-cover"
+            loading="lazy"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/60" />
         </div>
