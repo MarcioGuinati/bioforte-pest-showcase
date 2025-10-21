@@ -94,7 +94,7 @@ const HeroSlider = () => {
             <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/70 to-transparent z-10" />
             <img
               src={slide.image}
-              alt={slide.title}
+              alt={`${slide.title} - ${slide.description}`}
               className="w-full h-full object-cover object-center parallax"
             />
             {/* Floating Elements */}
@@ -112,7 +112,7 @@ const HeroSlider = () => {
               {slides[currentSlide].subtitle}
             </span>
             <h1 className="text-4xl md:text-6xl font-bold text-foreground leading-tight mb-6 animate-zoom-in">
-              <span className="text-shimmer">{slides[currentSlide].title}</span>
+              <span className="text-shimmer" aria-label={slides[currentSlide].title}>{slides[currentSlide].title}</span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed animate-blur-in">
               {slides[currentSlide].description}
@@ -135,7 +135,7 @@ const HeroSlider = () => {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {features.map((feature, index) => (
               <div key={index} className={`flex flex-col items-center text-center p-4 glass-strong rounded-lg hover-lift animate-scale-bounce animate-stagger-${index + 1} group effect-3d-hover`}>
-                <div className="gradient-animated p-3 rounded-full mb-3 group-hover:animate-wiggle">
+                <div className="gradient-animated p-3 rounded-full mb-3 group-hover:animate-wiggle" aria-hidden="true">
                   <feature.icon className="h-6 w-6 text-primary-foreground" />
                 </div>
                 <h3 className="font-semibold text-sm mb-1 group-hover:text-primary transition-colors">{feature.title}</h3>
@@ -147,33 +147,44 @@ const HeroSlider = () => {
       </div>
 
       {/* Navigation */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30 flex items-center gap-4">
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30 flex items-center gap-4" role="group" aria-label="Controles do carrossel de slides">
         <button
           onClick={prevSlide}
-          className="p-2 glass-strong rounded-full hover:bg-primary/20 transition-colors hover-glow animate-pulse-slow"
+          className="p-3 glass-strong rounded-full hover:bg-primary/20 transition-colors hover-glow animate-pulse-slow min-h-[44px] min-w-[44px] flex items-center justify-center"
+          aria-label="Slide anterior"
         >
-          <ChevronLeft className="h-5 w-5" />
+          <ChevronLeft className="h-5 w-5" aria-hidden="true" />
         </button>
 
-        <div className="flex gap-2">
-          {slides.map((_, index) => (
+        <div className="flex gap-2" role="tablist" aria-label="Indicadores de slide">
+          {slides.map((slide, index) => (
             <button
               key={index}
               onClick={() => setCurrentSlide(index)}
-              className={`h-2 rounded-full transition-all hover-glow ${
+              role="tab"
+              aria-selected={index === currentSlide}
+              aria-label={`Ir para slide ${index + 1}: ${slide.title}`}
+              className={`min-h-[44px] min-w-[44px] flex items-center justify-center transition-all hover-glow ${
                 index === currentSlide 
-                  ? "bg-primary w-8 animate-glow" 
-                  : "bg-muted-foreground/40 w-2 hover:bg-primary/60"
+                  ? "animate-glow" 
+                  : ""
               }`}
-            />
+            >
+              <span className={`h-2 rounded-full transition-all ${
+                index === currentSlide 
+                  ? "bg-primary w-8" 
+                  : "bg-muted-foreground/40 w-2 hover:bg-primary/60"
+              }`} />
+            </button>
           ))}
         </div>
 
         <button
           onClick={nextSlide}
-          className="p-2 glass-strong rounded-full hover:bg-primary/20 transition-colors hover-glow animate-pulse-slow"
+          className="p-3 glass-strong rounded-full hover:bg-primary/20 transition-colors hover-glow animate-pulse-slow min-h-[44px] min-w-[44px] flex items-center justify-center"
+          aria-label="Próximo slide"
         >
-          <ChevronRight className="h-5 w-5" />
+          <ChevronRight className="h-5 w-5" aria-hidden="true" />
         </button>
       </div>
     </section>

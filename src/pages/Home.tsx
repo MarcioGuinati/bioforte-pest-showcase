@@ -103,7 +103,7 @@ const Home = () => {
         <div className="container mx-auto px-4 relative">
           <div className="text-center mb-16 animate-fade-in-up">
             <Badge variant="outline" className="mb-4 animate-bounce-slow">Nossos Serviços</Badge>
-            <h2 className="text-3xl lg:text-5xl font-bold mb-6">
+            <h2 className="text-3xl lg:text-5xl font-bold mb-6" id="servicos">
               Soluções Completas em
               <span className="text-gradient"> Controle de Pragas</span>
             </h2>
@@ -117,7 +117,7 @@ const Home = () => {
             {services.map((service, index) => (
               <Card key={index} className={`hover-lift glass-strong border-0 animate-scale-in animate-stagger-${(index % 4) + 1} hover-glow group`}>
                 <CardContent className="p-6 text-center">
-                  <div className="gradient-animated p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center group-hover:animate-wiggle">
+                  <div className="gradient-animated p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center group-hover:animate-wiggle" aria-hidden="true">
                     <service.icon className="h-8 w-8 text-primary-foreground" />
                   </div>
                   <h3 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors">{service.title}</h3>
@@ -157,7 +157,7 @@ const Home = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="animate-fade-in-up">
               <Badge variant="outline" className="mb-4 hover-glow">Sobre a Bioforte</Badge>
-              <h2 className="text-3xl lg:text-4xl font-bold mb-6">
+              <h2 className="text-3xl lg:text-4xl font-bold mb-6" id="sobre">
                 Experiência e Confiabilidade em 
                 <span className="text-gradient"> Controle de Pragas</span>
               </h2>
@@ -229,7 +229,7 @@ const Home = () => {
         <div className="container mx-auto px-4 relative">
           <div className="text-center mb-16 animate-fade-in-down">
             <Badge variant="outline" className="mb-4 animate-bounce-slow">Depoimentos</Badge>
-            <h2 className="text-3xl lg:text-4xl font-bold mb-6">
+            <h2 className="text-3xl lg:text-4xl font-bold mb-6" id="depoimentos">
               O que nossos 
               <span className="text-gradient"> clientes dizem</span>
             </h2>
@@ -267,7 +267,7 @@ const Home = () => {
         </div>
         <div className="container mx-auto px-4 text-center relative">
           <div className="max-w-3xl mx-auto animate-fade-in-up">
-            <h2 className="text-3xl lg:text-5xl font-bold text-primary-foreground mb-6 animate-zoom-in">
+            <h2 className="text-3xl lg:text-5xl font-bold text-primary-foreground mb-6 animate-zoom-in" id="contato-cta">
               Precisa de Controle de Pragas?
             </h2>
             <p className="text-xl text-primary-foreground/90 mb-8 animate-blur-in">
@@ -283,10 +283,13 @@ const Home = () => {
               </Link>
               <Button 
                 variant="outline" 
-                size="lg" 
+                size="lg"
+                asChild
                 className="font-semibold bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary hover-glow"
               >
-                (11) 99999-9999
+                <a href="tel:+5511999999999" aria-label="Ligar para (11) 99999-9999">
+                  (11) 99999-9999
+                </a>
               </Button>
             </div>
           </div>

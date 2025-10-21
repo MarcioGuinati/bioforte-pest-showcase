@@ -24,16 +24,18 @@ const Header = () => {
           <div className="flex items-center gap-4">
             <a 
               href="mailto:contato@bioforte.com.br" 
-              className="flex items-center gap-1 hover:text-primary transition-colors"
+              className="flex items-center gap-1 hover:text-primary transition-colors min-h-[24px]"
+              aria-label="Enviar e-mail para contato@bioforte.com.br"
             >
-              <Mail className="h-3 w-3" />
+              <Mail className="h-3 w-3" aria-hidden="true" />
               contato@bioforte.com.br
             </a>
             <a 
               href="tel:+5511999999999" 
-              className="flex items-center gap-1 hover:text-primary transition-colors"
+              className="flex items-center gap-1 hover:text-primary transition-colors min-h-[24px]"
+              aria-label="Ligar para (11) 99999-9999"
             >
-              <Phone className="h-3 w-3" />
+              <Phone className="h-3 w-3" aria-hidden="true" />
               (11) 99999-9999
             </a>
           </div>
@@ -44,12 +46,12 @@ const Header = () => {
 
         {/* Main Navigation */}
         <div className="flex items-center justify-between py-4">
-          <Link to="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 gradient-primary rounded-lg flex items-center justify-center">
+          <Link to="/" className="flex items-center space-x-2" aria-label="Bioforte Controle de Pragas - Ir para página inicial">
+            <div className="w-10 h-10 gradient-primary rounded-lg flex items-center justify-center" aria-hidden="true">
               <span className="text-primary-foreground font-bold text-lg">B</span>
             </div>
             <div>
-              <h1 className="font-bold text-xl text-foreground">Bioforte</h1>
+              <span className="font-bold text-xl text-foreground">Bioforte</span>
               <p className="text-xs text-primary">Controle de Pragas</p>
             </div>
           </Link>
@@ -76,10 +78,12 @@ const Header = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden p-2"
+            className="lg:hidden p-3 min-h-[48px] min-w-[48px] flex items-center justify-center"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label={isMenuOpen ? "Fechar menu de navegação" : "Abrir menu de navegação"}
+            aria-expanded={isMenuOpen}
           >
-            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {isMenuOpen ? <X className="h-6 w-6" aria-hidden="true" /> : <Menu className="h-6 w-6" aria-hidden="true" />}
           </button>
         </div>
 

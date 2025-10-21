@@ -12,10 +12,11 @@ const WhatsAppButton = () => {
   return (
     <button
       onClick={handleWhatsAppClick}
-      className="fixed bottom-6 right-6 z-50 gradient-primary p-4 rounded-full shadow-glow-lg hover:shadow-glow transition-all duration-300 hover:scale-110 animate-bounce-slow"
-      aria-label="Falar no WhatsApp"
+      className="fixed bottom-6 right-6 z-50 gradient-primary p-4 rounded-full shadow-glow-lg hover:shadow-glow transition-all duration-300 hover:scale-110 animate-bounce-slow min-h-[56px] min-w-[56px] flex items-center justify-center"
+      aria-label="Abrir conversa no WhatsApp para solicitar orçamento"
+      title="Falar no WhatsApp"
     >
-      <MessageCircle className="h-6 w-6 text-primary-foreground" />
+      <MessageCircle className="h-6 w-6 text-primary-foreground" aria-hidden="true" />
     </button>
   );
 };

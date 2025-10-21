@@ -11,18 +11,18 @@
     --foreground: 220 13% 18%;
 
     /* Brand Green Palette */
-    --primary: 142 71% 45%;
+    --primary: 142 71% 38%;
     --primary-foreground: 0 0% 100%;
-    --primary-light: 142 71% 55%;
-    --primary-dark: 142 71% 35%;
+    --primary-light: 142 71% 48%;
+    --primary-dark: 142 71% 28%;
 
     /* Secondary Colors */
     --secondary: 220 13% 91%;
     --secondary-foreground: 220 13% 18%;
 
     /* Accent Colors */
-    --accent: 47 96% 53%;
-    --accent-foreground: 220 13% 18%;
+    --accent: 47 96% 48%;
+    --accent-foreground: 220 13% 9%;
 
     /* Surface Colors */
     --card: 0 0% 100%;
@@ -33,7 +33,7 @@
 
     /* Semantic Colors */
     --muted: 220 13% 95%;
-    --muted-foreground: 220 13% 46%;
+    --muted-foreground: 220 13% 38%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
