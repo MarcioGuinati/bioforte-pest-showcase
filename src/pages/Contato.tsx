@@ -146,7 +146,7 @@ Telefone: ${formData.phone || "Não informado"}`;
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {contactInfo.map((info, index) => (
-              <Card key={index} className="hover-lift glass border-0 text-center">
+              <Card key={index} className="glass text-center">
                 <CardContent className="p-6">
                   <div className="gradient-primary p-3 rounded-full w-12 h-12 mx-auto mb-4 flex items-center justify-center">
                     <info.icon className="h-6 w-6 text-primary-foreground" />
@@ -188,7 +188,7 @@ Telefone: ${formData.phone || "Não informado"}`;
             <div className="grid lg:grid-cols-3 gap-12">
               {/* Form */}
               <div className="lg:col-span-2">
-                <Card className="glass border-0">
+                <Card className="glass">
                   <CardContent className="p-8">
                     <form onSubmit={handleSubmit} className="space-y-6">
                       {/* Personal Info */}
@@ -399,7 +399,7 @@ Telefone: ${formData.phone || "Não informado"}`;
                 </Card>
 
                 {/* Why Choose Us */}
-                <Card className="glass border-0">
+                <Card className="glass">
                   <CardContent className="p-6">
                     <h3 className="font-bold text-lg mb-4">Por que nos escolher?</h3>
                     <div className="space-y-3">
@@ -421,7 +421,7 @@ Telefone: ${formData.phone || "Não informado"}`;
                 </Card>
 
                 {/* Business Hours */}
-                <Card className="glass border-0">
+                <Card className="glass">
                   <CardContent className="p-6">
                     <h3 className="font-bold text-lg mb-4">Horários de Atendimento</h3>
                     <div className="space-y-2 text-sm">
@@ -488,7 +488,7 @@ Telefone: ${formData.phone || "Não informado"}`;
                   answer: "Atendemos toda a Grande São Paulo: capital, ABC, Guarulhos, Osasco e região metropolitana."
                 }
               ].map((faq, index) => (
-                <Card key={index} className="hover-lift glass border-0">
+                <Card key={index} className="glass">
                   <CardContent className="p-6">
                     <h4 className="font-semibold mb-3">{faq.question}</h4>
                     <p className="text-muted-foreground text-sm leading-relaxed">

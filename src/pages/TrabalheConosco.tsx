@@ -180,7 +180,7 @@ const TrabalheConosco = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {benefits.map((benefit, index) => (
-              <Card key={index} className="hover-lift glass border-0">
+              <Card key={index} className="glass">
                 <CardContent className="p-6 text-center">
                   <div className="gradient-primary p-3 rounded-full w-12 h-12 mx-auto mb-4 flex items-center justify-center">
                     <benefit.icon className="h-6 w-6 text-primary-foreground" />
@@ -208,7 +208,7 @@ const TrabalheConosco = () => {
 
           <div className="max-w-4xl mx-auto space-y-8">
             {openPositions.map((position, index) => (
-              <Card key={index} className="hover-lift glass border-0 overflow-hidden">
+              <Card key={index} className="glass overflow-hidden">
                 <CardContent className="p-0">
                   <div className="flex flex-col lg:flex-row">
                     {/* Position Info */}
@@ -286,7 +286,7 @@ const TrabalheConosco = () => {
               </p>
             </div>
 
-            <Card className="glass border-0">
+            <Card className="glass">
               <CardContent className="p-8">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-6">

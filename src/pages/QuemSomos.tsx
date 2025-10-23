@@ -108,7 +108,7 @@ const QuemSomos = () => {
         <div className="container mx-auto px-4 relative">
           <div className="grid lg:grid-cols-3 gap-12">
             {/* Mission */}
-            <Card className="hover-lift glass-strong border-0 animate-scale-bounce animate-stagger-1 group effect-3d-hover">
+            <Card className="glass-strong animate-scale-bounce animate-stagger-1 group">
               <CardContent className="p-8 text-center">
                 <div className="gradient-animated p-4 rounded-full w-16 h-16 mx-auto mb-6 flex items-center justify-center group-hover:animate-wiggle">
                   <Target className="h-8 w-8 text-primary-foreground" />
@@ -123,7 +123,7 @@ const QuemSomos = () => {
             </Card>
 
             {/* Vision */}
-            <Card className="hover-lift glass-strong border-0 animate-scale-bounce animate-stagger-2 group effect-3d-hover">
+            <Card className="glass-strong animate-scale-bounce animate-stagger-2 group">
               <CardContent className="p-8 text-center">
                 <div className="gradient-animated p-4 rounded-full w-16 h-16 mx-auto mb-6 flex items-center justify-center group-hover:animate-wiggle">
                   <Eye className="h-8 w-8 text-primary-foreground" />
@@ -138,7 +138,7 @@ const QuemSomos = () => {
             </Card>
 
             {/* Values */}
-            <Card className="hover-lift glass-strong border-0 animate-scale-bounce animate-stagger-3 group effect-3d-hover">
+            <Card className="glass-strong animate-scale-bounce animate-stagger-3 group">
               <CardContent className="p-8 text-center">
                 <div className="gradient-animated p-4 rounded-full w-16 h-16 mx-auto mb-6 flex items-center justify-center group-hover:animate-wiggle">
                   <Heart className="h-8 w-8 text-primary-foreground" />
@@ -174,7 +174,7 @@ const QuemSomos = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {values.map((value, index) => (
-              <Card key={index} className={`hover-lift glass-strong border-0 animate-scale-bounce animate-stagger-${index + 1} group effect-3d-hover`}>
+              <Card key={index} className={`glass-strong animate-scale-bounce animate-stagger-${index + 1} group`}>
                 <CardContent className="p-6 text-center">
                   <div className="gradient-animated p-3 rounded-full w-12 h-12 mx-auto mb-4 flex items-center justify-center group-hover:animate-wiggle">
                     <value.icon className="h-6 w-6 text-primary-foreground" />
@@ -242,7 +242,7 @@ const QuemSomos = () => {
               "Certificação ANVISA",
               "Licença Ambiental"
             ].map((cert, index) => (
-              <Card key={index} className="hover-lift glass border-0 text-center">
+              <Card key={index} className="glass text-center">
                 <CardContent className="p-6">
                   <div className="gradient-primary p-3 rounded-full w-12 h-12 mx-auto mb-4 flex items-center justify-center">
                     <Award className="h-6 w-6 text-primary-foreground" />

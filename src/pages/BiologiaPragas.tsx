@@ -120,7 +120,7 @@ const BiologiaPragas = () => {
             </p>
             
             <div className="grid md:grid-cols-3 gap-8 mt-12">
-              <Card className="hover-lift glass border-0">
+               <Card className="glass">
                 <CardContent className="p-6 text-center">
                   <Eye className="h-12 w-12 text-primary mx-auto mb-4" />
                   <h3 className="font-bold text-lg mb-2">Identificação</h3>
@@ -130,7 +130,7 @@ const BiologiaPragas = () => {
                 </CardContent>
               </Card>
 
-              <Card className="hover-lift glass border-0">
+               <Card className="glass">
                 <CardContent className="p-6 text-center">
                   <Shield className="h-12 w-12 text-primary mx-auto mb-4" />
                   <h3 className="font-bold text-lg mb-2">Prevenção</h3>
@@ -140,7 +140,7 @@ const BiologiaPragas = () => {
                 </CardContent>
               </Card>
 
-              <Card className="hover-lift glass border-0">
+              <Card className="glass">
                 <CardContent className="p-6 text-center">
                   <Zap className="h-12 w-12 text-primary mx-auto mb-4" />
                   <h3 className="font-bold text-lg mb-2">Controle</h3>
@@ -166,7 +166,7 @@ const BiologiaPragas = () => {
 
           <div className="space-y-12">
             {pests.map((pest, index) => (
-              <Card key={index} className="hover-lift glass border-0 overflow-hidden">
+              <Card key={index} className="glass overflow-hidden">
                 <CardContent className="p-0">
                   <div className="grid lg:grid-cols-3 gap-0">
                     {/* Pest Info */}

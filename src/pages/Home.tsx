@@ -115,7 +115,7 @@ const Home = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {services.map((service, index) => (
-              <Card key={index} className={`hover-lift glass-strong border-0 animate-scale-in animate-stagger-${(index % 4) + 1} hover-glow group`}>
+              <Card key={index} className={`glass-strong animate-scale-in animate-stagger-${(index % 4) + 1} hover-glow group`}>
                 <CardContent className="p-6 text-center">
                   <div className="gradient-animated p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center group-hover:animate-wiggle" aria-hidden="true">
                     <service.icon className="h-8 w-8 text-primary-foreground" />
@@ -237,7 +237,7 @@ const Home = () => {
 
           <div className="grid md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
-              <Card key={index} className={`hover-lift glass-strong border-0 animate-scale-bounce animate-stagger-${index + 1} hover-glow group effect-3d-hover`}>
+              <Card key={index} className={`glass-strong animate-scale-bounce animate-stagger-${index + 1} hover-glow group`}>
                 <CardContent className="p-6">
                   <div className="flex mb-4">
                     {[...Array(testimonial.rating)].map((_, i) => (

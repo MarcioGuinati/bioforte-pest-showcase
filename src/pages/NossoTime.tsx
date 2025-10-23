@@ -149,7 +149,7 @@ const NossoTime = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {teamMembers.map((member, index) => (
-              <Card key={index} className="hover-lift glass border-0 overflow-hidden">
+              <Card key={index} className="glass overflow-hidden">
                 <CardContent className="p-0">
                   {/* Profile Header */}
                   <div className="gradient-primary p-6 text-center">
@@ -215,7 +215,7 @@ const NossoTime = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {certifications.map((cert, index) => (
-              <Card key={index} className="hover-lift glass border-0">
+              <Card key={index} className="glass">
                 <CardContent className="p-6">
                   <div className="gradient-primary p-3 rounded-full w-12 h-12 mx-auto mb-4 flex items-center justify-center">
                     <Award className="h-6 w-6 text-primary-foreground" />
@@ -288,7 +288,7 @@ const NossoTime = () => {
                     description: "Desenvolvimento de novos profissionais por especialistas sênior"
                   }
                 ].map((program, index) => (
-                  <Card key={index} className="hover-lift glass border-0">
+                  <Card key={index} className="glass">
                     <CardContent className="p-6">
                       <div className="flex items-start gap-4">
                         <div className="gradient-primary p-2 rounded-lg">
@@ -341,7 +341,7 @@ const NossoTime = () => {
                   icon: Users
                 }
               ].map((value, index) => (
-                <Card key={index} className="hover-lift glass border-0">
+                <Card key={index} className="glass">
                   <CardContent className="p-8 text-center">
                     <div className="gradient-primary p-4 rounded-full w-16 h-16 mx-auto mb-6 flex items-center justify-center">
                       <value.icon className="h-8 w-8 text-primary-foreground" />

@@ -227,7 +227,7 @@ const AreaAtuacao = () => {
 
           <div className="grid lg:grid-cols-2 gap-8">
             {services.map((service, index) => (
-              <Card key={index} className="hover-lift glass-strong border-0 overflow-hidden animate-scale-bounce hover-glow group effect-3d-hover" style={{animationDelay: `${index * 0.1}s`}}>
+              <Card key={index} className="glass-strong overflow-hidden animate-scale-bounce hover-glow group" style={{animationDelay: `${index * 0.1}s`}}>
                 <CardContent className="p-0">
                   <div className="flex">
                     {/* Icon Section */}
@@ -320,7 +320,7 @@ const AreaAtuacao = () => {
                   description: "Acompanhamento e manutenção preventiva"
                 }
               ].map((process, index) => (
-                <Card key={index} className="hover-lift glass border-0 text-center">
+                <Card key={index} className="glass text-center">
                   <CardContent className="p-6">
                     <div className="gradient-primary text-primary-foreground rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 font-bold text-lg">
                       {process.step}
@@ -365,7 +365,7 @@ const AreaAtuacao = () => {
                   areas: ["Guarulhos", "Osasco", "Barueri", "Cotia", "Taboão da Serra"]
                 }
               ].map((region, index) => (
-                <Card key={index} className="hover-lift glass border-0">
+                <Card key={index} className="glass">
                   <CardContent className="p-6">
                     <h3 className="font-bold text-lg mb-4">{region.title}</h3>
                     <ul className="space-y-2">
