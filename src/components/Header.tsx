@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Phone, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
+import logoBioforte from "@/assets/logo-bioforte.png";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -46,14 +47,12 @@ const Header = () => {
 
         {/* Main Navigation */}
         <div className="flex items-center justify-between py-4">
-          <Link to="/" className="flex items-center space-x-2" aria-label="Bioforte Controle de Pragas - Ir para página inicial">
-            <div className="w-10 h-10 gradient-primary rounded-lg flex items-center justify-center" aria-hidden="true">
-              <span className="text-primary-foreground font-bold text-lg">B</span>
-            </div>
-            <div>
-              <span className="font-bold text-xl text-foreground">Bioforte</span>
-              <p className="text-xs text-primary">Controle de Pragas</p>
-            </div>
+          <Link to="/" className="flex items-center space-x-3" aria-label="Bioforte Controle de Pragas - Ir para página inicial">
+            <img 
+              src={logoBioforte} 
+              alt="Bioforte Controle de Pragas" 
+              className="h-12 w-auto"
+            />
           </Link>
 
           {/* Desktop Navigation */}
