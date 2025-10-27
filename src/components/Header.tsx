@@ -47,11 +47,11 @@ const Header = () => {
 
         {/* Main Navigation */}
         <div className="flex items-center justify-between py-4">
-          <Link to="/" className="flex items-center space-x-3" aria-label="Bioforte Controle de Pragas - Ir para página inicial">
+          <Link to="/" className="flex items-center" aria-label="Bioforte Controle de Pragas - Ir para página inicial">
             <img 
               src={logoBioforte} 
               alt="Bioforte Controle de Pragas" 
-              className="h-12 w-auto"
+              className="h-14 w-auto max-w-[180px] object-contain"
             />
           </Link>
 
