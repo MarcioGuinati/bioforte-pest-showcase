@@ -59,7 +59,7 @@ const Header = () => {
           <nav className="hidden lg:flex items-center space-x-1">
             {navItems.map((item) => (
               <Link key={item.name} to={item.path}>
-                <Button variant="ghost" className="font-medium hover:bg-primary/10">
+                <Button variant="ghost" className="font-medium hover:bg-primary/20 hover:text-primary">
                   {item.name}
                 </Button>
               </Link>
@@ -96,7 +96,7 @@ const Header = () => {
                   to={item.path}
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  <Button variant="ghost" className="w-full justify-start font-medium">
+                  <Button variant="ghost" className="w-full justify-start font-medium hover:bg-primary/20 hover:text-primary">
                     {item.name}
                   </Button>
                 </Link>
