@@ -189,12 +189,12 @@ Telefone: ${formData.phone || "Não informado"}`;
               {/* Form */}
               <div className="lg:col-span-2">
                 <Card className="glass">
-                  <CardContent className="p-8">
+                  <CardContent className="p-4 sm:p-6 lg:p-8">
                     <form onSubmit={handleSubmit} className="space-y-6">
                       {/* Personal Info */}
                       <div>
                         <h3 className="font-semibold text-lg mb-4">Dados Pessoais</h3>
-                        <div className="grid md:grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                           <div className="space-y-2">
                             <Label htmlFor="name">Nome Completo *</Label>
                             <Input
@@ -237,11 +237,11 @@ Telefone: ${formData.phone || "Não informado"}`;
                         <div className="space-y-6">
                           <div className="space-y-2">
                             <Label>Tipo de Serviço *</Label>
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                               {services.map((service, index) => (
                                 <label
                                   key={index}
-                                  className={`flex items-center gap-3 p-4 rounded-lg border cursor-pointer transition-colors ${
+                                  className={`flex items-center gap-3 p-3 sm:p-4 rounded-lg border cursor-pointer transition-colors ${
                                     formData.service === service.value 
                                       ? "border-primary bg-primary/5" 
                                       : "border-border hover:border-primary/50"
@@ -255,14 +255,14 @@ Telefone: ${formData.phone || "Não informado"}`;
                                     onChange={(e) => handleInputChange("service", e.target.value)}
                                     className="sr-only"
                                   />
-                                  <service.icon className="h-5 w-5 text-primary" />
+                                  <service.icon className="h-5 w-5 text-primary flex-shrink-0" />
                                   <span className="text-sm font-medium">{service.name}</span>
                                 </label>
                               ))}
                             </div>
                           </div>
 
-                          <div className="grid md:grid-cols-2 gap-6">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                             <div className="space-y-2">
                               <Label htmlFor="urgency">Urgência</Label>
                               <Select value={formData.urgency} onValueChange={(value) => handleInputChange("urgency", value)}>
@@ -357,8 +357,8 @@ Telefone: ${formData.phone || "Não informado"}`;
                         </Label>
                       </div>
 
-                      <div className="flex gap-4">
-                        <Button type="submit" variant="hero" size="lg" className="flex-1">
+                      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                        <Button type="submit" variant="hero" size="lg" className="flex-1 w-full sm:w-auto">
                           <Send className="h-4 w-4 mr-2" />
                           Enviar Mensagem
                         </Button>
@@ -366,7 +366,7 @@ Telefone: ${formData.phone || "Não informado"}`;
                           type="button" 
                           variant="outline" 
                           size="lg" 
-                          className="flex-1"
+                          className="flex-1 w-full sm:w-auto"
                           onClick={handleWhatsAppClick}
                         >
                           <MessageCircle className="h-4 w-4 mr-2" />
