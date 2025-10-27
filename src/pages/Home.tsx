@@ -77,15 +77,15 @@ const Home = () => {
       <HeroSlider />
 
       {/* Stats Section */}
-      <section className="py-16 gradient-primary">
+      <section className="py-16 bg-primary">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
               <div key={index} className="text-center animate-scale-bounce hover-float">
-                <div className="text-4xl lg:text-5xl font-bold text-primary-foreground mb-2 text-shimmer">
+                <div className="text-4xl lg:text-5xl font-bold text-white mb-2 drop-shadow-lg">
                   {stat.number}
                 </div>
-                <div className="text-primary-foreground/80 font-medium">
+                <div className="text-white/90 font-medium text-sm lg:text-base">
                   {stat.label}
                 </div>
               </div>
