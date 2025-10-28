@@ -11,6 +11,7 @@ import {
   Youtube
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import logoBioforte from "@/assets/logo-bioforte.png";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -43,15 +44,13 @@ const Footer = () => {
         <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-8">
           {/* Company Info */}
           <div className="space-y-6">
-            <div className="flex items-center space-x-2">
-              <div className="w-10 h-10 gradient-primary rounded-lg flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-lg">B</span>
-              </div>
-              <div>
-                <h3 className="font-bold text-xl">Bioforte</h3>
-                <p className="text-sm text-primary">Controle de Pragas</p>
-              </div>
-            </div>
+            <Link to="/" className="inline-block">
+              <img 
+                src={logoBioforte} 
+                alt="Bioforte Controle de Pragas" 
+                className="h-14 w-auto max-w-[180px] object-contain"
+              />
+            </Link>
             <p className="text-muted-foreground leading-relaxed">
               Especialistas em controle integrado de pragas urbanas, 
               oferecendo soluções seguras e eficazes há mais de 15 anos.
