@@ -10,60 +10,22 @@ import {
   CheckCircle,
   Star,
   Briefcase,
-  Target
+  Target,
+  Loader2
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
-const teamMembers = [
-  {
-    name: "Dr. Carlos Mendoza",
-    role: "Diretor Técnico",
-    specialization: "Entomologia Aplicada",
-    experience: "20+ anos",
-    certifications: ["PhD em Entomologia", "Especialista ANVISA", "Consultor MIP"],
-    description: "Especialista reconhecido em controle integrado de pragas urbanas."
-  },
-  {
-    name: "Eng. Marina Santos",
-    role: "Gerente de Operações", 
-    specialization: "Engenharia Ambiental",
-    experience: "15+ anos",
-    certifications: ["CREA Ativo", "ISO 9001", "Gestão Ambiental"],
-    description: "Responsável pela implementação de protocolos sustentáveis."
-  },
-  {
-    name: "Téc. Roberto Silva",
-    role: "Supervisor de Campo",
-    specialization: "Controle de Pragas",
-    experience: "18+ anos",
-    certifications: ["Técnico Certificado", "Segurança do Trabalho", "Aplicação de Defensivos"],
-    description: "Vasta experiência em aplicações comerciais e industriais."
-  },
-  {
-    name: "Dra. Ana Paula",
-    role: "Consultora Científica",
-    specialization: "Microbiologia",
-    experience: "12+ anos", 
-    certifications: ["Doutora em Microbiologia", "Pesquisadora CNPq", "Consultora HACCP"],
-    description: "Especialista em segurança alimentar e controle microbiológico."
-  },
-  {
-    name: "Téc. João Oliveira",
-    role: "Especialista Residencial",
-    specialization: "Dedetização",
-    experience: "10+ anos",
-    certifications: ["Técnico Certificado", "Atendimento ao Cliente", "Produtos Domissanitários"],
-    description: "Focado em soluções seguras para ambientes familiares."
-  },
-  {
-    name: "Eng. Patricia Lima",
-    role: "Coordenadora de Qualidade",
-    specialization: "Controle de Qualidade",
-    experience: "14+ anos",
-    certifications: ["Engenheira Química", "Auditora ISO", "Six Sigma"],
-    description: "Garante excelência em todos os processos e resultados."
-  }
-];
+interface TeamMember {
+  name: string;
+  position: string;
+  area: string;
+  experience: string;
+  certifications: string[];
+  description: string;
+}
 
 const certifications = [
   {
@@ -85,6 +47,28 @@ const certifications = [
 ];
 
 const NossoTime = () => {
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTeamMembers = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "team"));
+        const members: TeamMember[] = [];
+        querySnapshot.forEach((doc) => {
+          members.push(doc.data() as TeamMember);
+        });
+        setTeamMembers(members);
+      } catch (error) {
+        console.error("Erro ao buscar membros da equipe:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTeamMembers();
+  }, []);
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -147,55 +131,61 @@ const NossoTime = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {teamMembers.map((member, index) => (
-              <Card key={index} className="glass overflow-hidden">
-                <CardContent className="p-0">
-                  {/* Profile Header */}
-                  <div className="gradient-primary p-6 text-center">
-                    <div className="w-20 h-20 bg-primary-foreground rounded-full mx-auto mb-4 flex items-center justify-center">
-                      <Users className="h-8 w-8 text-primary" />
-                    </div>
-                    <h3 className="text-xl font-bold text-primary-foreground mb-1">
-                      {member.name}
-                    </h3>
-                    <p className="text-primary-foreground/80 font-medium">
-                      {member.role}
-                    </p>
-                  </div>
-
-                  {/* Profile Content */}
-                  <div className="p-6">
-                    <div className="flex items-center gap-2 mb-3">
-                      <Briefcase className="h-4 w-4 text-primary" />
-                      <span className="text-sm font-medium">{member.specialization}</span>
+          {loading ? (
+            <div className="flex items-center justify-center py-20">
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {teamMembers.map((member, index) => (
+                <Card key={index} className="glass overflow-hidden">
+                  <CardContent className="p-0">
+                    {/* Profile Header */}
+                    <div className="gradient-primary p-6 text-center">
+                      <div className="w-20 h-20 bg-primary-foreground rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <Users className="h-8 w-8 text-primary" />
+                      </div>
+                      <h3 className="text-xl font-bold text-primary-foreground mb-1">
+                        {member.name}
+                      </h3>
+                      <p className="text-primary-foreground/80 font-medium">
+                        {member.position}
+                      </p>
                     </div>
 
-                    <div className="flex items-center gap-2 mb-4">
-                      <Clock className="h-4 w-4 text-primary" />
-                      <span className="text-sm text-muted-foreground">{member.experience}</span>
-                    </div>
+                    {/* Profile Content */}
+                    <div className="p-6">
+                      <div className="flex items-center gap-2 mb-3">
+                        <Briefcase className="h-4 w-4 text-primary" />
+                        <span className="text-sm font-medium">{member.area}</span>
+                      </div>
 
-                    <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
-                      {member.description}
-                    </p>
+                      <div className="flex items-center gap-2 mb-4">
+                        <Clock className="h-4 w-4 text-primary" />
+                        <span className="text-sm text-muted-foreground">{member.experience}</span>
+                      </div>
 
-                    <div>
-                      <h4 className="font-semibold mb-2 text-sm">Certificações</h4>
-                      <div className="space-y-1">
-                        {member.certifications.map((cert, idx) => (
-                          <div key={idx} className="flex items-center gap-2 text-xs">
-                            <Star className="h-3 w-3 text-accent" />
-                            <span>{cert}</span>
-                          </div>
-                        ))}
+                      <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
+                        {member.description}
+                      </p>
+
+                      <div>
+                        <h4 className="font-semibold mb-2 text-sm">Certificações</h4>
+                        <div className="space-y-1">
+                          {member.certifications.map((cert, idx) => (
+                            <div key={idx} className="flex items-center gap-2 text-xs">
+                              <Star className="h-3 w-3 text-accent" />
+                              <span>{cert}</span>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
