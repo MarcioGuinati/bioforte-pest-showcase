@@ -7,7 +7,6 @@ import {
   Clock,
   Facebook,
   Instagram,
-  Linkedin,
   Youtube
 } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -31,10 +30,9 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { icon: Facebook, href: "#", label: "Facebook" },
-    { icon: Instagram, href: "#", label: "Instagram" },
-    { icon: Linkedin, href: "#", label: "LinkedIn" },
-    { icon: Youtube, href: "#", label: "YouTube" }
+    { icon: Facebook, href: "https://www.facebook.com/BioforteDedetizadora?locale=pt_BR", label: "Facebook" },
+    { icon: Instagram, href: "https://www.instagram.com/biofortededetizadora/", label: "Instagram" },
+    { icon: Youtube, href: "https://www.youtube.com/@biofortesaneamentoambienta3867", label: "YouTube" }
   ];
 
   return (
@@ -105,7 +103,9 @@ const Footer = () => {
               <div className="flex items-start space-x-3">
                 <Phone className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
                 <div>
-                  <p className="font-medium">(11) 99999-9999</p>
+                  <a href="tel:+5516974007842" className="font-medium hover:text-primary transition-colors">
+                    (16) 97400-7842
+                  </a>
                   <p className="text-sm text-muted-foreground">Segunda a Sexta: 8h às 18h</p>
                 </div>
               </div>

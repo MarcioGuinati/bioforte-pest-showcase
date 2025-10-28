@@ -1,7 +1,7 @@
 import { MessageCircle } from "lucide-react";
 
 const WhatsAppButton = () => {
-  const whatsappNumber = "5511999999999"; // Número do WhatsApp
+  const whatsappNumber = "5516974007842"; // Número do WhatsApp
   const message = "Olá! Gostaria de solicitar um orçamento para controle de pragas.";
   
   const handleWhatsAppClick = () => {

@@ -129,7 +129,9 @@ const HeroSlider = () => {
               </Button>
             </Link>
             <Button variant="outline" size="lg" className="font-semibold hover-glow animate-float">
-              (11) 99999-9999
+              <a href="tel:+5516974007842" className="flex items-center">
+                (16) 97400-7842
+              </a>
             </Button>
           </div>
 

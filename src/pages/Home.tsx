@@ -296,8 +296,8 @@ const Home = () => {
                 asChild
                 className="font-semibold bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary hover-glow"
               >
-                <a href="tel:+5511999999999" aria-label="Ligar para (11) 99999-9999">
-                  (11) 99999-9999
+                <a href="tel:+5516974007842" aria-label="Ligar para (16) 97400-7842">
+                  (16) 97400-7842
                 </a>
               </Button>
             </div>

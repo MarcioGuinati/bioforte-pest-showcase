@@ -26,16 +26,16 @@ const contactInfo = [
   {
     icon: Phone,
     title: "Telefone",
-    content: "(11) 99999-9999",
+    content: "(16) 97400-7842",
     description: "Atendimento de Segunda a Sexta: 8h às 18h",
-    action: "tel:+5511999999999"
+    action: "tel:+5516974007842"
   },
   {
     icon: MessageCircle,
     title: "WhatsApp",
-    content: "(11) 99999-9999",
+    content: "(16) 97400-7842",
     description: "Atendimento rápido e direto",
-    action: "https://wa.me/5511999999999"
+    action: "https://wa.me/5516974007842"
   },
   {
     icon: Mail,
@@ -117,7 +117,7 @@ Nome: ${formData.name || "Não informado"}
 Serviço: ${formData.service || "Não especificado"}
 Telefone: ${formData.phone || "Não informado"}`;
     
-    const url = `https://wa.me/5511999999999?text=${encodeURIComponent(message)}`;
+    const url = `https://wa.me/5516974007842?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");
   };
 
@@ -224,7 +224,7 @@ Telefone: ${formData.phone || "Não informado"}`;
                               type="tel"
                               value={formData.phone}
                               onChange={(e) => handleInputChange("phone", e.target.value)}
-                              placeholder="(11) 99999-9999"
+                              placeholder="(16) 97400-7842"
                               required
                             />
                           </div>
@@ -391,8 +391,10 @@ Telefone: ${formData.phone || "Não informado"}`;
                       <p className="text-sm text-muted-foreground mb-4">
                         Para casos urgentes que precisam de atendimento imediato
                       </p>
-                      <Button variant="destructive" className="w-full" size="lg">
-                        (11) 99999-9999
+                      <Button variant="destructive" className="w-full" size="lg" asChild>
+                        <a href="tel:+5516974007842">
+                          (16) 97400-7842
+                        </a>
                       </Button>
                     </div>
                   </CardContent>
@@ -513,8 +515,10 @@ Telefone: ${formData.phone || "Não informado"}`;
             Entre em contato agora mesmo!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="secondary" size="lg" className="font-semibold">
-              (11) 99999-9999
+            <Button variant="secondary" size="lg" className="font-semibold" asChild>
+              <a href="tel:+5516974007842">
+                (16) 97400-7842
+              </a>
             </Button>
             <Button 
               variant="outline" 

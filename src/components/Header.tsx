@@ -32,12 +32,12 @@ const Header = () => {
               contato@bioforte.com.br
             </a>
             <a 
-              href="tel:+5511999999999" 
+              href="tel:+5516974007842" 
               className="flex items-center gap-1 hover:text-primary transition-colors min-h-[24px]"
-              aria-label="Ligar para (11) 99999-9999"
+              aria-label="Ligar para (16) 97400-7842"
             >
               <Phone className="h-3 w-3" aria-hidden="true" />
-              (11) 99999-9999
+              (16) 97400-7842
             </a>
           </div>
           <div className="hidden md:flex items-center gap-2">
