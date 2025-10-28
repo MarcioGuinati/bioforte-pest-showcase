@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -7,6 +7,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 import { 
   Users, 
   Award, 
@@ -19,7 +21,8 @@ import {
   GraduationCap,
   MapPin,
   Clock,
-  DollarSign
+  DollarSign,
+  Loader2
 } from "lucide-react";
 
 const benefits = [
@@ -55,60 +58,15 @@ const benefits = [
   }
 ];
 
-const openPositions = [
-  {
-    title: "Técnico em Controle de Pragas",
-    type: "CLT - Presencial",
-    location: "São Paulo - SP",
-    experience: "2+ anos",
-    description: "Responsável pela execução de serviços de controle de pragas em clientes residenciais e comerciais.",
-    requirements: [
-      "Certificado técnico em controle de pragas",
-      "Experiência com aplicação de defensivos",
-      "CNH categoria B",
-      "Conhecimentos de segurança do trabalho"
-    ]
-  },
-  {
-    title: "Vendedor Técnico",
-    type: "CLT - Campo",
-    location: "Grande São Paulo",
-    experience: "3+ anos",
-    description: "Desenvolvimento de novos clientes e manutenção de carteira existente.",
-    requirements: [
-      "Experiência em vendas B2B",
-      "Conhecimento técnico em controle de pragas",
-      "Ensino superior completo",
-      "Disponibilidade para viagens"
-    ]
-  },
-  {
-    title: "Auxiliar Administrativo",
-    type: "CLT - Presencial",
-    location: "São Paulo - SP",
-    experience: "1+ ano",
-    description: "Apoio nas atividades administrativas, atendimento ao cliente e organização documental.",
-    requirements: [
-      "Ensino médio completo",
-      "Conhecimentos em pacote Office",
-      "Experiência com atendimento",
-      "Organização e proatividade"
-    ]
-  },
-  {
-    title: "Biólogo/Entomologista",
-    type: "CLT - Presencial",
-    location: "São Paulo - SP", 
-    experience: "5+ anos",
-    description: "Desenvolvimento de protocolos técnicos e supervisão de equipes operacionais.",
-    requirements: [
-      "Graduação em Biologia ou áreas afins",
-      "Especialização em Entomologia",
-      "Experiência em controle de pragas",
-      "Conhecimento em legislação sanitária"
-    ]
-  }
-];
+interface Job {
+  title: string;
+  type: string;
+  location: string;
+  experience: string;
+  description: string;
+  requirements: string[];
+  modality?: string;
+}
 
 const TrabalheConosco = () => {
   const [formData, setFormData] = useState({
@@ -120,8 +78,32 @@ const TrabalheConosco = () => {
     education: "",
     message: ""
   });
+  const [openPositions, setOpenPositions] = useState<Job[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const { toast } = useToast();
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const jobsCollection = collection(db, "jobs");
+        const jobsSnapshot = await getDocs(jobsCollection);
+        const jobsList = jobsSnapshot.docs.map(doc => doc.data() as Job);
+        setOpenPositions(jobsList);
+      } catch (error) {
+        console.error("Erro ao carregar vagas:", error);
+        toast({
+          title: "Erro ao carregar vagas",
+          description: "Não foi possível carregar as vagas disponíveis.",
+          variant: "destructive"
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchJobs();
+  }, [toast]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -207,8 +189,21 @@ const TrabalheConosco = () => {
           </div>
 
           <div className="max-w-4xl mx-auto space-y-8">
-            {openPositions.map((position, index) => (
-              <Card key={index} className="glass overflow-hidden">
+            {loading ? (
+              <div className="flex items-center justify-center py-20">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+              </div>
+            ) : openPositions.length === 0 ? (
+              <Card className="glass">
+                <CardContent className="p-12 text-center">
+                  <p className="text-muted-foreground">
+                    No momento não há vagas disponíveis. Envie sua candidatura mesmo assim!
+                  </p>
+                </CardContent>
+              </Card>
+            ) : (
+              openPositions.map((position, index) => (
+                <Card key={index} className="glass overflow-hidden">
                 <CardContent className="p-0">
                   <div className="flex flex-col lg:flex-row">
                     {/* Position Info */}
@@ -266,7 +261,8 @@ const TrabalheConosco = () => {
                   </div>
                 </CardContent>
               </Card>
-            ))}
+              ))
+            )}
           </div>
         </div>
       </section>
