@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { supabase } from "@/integrations/supabase/client";
 import { 
   Users, 
   Award, 
@@ -105,21 +106,48 @@ const TrabalheConosco = () => {
     fetchJobs();
   }, [toast]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Candidatura Enviada!",
-      description: "Recebemos sua candidatura. Entraremos em contato em breve.",
-    });
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      position: "",
-      experience: "",
-      education: "",
-      message: ""
-    });
+    
+    try {
+      const { error } = await supabase
+        .from('applications')
+        .insert([
+          {
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            position: formData.position || null,
+            experience: formData.experience || null,
+            education: formData.education || null,
+            message: formData.message || null
+          }
+        ]);
+
+      if (error) throw error;
+
+      toast({
+        title: "Candidatura Enviada!",
+        description: "Recebemos sua candidatura. Entraremos em contato em breve.",
+      });
+      
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        position: "",
+        experience: "",
+        education: "",
+        message: ""
+      });
+    } catch (error) {
+      console.error("Erro ao enviar candidatura:", error);
+      toast({
+        title: "Erro ao enviar candidatura",
+        description: "Ocorreu um erro ao enviar sua candidatura. Tente novamente.",
+        variant: "destructive"
+      });
+    }
   };
 
   const handleInputChange = (field: string, value: string) => {
