@@ -156,7 +156,7 @@ const Footer = () => {
               © {currentYear} Bioforte Controle de Pragas. Todos os direitos reservados.
             </p>
             <p className="text-xs text-muted-foreground mt-1">
-              CNPJ: 00.000.000/0001-00 | Licenças Sanitárias Atualizadas
+              CNPJ: 18.265.906/0001-01 | Licenças Sanitárias Atualizadas
             </p>
           </div>
           <div className="flex items-center gap-6 text-sm">

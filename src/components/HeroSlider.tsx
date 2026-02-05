@@ -4,6 +4,13 @@ import { ChevronLeft, ChevronRight, Shield, Users, Award, Clock, ArrowRight } fr
 import { Link } from "react-router-dom";
 import heroSpecialist from "@/assets/hero-specialist.jpg";
 import companyBuilding from "@/assets/company-building.jpg";
+import slide01 from "@/assets/SLIDE 01.png";
+import slide02 from "@/assets/SLIDE 02.png";
+import slide03 from "@/assets/SLIDE 03.png";
+import slide04 from "@/assets/SLIDE 04.png";
+import slide05 from "@/assets/SLIDE 05.png";
+import slide06 from "@/assets/038f9b42-2503-4e8d-afa4-9bd64e7ef10b.jpg";
+import slide07 from "@/assets/d0398b49-0224-4067-af90-a1f2c4a6c0db.jpg";
 import equipment from "@/assets/equipment.jpg";
 
 const slides = [
@@ -12,7 +19,7 @@ const slides = [
     title: "Líder em Controle de Pragas",
     subtitle: "Proteção Profissional para seu Ambiente",
     description: "Mais de 15 anos de experiência oferecendo soluções eficazes e seguras para controle de pragas urbanas.",
-    image: heroSpecialist,
+    image: slide06,
     cta: "Solicitar Orçamento",
     ctaLink: "/contato"
   },
@@ -21,7 +28,7 @@ const slides = [
     title: "Tecnologia de Ponta",
     subtitle: "Equipamentos Modernos e Seguros",
     description: "Utilizamos os equipamentos mais avançados do mercado para garantir eficiência máxima no controle.",
-    image: equipment,
+    image: slide07,
     cta: "Conheça Nossos Serviços",
     ctaLink: "/area-atuacao"
   },

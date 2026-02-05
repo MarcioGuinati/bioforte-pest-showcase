@@ -41,7 +41,7 @@ const Header = () => {
             </a>
           </div>
           <div className="hidden md:flex items-center gap-2">
-            <span>CNPJ: 00.000.000/0001-00</span>
+            <span>CNPJ: 18.265.906/0001-01</span>
           </div>
         </div>
 
