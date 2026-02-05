@@ -18,6 +18,7 @@ import {
   Award
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import UnitsMap from "@/components/UnitsMap";
 
 const services = [
   {
@@ -337,70 +338,8 @@ const AreaAtuacao = () => {
         </div>
       </section>
 
-      {/* Coverage Area */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <Badge variant="outline" className="mb-4">Área de Cobertura</Badge>
-            <h2 className="text-3xl lg:text-4xl font-bold mb-6">
-              Atendemos toda a <span className="text-primary">Grande São Paulo</span>
-            </h2>
-            <p className="text-lg text-muted-foreground mb-12">
-              Nossa equipe está preparada para atender você em toda região metropolitana 
-              com rapidez e eficiência.
-            </p>
-
-            <div className="grid md:grid-cols-3 gap-8">
-              {[
-                {
-                  title: "São Paulo Capital",
-                  areas: ["Zona Sul", "Zona Norte", "Zona Leste", "Zona Oeste", "Centro"]
-                },
-                {
-                  title: "ABC Paulista", 
-                  areas: ["Santo André", "São Bernardo", "São Caetano", "Diadema", "Mauá"]
-                },
-                {
-                  title: "Grande São Paulo",
-                  areas: ["Guarulhos", "Osasco", "Barueri", "Cotia", "Taboão da Serra"]
-                }
-              ].map((region, index) => (
-                <Card key={index} className="glass">
-                  <CardContent className="p-6">
-                    <h3 className="font-bold text-lg mb-4">{region.title}</h3>
-                    <ul className="space-y-2">
-                      {region.areas.map((area, idx) => (
-                        <li key={idx} className="flex items-center gap-2 text-sm">
-                          <CheckCircle className="h-3 w-3 text-primary" />
-                          <span>{area}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-
-            <div className="mt-12 p-6 gradient-card rounded-2xl">
-              <p className="text-muted-foreground mb-4">
-                <strong>Atendimento de Emergência:</strong> Disponível 24 horas para casos urgentes
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link to="/contato">
-                  <Button variant="hero" size="lg">
-                    Verificar Atendimento na sua Região
-                  </Button>
-                </Link>
-                <Button variant="outline" size="lg">
-                  <a href="tel:+5516974007842" className="flex items-center">
-                    (16) 97400-7842
-                  </a>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Units Map */}
+      <UnitsMap />
 
       {/* CTA Section */}
       <section className="py-20 gradient-hero">

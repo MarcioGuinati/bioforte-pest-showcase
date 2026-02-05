@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, Phone, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
 import logoBioforte from "@/assets/logo-bioforte.png";
+import { ThemeToggle } from "./ThemeToggle";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -14,6 +15,7 @@ const Header = () => {
     { name: "Área de Atuação", path: "/area-atuacao" },
     { name: "Nosso Time", path: "/nosso-time" },
     { name: "Trabalhe Conosco", path: "/trabalhe-conosco" },
+    { name: "Área do Cliente", path: "/area-cliente" },
     { name: "Contato", path: "/contato" },
   ];
 
@@ -23,16 +25,16 @@ const Header = () => {
         {/* Top Bar */}
         <div className="flex items-center justify-between py-2 text-sm text-muted-foreground border-b border-border/30">
           <div className="flex items-center gap-4">
-            <a 
-              href="mailto:contato@bioforte.com.br" 
+            <a
+              href="mailto:contato@bioforte.com.br"
               className="flex items-center gap-1 hover:text-primary transition-colors min-h-[24px]"
               aria-label="Enviar e-mail para contato@bioforte.com.br"
             >
               <Mail className="h-3 w-3" aria-hidden="true" />
               contato@bioforte.com.br
             </a>
-            <a 
-              href="tel:+5516974007842" 
+            <a
+              href="tel:+5516974007842"
               className="flex items-center gap-1 hover:text-primary transition-colors min-h-[24px]"
               aria-label="Ligar para (16) 97400-7842"
             >
@@ -40,17 +42,23 @@ const Header = () => {
               (16) 97400-7842
             </a>
           </div>
-          <div className="hidden md:flex items-center gap-2">
+
+          <div className="hidden md:flex items-center gap-3">
             <span>CNPJ: 18.265.906/0001-01</span>
+            <ThemeToggle />
           </div>
         </div>
 
         {/* Main Navigation */}
         <div className="flex items-center justify-between py-4">
-          <Link to="/" className="flex items-center" aria-label="Bioforte Controle de Pragas - Ir para página inicial">
-            <img 
-              src={logoBioforte} 
-              alt="Bioforte Controle de Pragas" 
+          <Link
+            to="/"
+            className="flex items-center"
+            aria-label="Bioforte Controle de Pragas - Ir para página inicial"
+          >
+            <img
+              src={logoBioforte}
+              alt="Bioforte Controle de Pragas"
               className="h-14 w-auto max-w-[180px] object-contain"
             />
           </Link>
@@ -59,7 +67,10 @@ const Header = () => {
           <nav className="hidden lg:flex items-center space-x-1">
             {navItems.map((item) => (
               <Link key={item.name} to={item.path}>
-                <Button variant="ghost" className="font-medium hover:bg-primary/20 hover:text-primary">
+                <Button
+                  variant="ghost"
+                  className="font-medium hover:bg-primary/20 hover:text-primary"
+                >
                   {item.name}
                 </Button>
               </Link>
@@ -79,10 +90,18 @@ const Header = () => {
           <button
             className="lg:hidden p-3 min-h-[48px] min-w-[48px] flex items-center justify-center"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label={isMenuOpen ? "Fechar menu de navegação" : "Abrir menu de navegação"}
+            aria-label={
+              isMenuOpen
+                ? "Fechar menu de navegação"
+                : "Abrir menu de navegação"
+            }
             aria-expanded={isMenuOpen}
           >
-            {isMenuOpen ? <X className="h-6 w-6" aria-hidden="true" /> : <Menu className="h-6 w-6" aria-hidden="true" />}
+            {isMenuOpen ? (
+              <X className="h-6 w-6" aria-hidden="true" />
+            ) : (
+              <Menu className="h-6 w-6" aria-hidden="true" />
+            )}
           </button>
         </div>
 
@@ -91,12 +110,15 @@ const Header = () => {
           <div className="lg:hidden py-4 border-t border-border/30 animate-fade-in">
             <nav className="flex flex-col space-y-2">
               {navItems.map((item) => (
-                <Link 
-                  key={item.name} 
+                <Link
+                  key={item.name}
                   to={item.path}
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  <Button variant="ghost" className="w-full justify-start font-medium hover:bg-primary/20 hover:text-primary">
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start font-medium hover:bg-primary/20 hover:text-primary"
+                  >
                     {item.name}
                   </Button>
                 </Link>
