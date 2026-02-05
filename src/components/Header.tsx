@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, Phone, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
 import logoBioforte from "@/assets/logo-bioforte.png";
+import { ThemeToggle } from "./ThemeToggle";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -14,6 +15,7 @@ const Header = () => {
     { name: "Área de Atuação", path: "/area-atuacao" },
     { name: "Nosso Time", path: "/nosso-time" },
     { name: "Trabalhe Conosco", path: "/trabalhe-conosco" },
+    { name: "Área do Cliente", path: "/area-cliente" },
     { name: "Contato", path: "/contato" },
   ];
 
@@ -40,8 +42,9 @@ const Header = () => {
               (16) 97400-7842
             </a>
           </div>
-          <div className="hidden md:flex items-center gap-2">
+          <div className="hidden md:flex items-center gap-3">
             <span>CNPJ: 00.000.000/0001-00</span>
+            <ThemeToggle />
           </div>
         </div>
 
