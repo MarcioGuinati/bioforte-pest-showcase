@@ -1,26 +1,35 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Lock, Shield, HeadphonesIcon } from "lucide-react";
+import heroImage from "@/assets/company-building.jpg";
 
 const AreaCliente = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="py-16 gradient-hero relative overflow-hidden">
+      <section className="relative py-16 lg:py-24 overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute top-10 left-10 w-48 h-48 bg-white/10 rounded-full blur-3xl animate-float"></div>
-          <div className="absolute bottom-10 right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl animate-float" style={{animationDelay: "2s"}}></div>
+          <img
+            src={heroImage}
+            alt="Área do Cliente"
+            className="w-full h-full object-cover"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/60" />
         </div>
-        <div className="container mx-auto px-4 text-center relative">
-          <Badge variant="outline" className="mb-6 border-primary-foreground text-primary-foreground">
-            Acesso Exclusivo
-          </Badge>
-          <h1 className="text-4xl lg:text-5xl font-bold text-primary-foreground mb-4">
-            Área do <span className="text-accent">Cliente</span>
-          </h1>
-          <p className="text-lg text-primary-foreground/90 max-w-2xl mx-auto">
-            Acesse seu painel exclusivo para acompanhar serviços, relatórios e documentos.
-          </p>
+        
+        <div className="relative container mx-auto px-4">
+          <div className="max-w-3xl">
+            <Badge variant="outline" className="mb-6">
+              Acesso Exclusivo
+            </Badge>
+            <h1 className="text-4xl lg:text-5xl font-bold mb-4 animate-fade-in">
+              Área do <span className="text-primary">Cliente</span>
+            </h1>
+            <p className="text-lg text-muted-foreground max-w-2xl">
+              Acesse seu painel exclusivo para acompanhar serviços, relatórios e documentos.
+            </p>
+          </div>
         </div>
       </section>
 

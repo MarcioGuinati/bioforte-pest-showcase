@@ -14,6 +14,7 @@ import {
   Loader2
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import heroImage from "@/assets/company-building.jpg";
 import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
@@ -72,20 +73,32 @@ const NossoTime = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="py-20 lg:py-32 gradient-hero">
-        <div className="container mx-auto px-4 text-center">
-          <Badge variant="outline" className="mb-6 border-primary-foreground text-primary-foreground">
-            Nosso Time
-          </Badge>
-          <h1 className="text-4xl lg:text-6xl font-bold text-primary-foreground mb-6 animate-fade-in">
-            Especialistas
-            <br />
-            <span className="text-accent"> Certificados</span>
-          </h1>
-          <p className="text-lg lg:text-xl text-primary-foreground/90 leading-relaxed max-w-3xl mx-auto animate-fade-in">
-            Nossa equipe é formada por profissionais altamente qualificados, 
-            com certificações técnicas e anos de experiência no controle de pragas.
-          </p>
+      <section className="relative py-20 lg:py-32 overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src={heroImage}
+            alt="Nosso Time"
+            className="w-full h-full object-cover"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/60" />
+        </div>
+        
+        <div className="relative container mx-auto px-4">
+          <div className="max-w-3xl">
+            <Badge variant="outline" className="mb-6">
+              Nosso Time
+            </Badge>
+            <h1 className="text-4xl lg:text-6xl font-bold mb-6 animate-fade-in">
+              Especialistas
+              <br />
+              <span className="text-primary"> Certificados</span>
+            </h1>
+            <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed animate-fade-in">
+              Nossa equipe é formada por profissionais altamente qualificados, 
+              com certificações técnicas e anos de experiência no controle de pragas.
+            </p>
+          </div>
         </div>
       </section>
 

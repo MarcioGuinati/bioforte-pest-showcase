@@ -1,4 +1,5 @@
 import HeroSlider from "@/components/HeroSlider";
+import UnitsMap from "@/components/UnitsMap";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -266,6 +267,9 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* Units Map */}
+      <UnitsMap />
 
       {/* CTA Section */}
       <section className="py-20 gradient-hero relative overflow-hidden">
