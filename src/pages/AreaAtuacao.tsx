@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import UnitsMap from "@/components/UnitsMap";
+import heroImage from "@/assets/hero-specialist.jpg";
 
 const services = [
   {
@@ -160,25 +161,32 @@ const AreaAtuacao = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="py-20 lg:py-32 gradient-hero relative overflow-hidden">
+      <section className="relative py-20 lg:py-32 overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute top-10 left-10 w-48 h-48 bg-white/10 rounded-full blur-3xl animate-float"></div>
-          <div className="absolute bottom-10 right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl animate-float" style={{animationDelay: "2s"}}></div>
-          <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 w-96 h-96 bg-white/5 rounded-full blur-3xl animate-pulse-slow"></div>
+          <img
+            src={heroImage}
+            alt="Área de Atuação"
+            className="w-full h-full object-cover"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/60" />
         </div>
-        <div className="container mx-auto px-4 text-center relative">
-          <Badge variant="outline" className="mb-6 border-primary-foreground text-primary-foreground animate-bounce-slow">
-            Área de Atuação
-          </Badge>
-          <h1 className="text-4xl lg:text-6xl font-bold text-primary-foreground mb-6 animate-fade-in-up">
-            Soluções Completas em
-            <br />
-            <span className="text-shimmer text-accent"> Controle de Pragas</span>
-          </h1>
-          <p className="text-lg lg:text-xl text-primary-foreground/90 leading-relaxed max-w-3xl mx-auto animate-blur-in">
-            Atendemos todos os segmentos com soluções personalizadas, 
-            garantindo máxima eficiência e segurança para seu ambiente.
-          </p>
+        
+        <div className="relative container mx-auto px-4">
+          <div className="max-w-3xl">
+            <Badge variant="outline" className="mb-6">
+              Área de Atuação
+            </Badge>
+            <h1 className="text-4xl lg:text-6xl font-bold mb-6 animate-fade-in">
+              Soluções Completas em
+              <br />
+              <span className="text-primary"> Controle de Pragas</span>
+            </h1>
+            <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed animate-fade-in">
+              Atendemos todos os segmentos com soluções personalizadas, 
+              garantindo máxima eficiência e segurança para seu ambiente.
+            </p>
+          </div>
         </div>
       </section>
 

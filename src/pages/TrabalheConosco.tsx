@@ -25,6 +25,7 @@ import {
   DollarSign,
   Loader2
 } from "lucide-react";
+import heroImage from "@/assets/equipment.jpg";
 
 const benefits = [
   {
@@ -157,20 +158,32 @@ const TrabalheConosco = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="py-20 lg:py-32 gradient-hero">
-        <div className="container mx-auto px-4 text-center">
-          <Badge variant="outline" className="mb-6 border-primary-foreground text-primary-foreground">
-            Trabalhe Conosco
-          </Badge>
-          <h1 className="text-4xl lg:text-6xl font-bold text-primary-foreground mb-6 animate-fade-in">
-            Faça Parte da
-            <br />
-            <span className="text-accent"> Nossa Equipe</span>
-          </h1>
-          <p className="text-lg lg:text-xl text-primary-foreground/90 leading-relaxed max-w-3xl mx-auto animate-fade-in">
-            Junte-se a uma empresa líder no mercado de controle de pragas. 
-            Oferecemos excelentes oportunidades de crescimento e desenvolvimento profissional.
-          </p>
+      <section className="relative py-20 lg:py-32 overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src={heroImage}
+            alt="Trabalhe Conosco"
+            className="w-full h-full object-cover"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/60" />
+        </div>
+        
+        <div className="relative container mx-auto px-4">
+          <div className="max-w-3xl">
+            <Badge variant="outline" className="mb-6">
+              Trabalhe Conosco
+            </Badge>
+            <h1 className="text-4xl lg:text-6xl font-bold mb-6 animate-fade-in">
+              Faça Parte da
+              <br />
+              <span className="text-primary"> Nossa Equipe</span>
+            </h1>
+            <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed animate-fade-in">
+              Junte-se a uma empresa líder no mercado de controle de pragas. 
+              Oferecemos excelentes oportunidades de crescimento e desenvolvimento profissional.
+            </p>
+          </div>
         </div>
       </section>
 
