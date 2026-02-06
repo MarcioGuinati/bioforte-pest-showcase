@@ -7,20 +7,46 @@
     <meta name="description" content="Bioforte: especialista em controle de pragas há 15 anos. Dedetização residencial e comercial com profissionais certificados. Orçamento gratuito!" />
     <meta name="author" content="Bioforte Controle de Pragas" />
     <meta name="keywords" content="dedetização, controle de pragas, desratização, São Paulo, bioforte, pest control" />
+    <meta name="theme-color" content="#2d7a4a" />
 
     <!-- Preconnect para otimizar carregamento -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Preload font para melhorar LCP -->
+    <link 
+      rel="preload" 
+      href="https://fonts.gstatic.com/s/raleway/v34/1Ptxg8zYS_SKggPN4iEgvnHyvveLxVvao4CPNLA3JC9c.woff2" 
+      as="font" 
+      type="font/woff2" 
+      crossorigin 
+    />
+    
+    <!-- Font com display swap para evitar render-blocking -->
+    <link 
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap" 
+      rel="stylesheet" 
+      media="print" 
+      onload="this.media='all'" 
+    />
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    </noscript>
 
+    <!-- Open Graph -->
     <meta property="og:title" content="Bioforte Controle de Pragas | Dedetização Profissional" />
     <meta property="og:description" content="Especialistas em controle de pragas há 15 anos. Dedetização segura e eficaz para residências e empresas." />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <meta property="og:locale" content="pt_BR" />
 
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@lovable_dev" />
+    <meta name="twitter:site" content="@bioforte" />
     <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" />
   </head>
 
   <body>

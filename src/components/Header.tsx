@@ -64,12 +64,12 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-1">
+          <nav className="hidden lg:flex items-center space-x-1" aria-label="Navegação principal">
             {navItems.map((item) => (
               <Link key={item.name} to={item.path}>
                 <Button
                   variant="ghost"
-                  className="font-medium hover:bg-primary/20 hover:text-primary"
+                  className="font-medium hover:bg-primary/20 hover:text-primary focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                 >
                   {item.name}
                 </Button>
@@ -107,8 +107,12 @@ const Header = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="lg:hidden py-4 border-t border-border/30 animate-fade-in">
-            <nav className="flex flex-col space-y-2">
+          <div 
+            className="lg:hidden py-4 border-t border-border/30 animate-fade-in"
+            role="dialog"
+            aria-label="Menu de navegação móvel"
+          >
+            <nav className="flex flex-col space-y-2" aria-label="Navegação principal">
               {navItems.map((item) => (
                 <Link
                   key={item.name}
@@ -117,14 +121,14 @@ const Header = () => {
                 >
                   <Button
                     variant="ghost"
-                    className="w-full justify-start font-medium hover:bg-primary/20 hover:text-primary"
+                    className="w-full justify-start font-medium hover:bg-primary/20 hover:text-primary min-h-[48px]"
                   >
                     {item.name}
                   </Button>
                 </Link>
               ))}
               <Link to="/contato" onClick={() => setIsMenuOpen(false)}>
-                <Button variant="hero" className="w-full mt-4">
+                <Button variant="hero" className="w-full mt-4 min-h-[48px]">
                   Solicitar Orçamento
                 </Button>
               </Link>

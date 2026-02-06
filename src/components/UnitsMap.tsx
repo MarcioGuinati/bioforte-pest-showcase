@@ -1,9 +1,7 @@
+import { lazy, Suspense } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Building, Store, Award } from "lucide-react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import { Icon, DivIcon } from "leaflet";
-import "leaflet/dist/leaflet.css";
 
 interface Unit {
   city: string;
@@ -24,58 +22,41 @@ const typeConfig = {
   own: {
     label: "Unidade Própria",
     icon: Building,
-    color: "#2d7a4a",
     bgColor: "bg-primary text-primary-foreground",
     badgeColor: "bg-primary/20 text-primary border-primary/30",
   },
   franchise: {
     label: "Franquia",
     icon: Store,
-    color: "#6b9a1e",
     bgColor: "bg-accent text-accent-foreground",
     badgeColor: "bg-accent/20 text-accent-foreground border-accent/30",
   },
   licensed: {
     label: "Licenciado",
     icon: Award,
-    color: "#64748b",
     bgColor: "bg-secondary text-secondary-foreground",
     badgeColor: "bg-secondary text-secondary-foreground border-secondary",
   },
 };
 
-// Custom marker icon creator
-const createCustomIcon = (color: string) => {
-  return new DivIcon({
-    className: "custom-marker",
-    html: `<div style="
-      background-color: ${color};
-      width: 30px;
-      height: 30px;
-      border-radius: 50% 50% 50% 0;
-      transform: rotate(-45deg);
-      border: 3px solid white;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-    "></div>`,
-    iconSize: [30, 30],
-    iconAnchor: [15, 30],
-    popupAnchor: [0, -30],
-  });
-};
+// Lazy load the map component
+const LazyMap = lazy(() => import("./LazyMapContent"));
+
+const MapSkeleton = () => (
+  <div className="h-[500px] bg-muted animate-pulse rounded-lg flex items-center justify-center">
+    <p className="text-muted-foreground">Carregando mapa...</p>
+  </div>
+);
 
 const UnitsMap = () => {
-  // Center of the map (approximately center of all units)
-  const centerLat = -22.0;
-  const centerLng = -49.0;
-
   return (
-    <section className="py-20 bg-muted/30">
+    <section className="py-20 bg-muted/30" aria-labelledby="units-heading">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <Badge variant="outline" className="mb-4 animate-bounce-slow">
+          <Badge variant="outline" className="mb-4">
             Nossas Unidades
           </Badge>
-          <h2 className="text-3xl lg:text-4xl font-bold mb-4">
+          <h2 className="text-3xl lg:text-4xl font-bold mb-4" id="units-heading">
             Estamos <span className="text-gradient">perto de você</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -88,35 +69,9 @@ const UnitsMap = () => {
           <div className="lg:col-span-2">
             <Card className="glass overflow-hidden h-[500px]">
               <CardContent className="p-0 h-full">
-                <MapContainer
-                  center={[centerLat, centerLng]}
-                  zoom={6}
-                  style={{ height: "100%", width: "100%" }}
-                  scrollWheelZoom={false}
-                >
-                  <TileLayer
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                  />
-                  {units.map((unit, index) => {
-                    const config = typeConfig[unit.type];
-                    return (
-                      <Marker
-                        key={index}
-                        position={[unit.coordinates.lat, unit.coordinates.lng]}
-                        icon={createCustomIcon(config.color)}
-                      >
-                        <Popup>
-                          <div className="text-center p-1">
-                            <strong className="text-base">{unit.city} - {unit.state}</strong>
-                            <br />
-                            <span className="text-sm text-gray-600">{config.label}</span>
-                          </div>
-                        </Popup>
-                      </Marker>
-                    );
-                  })}
-                </MapContainer>
+                <Suspense fallback={<MapSkeleton />}>
+                  <LazyMap units={units} typeConfig={typeConfig} />
+                </Suspense>
               </CardContent>
             </Card>
           </div>
@@ -127,45 +82,49 @@ const UnitsMap = () => {
             <Card className="glass">
               <CardContent className="p-4">
                 <h3 className="font-semibold mb-3 text-sm uppercase tracking-wide">Legenda</h3>
-                <div className="space-y-2">
+                <ul className="space-y-2" role="list">
                   {Object.entries(typeConfig).map(([key, config]) => (
-                    <div key={key} className="flex items-center gap-2">
-                      <div className={`p-1.5 rounded ${config.bgColor}`}>
+                    <li key={key} className="flex items-center gap-2">
+                      <div className={`p-1.5 rounded ${config.bgColor}`} aria-hidden="true">
                         <config.icon className="h-3 w-3" />
                       </div>
                       <span className="text-sm">{config.label}</span>
-                    </div>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </CardContent>
             </Card>
 
             {/* Units Cards */}
-            {units.map((unit, index) => {
-              const config = typeConfig[unit.type];
-              return (
-                <Card key={index} className="glass hover-lift group">
-                  <CardContent className="p-4">
-                    <div className="flex items-start gap-3">
-                      <div className={`p-2 rounded-lg ${config.bgColor} group-hover:scale-110 transition-transform`}>
-                        <config.icon className="h-4 w-4" />
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between">
-                          <h4 className="font-bold">{unit.city}</h4>
-                          <Badge variant="outline" className={config.badgeColor}>
-                            {unit.state}
-                          </Badge>
+            <ul className="space-y-4" role="list" aria-label="Lista de unidades">
+              {units.map((unit, index) => {
+                const config = typeConfig[unit.type];
+                return (
+                  <li key={index}>
+                    <Card className="glass hover-lift group">
+                      <CardContent className="p-4">
+                        <div className="flex items-start gap-3">
+                          <div className={`p-2 rounded-lg ${config.bgColor} group-hover:scale-110 transition-transform`} aria-hidden="true">
+                            <config.icon className="h-4 w-4" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center justify-between">
+                              <h4 className="font-bold">{unit.city}</h4>
+                              <Badge variant="outline" className={config.badgeColor}>
+                                {unit.state}
+                              </Badge>
+                            </div>
+                            <p className="text-sm text-muted-foreground mt-1">
+                              {config.label}
+                            </p>
+                          </div>
                         </div>
-                        <p className="text-sm text-muted-foreground mt-1">
-                          {config.label}
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
+                      </CardContent>
+                    </Card>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
         </div>
       </div>

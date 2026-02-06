@@ -53,36 +53,38 @@ const Footer = () => {
               Especialistas em controle integrado de pragas urbanas, 
               oferecendo soluções seguras e eficazes há mais de 15 anos.
             </p>
-            <div className="flex space-x-3">
+            <nav aria-label="Redes sociais" className="flex space-x-3">
               {socialLinks.map((social, index) => (
                 <a
                   key={index}
                   href={social.href}
-                  aria-label={social.label}
-                  className="w-10 h-10 bg-muted rounded-lg flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Visitar ${social.label} da Bioforte (abre em nova aba)`}
+                  className="min-w-[44px] min-h-[44px] w-11 h-11 bg-muted rounded-lg flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                 >
-                  <social.icon className="h-5 w-5" />
+                  <social.icon className="h-5 w-5" aria-hidden="true" />
                 </a>
               ))}
-            </div>
+            </nav>
           </div>
 
           {/* Quick Links */}
-          <div>
+          <nav aria-label="Links rápidos">
             <h4 className="font-semibold text-lg mb-6">Links Rápidos</h4>
-            <ul className="space-y-3">
+            <ul className="space-y-3" role="list">
               {quickLinks.map((link, index) => (
                 <li key={index}>
                   <Link
                     to={link.path}
-                    className="text-muted-foreground hover:text-primary transition-colors"
+                    className="text-muted-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded px-1 py-0.5 -mx-1"
                   >
                     {link.name}
                   </Link>
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
           {/* Services */}
           <div>
@@ -159,14 +161,20 @@ const Footer = () => {
               CNPJ: 18.265.906/0001-01 | Licenças Sanitárias Atualizadas
             </p>
           </div>
-          <div className="flex items-center gap-6 text-sm">
-            <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+          <nav className="flex items-center gap-6 text-sm" aria-label="Links legais">
+            <a 
+              href="#" 
+              className="text-muted-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded px-1 py-0.5"
+            >
               Política de Privacidade
             </a>
-            <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+            <a 
+              href="#" 
+              className="text-muted-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded px-1 py-0.5"
+            >
               Termos de Uso
             </a>
-          </div>
+          </nav>
         </div>
       </div>
     </footer>

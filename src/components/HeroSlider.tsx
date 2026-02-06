@@ -1,17 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Shield, Users, Award, Clock, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import heroSpecialist from "@/assets/hero-specialist.jpg";
-import companyBuilding from "@/assets/company-building.jpg";
-import slide01 from "@/assets/SLIDE 01.png";
-import slide02 from "@/assets/SLIDE 02.png";
-import slide03 from "@/assets/SLIDE 03.png";
-import slide04 from "@/assets/SLIDE 04.png";
-import slide05 from "@/assets/SLIDE 05.png";
 import slide06 from "@/assets/038f9b42-2503-4e8d-afa4-9bd64e7ef10b.jpg";
 import slide07 from "@/assets/d0398b49-0224-4067-af90-a1f2c4a6c0db.jpg";
-import equipment from "@/assets/equipment.jpg";
+import companyBuilding from "@/assets/company-building.jpg";
 
 const slides = [
   {
@@ -68,89 +61,105 @@ const features = [
 
 const HeroSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 7000);
-
-    return () => clearInterval(timer);
+  const nextSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
   }, []);
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
-  };
-
-  const prevSlide = () => {
+  const prevSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-  };
+  }, []);
+
+  useEffect(() => {
+    if (isPaused) return;
+    
+    const timer = setInterval(nextSlide, 7000);
+    return () => clearInterval(timer);
+  }, [isPaused, nextSlide]);
 
   return (
-    <section className="relative min-h-[90vh] overflow-hidden">
+    <section 
+      className="relative min-h-[90vh] overflow-hidden"
+      aria-roledescription="carrossel"
+      aria-label="Apresentação da Bioforte Controle de Pragas"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onFocus={() => setIsPaused(true)}
+      onBlur={() => setIsPaused(false)}
+    >
       {/* Slides */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0" aria-live="polite">
         {slides.map((slide, index) => (
           <div
             key={slide.id}
-            className={`absolute inset-0 transition-all duration-1000 ${
+            className={`absolute inset-0 transition-opacity duration-700 ${
               index === currentSlide 
-                ? "opacity-100 scale-100" 
-                : "opacity-0 scale-105"
+                ? "opacity-100 z-10" 
+                : "opacity-0 z-0"
             }`}
+            role="group"
+            aria-roledescription="slide"
+            aria-label={`Slide ${index + 1} de ${slides.length}: ${slide.title}`}
+            aria-hidden={index !== currentSlide}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/70 to-transparent z-10" />
             <img
               src={slide.image}
-              alt={`${slide.title} - ${slide.description}`}
-              className="w-full h-full object-cover object-center parallax"
-              fetchPriority={index === 0 ? "high" : "low"}
+              alt=""
+              width={1920}
+              height={1080}
+              className="w-full h-full object-cover object-center"
               loading={index === 0 ? "eager" : "lazy"}
+              fetchPriority={index === 0 ? "high" : "auto"}
+              decoding={index === 0 ? "sync" : "async"}
             />
-            {/* Floating Elements */}
-            <div className="absolute top-10 right-10 w-32 h-32 bg-primary/20 rounded-full blur-3xl animate-float"></div>
-            <div className="absolute bottom-20 left-20 w-24 h-24 bg-accent/20 rounded-full blur-2xl animate-float" style={{animationDelay: "2s"}}></div>
           </div>
         ))}
       </div>
 
       {/* Content */}
       <div className="relative z-20 container mx-auto px-4 h-full min-h-[90vh] flex items-center">
-        <div className="max-w-2xl animate-fade-in-up">
+        <div className="max-w-2xl animate-fade-in">
           <div className="mb-6">
-            <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4 animate-bounce-slow hover-glow">
+            <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
               {slides[currentSlide].subtitle}
             </span>
-            <h1 className="text-4xl md:text-6xl font-bold text-foreground leading-tight mb-6 animate-zoom-in">
-              <span className="text-shimmer" aria-label={slides[currentSlide].title}>{slides[currentSlide].title}</span>
+            <h1 className="text-4xl md:text-6xl font-bold text-foreground leading-tight mb-6">
+              <span className="text-gradient">{slides[currentSlide].title}</span>
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed animate-blur-in">
+            <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
               {slides[currentSlide].description}
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
             <Link to={slides[currentSlide].ctaLink}>
-              <Button variant="hero" size="lg" className="font-semibold hover-shine pulse-ring animate-glow group">
+              <Button variant="hero" size="lg" className="font-semibold pulse-ring group">
                 {slides[currentSlide].cta}
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
               </Button>
             </Link>
-            <Button variant="outline" size="lg" className="font-semibold hover-glow animate-float">
-              <a href="tel:+5516974007842" className="flex items-center">
+            <Button variant="outline" size="lg" className="font-semibold hover-glow" asChild>
+              <a href="tel:+5516974007842" aria-label="Ligar para (16) 97400-7842">
                 (16) 97400-7842
               </a>
             </Button>
           </div>
 
           {/* Features Grid */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4" role="list" aria-label="Diferenciais da Bioforte">
             {features.map((feature, index) => (
-              <div key={index} className={`flex flex-col items-center text-center p-4 glass-strong rounded-lg hover-lift animate-scale-bounce animate-stagger-${index + 1} group effect-3d-hover`}>
-                <div className="gradient-animated p-3 rounded-full mb-3 group-hover:animate-wiggle" aria-hidden="true">
+              <div 
+                key={index} 
+                role="listitem"
+                className="flex flex-col items-center text-center p-4 glass-strong rounded-lg hover-lift group"
+              >
+                <div className="gradient-animated p-3 rounded-full mb-3" aria-hidden="true">
                   <feature.icon className="h-6 w-6 text-primary-foreground" />
                 </div>
-                <h3 className="font-semibold text-sm mb-1 group-hover:text-primary transition-colors">{feature.title}</h3>
-                <p className="text-xs text-muted-foreground group-hover:text-foreground transition-colors">{feature.description}</p>
+                <h2 className="font-semibold text-sm mb-1 group-hover:text-primary transition-colors">{feature.title}</h2>
+                <p className="text-xs text-muted-foreground">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -158,16 +167,16 @@ const HeroSlider = () => {
       </div>
 
       {/* Navigation */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30 flex items-center gap-4" role="group" aria-label="Controles do carrossel de slides">
+      <nav className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30 flex items-center gap-4" aria-label="Navegação do carrossel">
         <button
           onClick={prevSlide}
-          className="p-3 glass-strong rounded-full hover:bg-primary/20 transition-colors hover-glow animate-pulse-slow min-h-[44px] min-w-[44px] flex items-center justify-center"
+          className="p-3 glass-strong rounded-full hover:bg-primary/20 transition-colors min-h-[48px] min-w-[48px] flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
           aria-label="Slide anterior"
         >
           <ChevronLeft className="h-5 w-5" aria-hidden="true" />
         </button>
 
-        <div className="flex gap-2" role="tablist" aria-label="Indicadores de slide">
+        <div className="flex gap-1" role="tablist" aria-label="Indicadores de slide">
           {slides.map((slide, index) => (
             <button
               key={index}
@@ -175,29 +184,27 @@ const HeroSlider = () => {
               role="tab"
               aria-selected={index === currentSlide}
               aria-label={`Ir para slide ${index + 1}: ${slide.title}`}
-              className={`min-h-[44px] min-w-[44px] flex items-center justify-center transition-all hover-glow ${
-                index === currentSlide 
-                  ? "animate-glow" 
-                  : ""
-              }`}
+              className="min-h-[48px] min-w-[48px] flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded"
             >
-              <span className={`h-2 rounded-full transition-all ${
-                index === currentSlide 
-                  ? "bg-primary w-8" 
-                  : "bg-muted-foreground/40 w-2 hover:bg-primary/60"
-              }`} />
+              <span 
+                className={`h-3 rounded-full transition-all ${
+                  index === currentSlide 
+                    ? "bg-primary w-8" 
+                    : "bg-muted-foreground/50 w-3 hover:bg-primary/60"
+                }`} 
+              />
             </button>
           ))}
         </div>
 
         <button
           onClick={nextSlide}
-          className="p-3 glass-strong rounded-full hover:bg-primary/20 transition-colors hover-glow animate-pulse-slow min-h-[44px] min-w-[44px] flex items-center justify-center"
+          className="p-3 glass-strong rounded-full hover:bg-primary/20 transition-colors min-h-[48px] min-w-[48px] flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
           aria-label="Próximo slide"
         >
           <ChevronRight className="h-5 w-5" aria-hidden="true" />
         </button>
-      </div>
+      </nav>
     </section>
   );
 };
