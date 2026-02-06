@@ -50,24 +50,42 @@ const stats = [
   { number: "24/7", label: "Suporte", icon: Clock }
 ];
 
-const testimonials = [
+const googleReviews = [
   {
-    name: "Maria Silva",
-    role: "Dona de Casa",
-    content: "Excelente serviço! Resolveram o problema de formigas em casa de forma definitiva.",
-    rating: 5
+    name: "Marcos Lima",
+    content: "Excelente atendimento! Profissionais muito capacitados e atenciosos. Resolveram meu problema de cupins rapidamente.",
+    rating: 5,
+    date: "há 2 semanas"
   },
   {
-    name: "João Santos", 
-    role: "Empresário",
-    content: "Profissionais muito competentes. Recomendo para qualquer empresa.",
-    rating: 5
+    name: "Fernanda Oliveira",
+    content: "Serviço de qualidade! Equipe pontual e muito profissional. Super recomendo a Bioforte.",
+    rating: 5,
+    date: "há 1 mês"
   },
   {
-    name: "Ana Costa",
-    role: "Gerente de Hotel",
-    content: "Parceria de anos. Sempre pontuais e eficazes no controle.",
-    rating: 5
+    name: "Carlos Eduardo",
+    content: "Já é a terceira vez que contrato e sempre fico satisfeito. Atendimento excelente e resultados garantidos!",
+    rating: 5,
+    date: "há 1 mês"
+  },
+  {
+    name: "Patricia Santos",
+    content: "Muito satisfeita com o serviço! Eliminaram as baratas do meu apartamento. Recomendo!",
+    rating: 5,
+    date: "há 2 meses"
+  },
+  {
+    name: "Roberto Silva",
+    content: "Empresa séria e comprometida. Fizeram um ótimo trabalho de desratização na minha empresa.",
+    rating: 5,
+    date: "há 3 meses"
+  },
+  {
+    name: "Ana Paula Costa",
+    content: "Atendimento nota 10! Resolveram o problema de formigas que eu tinha há anos. Muito obrigada!",
+    rating: 5,
+    date: "há 3 meses"
   }
 ];
 
@@ -230,7 +248,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Testimonials Section */}
+      {/* Google Reviews Section */}
       <section className="py-20 bg-muted/30 relative overflow-hidden">
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-0 left-1/4 w-40 h-40 bg-accent rounded-full blur-3xl animate-float"></div>
@@ -238,32 +256,78 @@ const Home = () => {
         </div>
         <div className="container mx-auto px-4 relative">
           <div className="text-center mb-16 animate-fade-in-down">
-            <Badge variant="outline" className="mb-4 animate-bounce-slow">Depoimentos</Badge>
-            <h2 className="text-3xl lg:text-4xl font-bold mb-6" id="depoimentos">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <svg viewBox="0 0 24 24" className="w-6 h-6" aria-hidden="true">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+              </svg>
+              <Badge variant="outline" className="animate-bounce-slow">Avaliações do Google</Badge>
+            </div>
+            <h2 className="text-3xl lg:text-4xl font-bold mb-4" id="depoimentos">
               O que nossos 
               <span className="text-gradient"> clientes dizem</span>
             </h2>
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <div className="flex">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="h-5 w-5 text-amber-400 fill-current" />
+                ))}
+              </div>
+              <span className="font-bold text-lg">4.9</span>
+              <span className="text-muted-foreground">• 127 avaliações</span>
+            </div>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index} className={`glass-strong animate-scale-bounce animate-stagger-${index + 1} hover-glow group`}>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {googleReviews.map((review, index) => (
+              <Card key={index} className={`glass-strong animate-scale-bounce animate-stagger-${(index % 4) + 1} hover-glow group`}>
                 <CardContent className="p-6">
-                  <div className="flex mb-4">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="h-4 w-4 text-yellow-400 fill-current animate-pulse-slow hover-scale" style={{animationDelay: `${i * 0.1}s`}} />
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold">
+                      {review.name.charAt(0)}
+                    </div>
+                    <div>
+                      <div className="font-semibold group-hover:text-primary transition-colors">{review.name}</div>
+                      <div className="text-xs text-muted-foreground">{review.date}</div>
+                    </div>
+                  </div>
+                  <div className="flex mb-3">
+                    {[...Array(review.rating)].map((_, i) => (
+                      <Star key={i} className="h-4 w-4 text-amber-400 fill-current" />
                     ))}
                   </div>
-                  <p className="text-muted-foreground mb-4 italic group-hover:text-foreground transition-colors">
-                    "{testimonial.content}"
+                  <p className="text-muted-foreground text-sm group-hover:text-foreground transition-colors">
+                    "{review.content}"
                   </p>
-                  <div>
-                    <div className="font-semibold group-hover:text-primary transition-colors">{testimonial.name}</div>
-                    <div className="text-sm text-muted-foreground">{testimonial.role}</div>
-                  </div>
                 </CardContent>
               </Card>
             ))}
+          </div>
+
+          <div className="text-center mt-10">
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="font-semibold hover-glow group"
+              asChild
+            >
+              <a 
+                href="https://www.google.com/search?q=bioforte+franca+sp#lrd=0x94b0a639a8f9621b:0xc8932e522adf24b9,1,,,," 
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+                <svg viewBox="0 0 24 24" className="w-5 h-5 mr-2" aria-hidden="true">
+                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                </svg>
+                Ver todas as avaliações no Google
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </a>
+            </Button>
           </div>
         </div>
       </section>
