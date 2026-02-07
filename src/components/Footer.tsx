@@ -36,13 +36,19 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-card border-t border-border">
+    <footer className="bg-card border-t border-border relative overflow-hidden">
+      {/* Decorative elements */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-10 right-10 w-64 h-64 bg-primary rounded-full blur-3xl" />
+        <div className="absolute bottom-10 left-10 w-48 h-48 bg-accent rounded-full blur-3xl" />
+      </div>
+      
       {/* Main Footer */}
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 py-16 relative">
         <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-8">
           {/* Company Info */}
           <div className="space-y-6">
-            <Link to="/" className="inline-block">
+            <Link to="/" className="inline-block hover:opacity-90 transition-opacity">
               <img 
                 src={logoBioforte} 
                 alt="Bioforte Controle de Pragas" 
@@ -61,7 +67,7 @@ const Footer = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Visitar ${social.label} da Bioforte (abre em nova aba)`}
-                  className="min-w-[44px] min-h-[44px] w-11 h-11 bg-muted rounded-lg flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                  className="min-w-[44px] min-h-[44px] w-11 h-11 bg-muted rounded-lg flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                 >
                   <social.icon className="h-5 w-5" aria-hidden="true" />
                 </a>
@@ -71,14 +77,15 @@ const Footer = () => {
 
           {/* Quick Links */}
           <nav aria-label="Links rápidos">
-            <h4 className="font-semibold text-lg mb-6">Links Rápidos</h4>
+            <h4 className="font-semibold text-lg mb-6 text-foreground">Links Rápidos</h4>
             <ul className="space-y-3" role="list">
               {quickLinks.map((link, index) => (
                 <li key={index}>
                   <Link
                     to={link.path}
-                    className="text-muted-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded px-1 py-0.5 -mx-1"
+                    className="text-muted-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded px-1 py-0.5 -mx-1 inline-flex items-center group"
                   >
+                    <span className="w-0 h-0.5 bg-primary group-hover:w-3 transition-all duration-300 mr-0 group-hover:mr-2" />
                     {link.name}
                   </Link>
                 </li>
@@ -88,10 +95,11 @@ const Footer = () => {
 
           {/* Services */}
           <div>
-            <h4 className="font-semibold text-lg mb-6">Nossos Serviços</h4>
+            <h4 className="font-semibold text-lg mb-6 text-foreground">Nossos Serviços</h4>
             <ul className="space-y-3">
               {services.map((service, index) => (
-                <li key={index} className="text-muted-foreground">
+                <li key={index} className="text-muted-foreground flex items-center group hover:text-foreground transition-colors">
+                  <span className="w-1.5 h-1.5 bg-primary rounded-full mr-2 group-hover:scale-150 transition-transform" />
                   {service}
                 </li>
               ))}
@@ -100,28 +108,32 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h4 className="font-semibold text-lg mb-6">Contato</h4>
+            <h4 className="font-semibold text-lg mb-6 text-foreground">Contato</h4>
             <div className="space-y-4">
-              <div className="flex items-start space-x-3">
-                <Phone className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+              <a href="tel:+5516974007842" className="flex items-start space-x-3 group hover:text-primary transition-colors">
+                <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
+                  <Phone className="h-4 w-4 text-primary" />
+                </div>
                 <div>
-                  <a href="tel:+5516974007842" className="font-medium hover:text-primary transition-colors">
-                    (16) 97400-7842
-                  </a>
+                  <p className="font-medium">(16) 97400-7842</p>
                   <p className="text-sm text-muted-foreground">Segunda a Sexta: 8h às 18h</p>
                 </div>
-              </div>
+              </a>
               
-              <div className="flex items-start space-x-3">
-                <Mail className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+              <a href="mailto:contato@bioforte.com.br" className="flex items-start space-x-3 group hover:text-primary transition-colors">
+                <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
+                  <Mail className="h-4 w-4 text-primary" />
+                </div>
                 <div>
                   <p className="font-medium">contato@bioforte.com.br</p>
                   <p className="text-sm text-muted-foreground">Resposta em até 24h</p>
                 </div>
-              </div>
+              </a>
 
               <div className="flex items-start space-x-3">
-                <MapPin className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                <div className="p-2 bg-primary/10 rounded-lg">
+                  <MapPin className="h-4 w-4 text-primary" />
+                </div>
                 <div>
                   <p className="font-medium">São Paulo - SP</p>
                   <p className="text-sm text-muted-foreground">Atendemos toda região metropolitana</p>
@@ -129,7 +141,9 @@ const Footer = () => {
               </div>
 
               <div className="flex items-start space-x-3">
-                <Clock className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                <div className="p-2 bg-primary/10 rounded-lg">
+                  <Clock className="h-4 w-4 text-primary" />
+                </div>
                 <div>
                   <p className="font-medium">Emergência 24h</p>
                   <p className="text-sm text-muted-foreground">Para casos urgentes</p>
@@ -139,7 +153,7 @@ const Footer = () => {
 
             <div className="mt-6">
               <Link to="/contato">
-                <Button variant="hero" className="w-full">
+                <Button variant="hero" className="w-full hover-shine pulse-ring">
                   Solicitar Orçamento
                 </Button>
               </Link>

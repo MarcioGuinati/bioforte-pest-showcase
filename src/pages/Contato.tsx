@@ -122,19 +122,23 @@ Telefone: ${formData.phone || "Não informado"}`;
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-hidden">
       {/* Hero Section */}
-      <section className="py-20 lg:py-32 gradient-hero">
-        <div className="container mx-auto px-4 text-center">
-          <Badge variant="outline" className="mb-6 border-primary-foreground text-primary-foreground">
+      <section className="py-20 lg:py-32 gradient-hero relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-20 right-20 w-64 h-64 bg-white rounded-full blur-3xl animate-float" />
+          <div className="absolute bottom-10 left-10 w-48 h-48 bg-accent rounded-full blur-3xl animate-float" style={{animationDelay: "2s"}} />
+        </div>
+        <div className="container mx-auto px-4 text-center relative">
+          <Badge variant="outline" className="mb-6 border-primary-foreground text-primary-foreground animate-fade-in">
             Entre em Contato
           </Badge>
-          <h1 className="text-4xl lg:text-6xl font-bold text-primary-foreground mb-6 animate-fade-in">
+          <h1 className="text-4xl lg:text-6xl font-bold text-primary-foreground mb-6 animate-fade-in-up">
             Solicite seu
             <br />
             <span className="text-accent"> Orçamento Gratuito</span>
           </h1>
-          <p className="text-lg lg:text-xl text-primary-foreground/90 leading-relaxed max-w-3xl mx-auto animate-fade-in">
+          <p className="text-lg lg:text-xl text-primary-foreground/90 leading-relaxed max-w-3xl mx-auto animate-blur-in">
             Entre em contato conosco e receba um orçamento personalizado. 
             Nossa equipe está pronta para resolver seu problema com pragas.
           </p>
@@ -146,12 +150,12 @@ Telefone: ${formData.phone || "Não informado"}`;
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {contactInfo.map((info, index) => (
-              <Card key={index} className="glass text-center">
+              <Card key={index} className="glass-strong text-center hover-lift group animate-scale-bounce" style={{animationDelay: `${index * 0.1}s`}}>
                 <CardContent className="p-6">
-                  <div className="gradient-primary p-3 rounded-full w-12 h-12 mx-auto mb-4 flex items-center justify-center">
+                  <div className="gradient-animated p-3 rounded-full w-12 h-12 mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                     <info.icon className="h-6 w-6 text-primary-foreground" />
                   </div>
-                  <h3 className="font-bold text-lg mb-2">{info.title}</h3>
+                  <h3 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors">{info.title}</h3>
                   {info.action ? (
                     <a 
                       href={info.action}
@@ -162,7 +166,7 @@ Telefone: ${formData.phone || "Não informado"}`;
                   ) : (
                     <p className="font-semibold mb-2">{info.content}</p>
                   )}
-                  <p className="text-muted-foreground text-sm">{info.description}</p>
+                  <p className="text-muted-foreground text-sm group-hover:text-foreground transition-colors">{info.description}</p>
                 </CardContent>
               </Card>
             ))}
@@ -171,13 +175,17 @@ Telefone: ${formData.phone || "Não informado"}`;
       </section>
 
       {/* Contact Form */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
+      <section className="py-20 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-20 left-20 w-64 h-64 bg-primary rounded-full blur-3xl animate-float" />
+          <div className="absolute bottom-20 right-20 w-48 h-48 bg-accent rounded-full blur-3xl animate-float" style={{animationDelay: "2s"}} />
+        </div>
+        <div className="container mx-auto px-4 relative">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <Badge variant="outline" className="mb-4">Formulário de Contato</Badge>
+            <div className="text-center mb-16 animate-fade-in-down">
+              <Badge variant="outline" className="mb-4 hover-glow">Formulário de Contato</Badge>
               <h2 className="text-3xl lg:text-4xl font-bold mb-6">
-                Fale conosco <span className="text-primary">agora mesmo</span>
+                Fale conosco <span className="text-gradient">agora mesmo</span>
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                 Preencha o formulário abaixo com detalhes sobre seu problema. 
@@ -187,8 +195,8 @@ Telefone: ${formData.phone || "Não informado"}`;
 
             <div className="grid lg:grid-cols-3 gap-12">
               {/* Form */}
-              <div className="lg:col-span-2">
-                <Card className="glass">
+              <div className="lg:col-span-2 animate-fade-in-up">
+                <Card className="glass-strong hover-glow">
                   <CardContent className="p-4 sm:p-6 lg:p-8">
                     <form onSubmit={handleSubmit} className="space-y-6">
                       {/* Personal Info */}

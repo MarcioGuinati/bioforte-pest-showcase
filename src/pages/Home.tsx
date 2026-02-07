@@ -97,14 +97,18 @@ const Home = () => {
 
       {/* Stats Section */}
       <section className="py-20 bg-primary relative overflow-hidden" aria-labelledby="stats-heading">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-10 right-10 w-64 h-64 bg-white rounded-full blur-3xl animate-float" />
+          <div className="absolute bottom-10 left-10 w-48 h-48 bg-accent rounded-full blur-3xl animate-float" style={{animationDelay: "3s"}} />
+        </div>
         <h2 id="stats-heading" className="sr-only">Nossos Números</h2>
         <div className="container mx-auto px-4 relative">
           <dl className="grid grid-cols-2 lg:grid-cols-4 gap-8" role="list">
             {stats.map((stat, index) => (
-              <div key={index} className="text-center group hover-lift" role="listitem">
+              <div key={index} className="text-center group hover-lift animate-scale-bounce" style={{animationDelay: `${index * 0.1}s`}} role="listitem">
                 <dt className="sr-only">{stat.label}</dt>
                 <div className="mb-4 inline-block" aria-hidden="true">
-                  <div className="w-20 h-20 lg:w-24 lg:h-24 mx-auto bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white/20 group-hover:border-white/40 group-hover:bg-white/20 transition-all">
+                  <div className="w-20 h-20 lg:w-24 lg:h-24 mx-auto bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white/20 group-hover:border-white/50 group-hover:bg-white/20 transition-all duration-300">
                     <stat.icon className="w-10 h-10 lg:w-12 lg:h-12 text-white" />
                   </div>
                 </div>
@@ -122,9 +126,13 @@ const Home = () => {
 
       {/* Services Section */}
       <section className="py-20 bg-muted/30 relative overflow-hidden" aria-labelledby="services-heading">
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-20 left-20 w-72 h-72 bg-primary rounded-full blur-3xl animate-float" />
+          <div className="absolute bottom-20 right-20 w-56 h-56 bg-accent rounded-full blur-3xl animate-float" style={{animationDelay: "2s"}} />
+        </div>
         <div className="container mx-auto px-4 relative">
-          <div className="text-center mb-16 animate-fade-in">
-            <Badge variant="outline" className="mb-4">Nossos Serviços</Badge>
+          <div className="text-center mb-16 animate-fade-in-up">
+            <Badge variant="outline" className="mb-4 hover-glow">Nossos Serviços</Badge>
             <h2 className="text-3xl lg:text-5xl font-bold mb-6" id="services-heading">
               Soluções Completas em
               <span className="text-gradient"> Controle de Pragas</span>
@@ -137,9 +145,9 @@ const Home = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8" role="list">
             {services.map((service, index) => (
-              <Card key={index} className="glass-strong hover-glow group" role="listitem">
+              <Card key={index} className="glass-strong hover-lift group animate-scale-bounce" style={{animationDelay: `${index * 0.1}s`}} role="listitem">
                 <CardContent className="p-6 text-center">
-                  <div className="gradient-animated p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center" aria-hidden="true">
+                  <div className="gradient-animated p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300" aria-hidden="true">
                     <service.icon className="h-8 w-8 text-primary-foreground" />
                   </div>
                   <h3 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors">{service.title}</h3>
@@ -148,7 +156,7 @@ const Home = () => {
                   </p>
                   <ul className="space-y-2" aria-label={`Características do serviço ${service.title}`}>
                     {service.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-center justify-center gap-2 text-xs">
+                      <li key={idx} className="flex items-center justify-center gap-2 text-xs group-hover:text-foreground transition-colors">
                         <CheckCircle className="h-3 w-3 text-primary flex-shrink-0" aria-hidden="true" />
                         <span>{feature}</span>
                       </li>
@@ -159,9 +167,9 @@ const Home = () => {
             ))}
           </div>
 
-          <div className="text-center mt-12">
+          <div className="text-center mt-12 animate-fade-in" style={{animationDelay: "0.5s"}}>
             <Link to="/area-atuacao">
-              <Button variant="hero" size="lg" className="font-semibold pulse-ring">
+              <Button variant="hero" size="lg" className="font-semibold pulse-ring hover-shine">
                 Ver Todos os Serviços
                 <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />
               </Button>
@@ -273,11 +281,11 @@ const Home = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" role="list" aria-label="Avaliações de clientes">
             {googleReviews.map((review, index) => (
-              <Card key={index} className="glass-strong hover-glow group" role="listitem">
+              <Card key={index} className="glass-strong hover-lift group animate-scale-bounce" style={{animationDelay: `${index * 0.1}s`}} role="listitem">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-3 mb-4">
                     <div 
-                      className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold"
+                      className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold group-hover:scale-110 transition-transform duration-300"
                       aria-hidden="true"
                     >
                       {review.name.charAt(0)}
@@ -292,7 +300,7 @@ const Home = () => {
                       <Star key={i} className="h-4 w-4 text-warning fill-current" aria-hidden="true" />
                     ))}
                   </div>
-                  <blockquote className="text-muted-foreground text-sm">
+                  <blockquote className="text-muted-foreground text-sm group-hover:text-foreground transition-colors">
                     "{review.content}"
                   </blockquote>
                 </CardContent>
