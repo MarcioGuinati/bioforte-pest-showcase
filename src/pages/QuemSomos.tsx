@@ -67,25 +67,24 @@ const timeline = [
 
 const QuemSomos = () => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-hidden">
       {/* Hero Section */}
       <section className="relative py-20 lg:py-32 overflow-hidden">
         <div className="absolute inset-0">
           <img
             src={companyBuilding}
             alt="Bioforte"
-            className="w-full h-full object-cover parallax"
-            loading="lazy"
+            className="w-full h-full object-cover"
+            loading="eager"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/70 to-background/50" />
-          {/* Floating elements */}
-          <div className="absolute top-20 right-20 w-40 h-40 bg-primary/20 rounded-full blur-3xl animate-float"></div>
-          <div className="absolute bottom-20 left-10 w-32 h-32 bg-accent/20 rounded-full blur-2xl animate-float" style={{animationDelay: "2s"}}></div>
+          <div className="absolute top-20 right-20 w-40 h-40 bg-primary/20 rounded-full blur-3xl animate-float" />
+          <div className="absolute bottom-20 left-10 w-32 h-32 bg-accent/20 rounded-full blur-2xl animate-float" style={{animationDelay: "2s"}} />
         </div>
         
         <div className="relative container mx-auto px-4">
           <div className="max-w-3xl">
-            <Badge variant="outline" className="mb-6 animate-bounce-slow hover-glow">Sobre a Bioforte</Badge>
+            <Badge variant="outline" className="mb-6 animate-fade-in hover-glow">Sobre a Bioforte</Badge>
             <h1 className="text-4xl lg:text-6xl font-bold mb-6 animate-fade-in-up">
               15 Anos Protegendo
               <span className="text-gradient"> Seu Ambiente</span>
@@ -102,15 +101,15 @@ const QuemSomos = () => {
       {/* Mission, Vision, Values */}
       <section className="py-20 bg-muted/30 relative overflow-hidden">
         <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-10 left-10 w-48 h-48 bg-primary rounded-full blur-3xl animate-float"></div>
-          <div className="absolute bottom-10 right-10 w-64 h-64 bg-accent rounded-full blur-3xl animate-float" style={{animationDelay: "3s"}}></div>
+          <div className="absolute top-10 left-10 w-48 h-48 bg-primary rounded-full blur-3xl animate-float" />
+          <div className="absolute bottom-10 right-10 w-64 h-64 bg-accent rounded-full blur-3xl animate-float" style={{animationDelay: "3s"}} />
         </div>
         <div className="container mx-auto px-4 relative">
           <div className="grid lg:grid-cols-3 gap-12">
             {/* Mission */}
-            <Card className="glass-strong animate-scale-bounce animate-stagger-1 group">
+            <Card className="glass-strong hover-lift group animate-scale-bounce" style={{animationDelay: "0.1s"}}>
               <CardContent className="p-8 text-center">
-                <div className="gradient-animated p-4 rounded-full w-16 h-16 mx-auto mb-6 flex items-center justify-center group-hover:animate-wiggle">
+                <div className="gradient-animated p-4 rounded-full w-16 h-16 mx-auto mb-6 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   <Target className="h-8 w-8 text-primary-foreground" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">Nossa Missão</h3>
@@ -123,9 +122,9 @@ const QuemSomos = () => {
             </Card>
 
             {/* Vision */}
-            <Card className="glass-strong animate-scale-bounce animate-stagger-2 group">
+            <Card className="glass-strong hover-lift group animate-scale-bounce" style={{animationDelay: "0.2s"}}>
               <CardContent className="p-8 text-center">
-                <div className="gradient-animated p-4 rounded-full w-16 h-16 mx-auto mb-6 flex items-center justify-center group-hover:animate-wiggle">
+                <div className="gradient-animated p-4 rounded-full w-16 h-16 mx-auto mb-6 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   <Eye className="h-8 w-8 text-primary-foreground" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">Nossa Visão</h3>
@@ -138,9 +137,9 @@ const QuemSomos = () => {
             </Card>
 
             {/* Values */}
-            <Card className="glass-strong animate-scale-bounce animate-stagger-3 group">
+            <Card className="glass-strong hover-lift group animate-scale-bounce" style={{animationDelay: "0.3s"}}>
               <CardContent className="p-8 text-center">
-                <div className="gradient-animated p-4 rounded-full w-16 h-16 mx-auto mb-6 flex items-center justify-center group-hover:animate-wiggle">
+                <div className="gradient-animated p-4 rounded-full w-16 h-16 mx-auto mb-6 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   <Heart className="h-8 w-8 text-primary-foreground" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">Nossos Valores</h3>
@@ -158,11 +157,11 @@ const QuemSomos = () => {
       {/* Values Grid */}
       <section className="py-20 relative overflow-hidden">
         <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-20 left-20 w-56 h-56 bg-accent rounded-full blur-3xl animate-pulse-slow"></div>
+          <div className="absolute top-20 left-20 w-56 h-56 bg-accent rounded-full blur-3xl animate-float" />
         </div>
         <div className="container mx-auto px-4 relative">
           <div className="text-center mb-16 animate-fade-in-down">
-            <Badge variant="outline" className="mb-4 animate-bounce-slow">Nossos Valores</Badge>
+            <Badge variant="outline" className="mb-4 hover-glow">Nossos Valores</Badge>
             <h2 className="text-3xl lg:text-4xl font-bold mb-6">
               O que nos <span className="text-gradient">move</span>
             </h2>
@@ -174,9 +173,9 @@ const QuemSomos = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {values.map((value, index) => (
-              <Card key={index} className={`glass-strong animate-scale-bounce animate-stagger-${index + 1} group`}>
+              <Card key={index} className="glass-strong hover-lift group animate-scale-bounce" style={{animationDelay: `${index * 0.1}s`}}>
                 <CardContent className="p-6 text-center">
-                  <div className="gradient-animated p-3 rounded-full w-12 h-12 mx-auto mb-4 flex items-center justify-center group-hover:animate-wiggle">
+                  <div className="gradient-animated p-3 rounded-full w-12 h-12 mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                     <value.icon className="h-6 w-6 text-primary-foreground" />
                   </div>
                   <h3 className="font-bold text-lg mb-3 group-hover:text-primary transition-colors">{value.title}</h3>
@@ -193,11 +192,11 @@ const QuemSomos = () => {
       {/* Timeline */}
       <section className="py-20 bg-muted/30 relative overflow-hidden">
         <div className="absolute inset-0 opacity-5">
-          <div className="absolute bottom-0 left-1/3 w-72 h-72 bg-primary rounded-full blur-3xl animate-float"></div>
+          <div className="absolute bottom-0 left-1/3 w-72 h-72 bg-primary rounded-full blur-3xl animate-float" />
         </div>
         <div className="container mx-auto px-4 relative">
           <div className="text-center mb-16 animate-fade-in-up">
-            <Badge variant="outline" className="mb-4 animate-bounce-slow">Nossa História</Badge>
+            <Badge variant="outline" className="mb-4 hover-glow">Nossa História</Badge>
             <h2 className="text-3xl lg:text-4xl font-bold mb-6">
               Trajetória de <span className="text-gradient">crescimento</span>
             </h2>
@@ -206,9 +205,9 @@ const QuemSomos = () => {
           <div className="max-w-4xl mx-auto">
             <div className="space-y-8">
               {timeline.map((item, index) => (
-                <div key={index} className={`flex items-start gap-6 animate-slide-in-left animate-stagger-${(index % 4) + 1} hover-lift group`}>
+                <div key={index} className="flex items-start gap-6 hover-lift group animate-slide-in-left" style={{animationDelay: `${index * 0.1}s`}}>
                   <div className="flex-shrink-0">
-                    <div className="gradient-animated p-3 rounded-full group-hover:animate-wiggle">
+                    <div className="gradient-animated p-3 rounded-full group-hover:scale-110 transition-transform duration-300">
                       <span className="text-primary-foreground font-bold text-sm">
                         {item.year}
                       </span>
@@ -226,12 +225,12 @@ const QuemSomos = () => {
       </section>
 
       {/* Certifications */}
-      <section className="py-20">
+      <section className="py-20 relative overflow-hidden">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <Badge variant="outline" className="mb-4">Certificações</Badge>
+          <div className="text-center mb-16 animate-fade-in-down">
+            <Badge variant="outline" className="mb-4 hover-glow">Certificações</Badge>
             <h2 className="text-3xl lg:text-4xl font-bold mb-6">
-              Qualidade <span className="text-primary">comprovada</span>
+              Qualidade <span className="text-gradient">comprovada</span>
             </h2>
           </div>
 
@@ -242,12 +241,12 @@ const QuemSomos = () => {
               "Certificação ANVISA",
               "Licença Ambiental"
             ].map((cert, index) => (
-              <Card key={index} className="glass text-center">
+              <Card key={index} className="glass-strong text-center hover-lift group animate-scale-bounce" style={{animationDelay: `${index * 0.1}s`}}>
                 <CardContent className="p-6">
-                  <div className="gradient-primary p-3 rounded-full w-12 h-12 mx-auto mb-4 flex items-center justify-center">
+                  <div className="gradient-animated p-3 rounded-full w-12 h-12 mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                     <Award className="h-6 w-6 text-primary-foreground" />
                   </div>
-                  <h3 className="font-bold">{cert}</h3>
+                  <h3 className="font-bold group-hover:text-primary transition-colors">{cert}</h3>
                 </CardContent>
               </Card>
             ))}
@@ -256,17 +255,20 @@ const QuemSomos = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 gradient-hero">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold text-primary-foreground mb-6">
+      <section className="py-20 gradient-hero relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-10 right-10 w-48 h-48 bg-white rounded-full blur-3xl animate-float" />
+        </div>
+        <div className="container mx-auto px-4 text-center relative">
+          <h2 className="text-3xl lg:text-4xl font-bold text-primary-foreground mb-6 animate-fade-in-up">
             Conheça nosso time de especialistas
           </h2>
-          <p className="text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto animate-blur-in">
             Profissionais altamente qualificados e certificados para atender 
             suas necessidades com excelência.
           </p>
           <Link to="/nosso-time">
-            <Button variant="secondary" size="lg" className="font-semibold">
+            <Button variant="secondary" size="lg" className="font-semibold pulse-ring hover-shine">
               Ver Nosso Time
             </Button>
           </Link>

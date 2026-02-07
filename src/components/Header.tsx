@@ -20,25 +20,25 @@ const Header = () => {
   ];
 
   return (
-    <header className="sticky top-0 z-50 glass border-b border-border/50">
+    <header className="sticky top-0 z-50 glass-strong border-b border-border/50 transition-all duration-300">
       <div className="container mx-auto px-4">
         {/* Top Bar */}
         <div className="flex items-center justify-between py-2 text-sm text-muted-foreground border-b border-border/30">
           <div className="flex items-center gap-4">
             <a
               href="mailto:contato@bioforte.com.br"
-              className="flex items-center gap-1 hover:text-primary transition-colors min-h-[24px]"
+              className="flex items-center gap-1 hover:text-primary transition-colors min-h-[24px] group"
               aria-label="Enviar e-mail para contato@bioforte.com.br"
             >
-              <Mail className="h-3 w-3" aria-hidden="true" />
+              <Mail className="h-3 w-3 group-hover:scale-110 transition-transform" aria-hidden="true" />
               contato@bioforte.com.br
             </a>
             <a
               href="tel:+5516974007842"
-              className="flex items-center gap-1 hover:text-primary transition-colors min-h-[24px]"
+              className="flex items-center gap-1 hover:text-primary transition-colors min-h-[24px] group"
               aria-label="Ligar para (16) 97400-7842"
             >
-              <Phone className="h-3 w-3" aria-hidden="true" />
+              <Phone className="h-3 w-3 group-hover:scale-110 transition-transform" aria-hidden="true" />
               (16) 97400-7842
             </a>
           </div>
@@ -53,7 +53,7 @@ const Header = () => {
         <div className="flex items-center justify-between py-4">
           <Link
             to="/"
-            className="flex items-center"
+            className="flex items-center hover:opacity-90 transition-opacity"
             aria-label="Bioforte Controle de Pragas - Ir para página inicial"
           >
             <img
@@ -69,7 +69,7 @@ const Header = () => {
               <Link key={item.name} to={item.path}>
                 <Button
                   variant="ghost"
-                  className="font-medium hover:bg-primary/20 hover:text-primary focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                  className="font-medium hover:bg-primary/10 hover:text-primary focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 relative after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-primary after:transition-all hover:after:w-3/4"
                 >
                   {item.name}
                 </Button>
@@ -80,7 +80,7 @@ const Header = () => {
           {/* CTA Button */}
           <div className="hidden lg:flex">
             <Link to="/contato">
-              <Button variant="hero" size="lg" className="font-semibold">
+              <Button variant="hero" size="lg" className="font-semibold pulse-ring hover-shine">
                 Solicitar Orçamento
               </Button>
             </Link>

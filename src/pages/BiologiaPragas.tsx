@@ -78,7 +78,7 @@ const pests = [
 
 const BiologiaPragas = () => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-hidden">
       {/* Hero Section */}
       <section className="relative py-20 lg:py-32 overflow-hidden">
         <div className="absolute inset-0">
@@ -86,19 +86,21 @@ const BiologiaPragas = () => {
             src={pestBiology}
             alt="Biologia das Pragas"
             className="w-full h-full object-cover"
-            loading="lazy"
+            loading="eager"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/60" />
+          <div className="absolute top-20 right-20 w-40 h-40 bg-primary/20 rounded-full blur-3xl animate-float" />
+          <div className="absolute bottom-20 left-10 w-32 h-32 bg-accent/20 rounded-full blur-2xl animate-float" style={{animationDelay: "2s"}} />
         </div>
         
         <div className="relative container mx-auto px-4">
           <div className="max-w-3xl">
-            <Badge variant="outline" className="mb-6">Conhecimento Científico</Badge>
-            <h1 className="text-4xl lg:text-6xl font-bold mb-6 animate-fade-in">
+            <Badge variant="outline" className="mb-6 animate-fade-in hover-glow">Conhecimento Científico</Badge>
+            <h1 className="text-4xl lg:text-6xl font-bold mb-6 animate-fade-in-up">
               Biologia das 
-              <span className="text-primary"> Pragas Urbanas</span>
+              <span className="text-gradient"> Pragas Urbanas</span>
             </h1>
-            <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed animate-fade-in">
+            <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed animate-blur-in">
               Entenda o comportamento, ciclo de vida e riscos das principais pragas 
               urbanas. Conhecimento científico aplicado ao controle eficaz.
             </p>
@@ -107,44 +109,53 @@ const BiologiaPragas = () => {
       </section>
 
       {/* Introduction */}
-      <section className="py-20 bg-muted/30">
-        <div className="container mx-auto px-4">
+      <section className="py-20 bg-muted/30 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-10 left-10 w-48 h-48 bg-primary rounded-full blur-3xl animate-float" />
+        </div>
+        <div className="container mx-auto px-4 relative">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl lg:text-4xl font-bold mb-6">
-              Por que <span className="text-primary">conhecer</span> as pragas?
+            <h2 className="text-3xl lg:text-4xl font-bold mb-6 animate-fade-in-up">
+              Por que <span className="text-gradient">conhecer</span> as pragas?
             </h2>
-            <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+            <p className="text-lg text-muted-foreground mb-8 leading-relaxed animate-blur-in">
               O controle eficaz de pragas começa com o entendimento profundo de sua biologia, 
               comportamento e ciclo reprodutivo. Esse conhecimento permite desenvolver 
               estratégias direcionadas e sustentáveis.
             </p>
             
             <div className="grid md:grid-cols-3 gap-8 mt-12">
-               <Card className="glass">
+               <Card className="glass-strong hover-lift group animate-scale-bounce" style={{animationDelay: "0.1s"}}>
                 <CardContent className="p-6 text-center">
-                  <Eye className="h-12 w-12 text-primary mx-auto mb-4" />
-                  <h3 className="font-bold text-lg mb-2">Identificação</h3>
-                  <p className="text-sm text-muted-foreground">
+                  <div className="gradient-animated p-3 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Eye className="h-8 w-8 text-primary-foreground" />
+                  </div>
+                  <h3 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors">Identificação</h3>
+                  <p className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
                     Reconhecer espécies e sinais de infestação
                   </p>
                 </CardContent>
               </Card>
 
-               <Card className="glass">
+               <Card className="glass-strong hover-lift group animate-scale-bounce" style={{animationDelay: "0.2s"}}>
                 <CardContent className="p-6 text-center">
-                  <Shield className="h-12 w-12 text-primary mx-auto mb-4" />
-                  <h3 className="font-bold text-lg mb-2">Prevenção</h3>
-                  <p className="text-sm text-muted-foreground">
+                  <div className="gradient-animated p-3 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Shield className="h-8 w-8 text-primary-foreground" />
+                  </div>
+                  <h3 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors">Prevenção</h3>
+                  <p className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
                     Medidas preventivas baseadas no comportamento
                   </p>
                 </CardContent>
               </Card>
 
-              <Card className="glass">
+              <Card className="glass-strong hover-lift group animate-scale-bounce" style={{animationDelay: "0.3s"}}>
                 <CardContent className="p-6 text-center">
-                  <Zap className="h-12 w-12 text-primary mx-auto mb-4" />
-                  <h3 className="font-bold text-lg mb-2">Controle</h3>
-                  <p className="text-sm text-muted-foreground">
+                  <div className="gradient-animated p-3 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Zap className="h-8 w-8 text-primary-foreground" />
+                  </div>
+                  <h3 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors">Controle</h3>
+                  <p className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
                     Tratamentos específicos e eficazes
                   </p>
                 </CardContent>
@@ -155,18 +166,21 @@ const BiologiaPragas = () => {
       </section>
 
       {/* Pests Details */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <Badge variant="outline" className="mb-4">Principais Pragas</Badge>
+      <section className="py-20 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-40 right-20 w-64 h-64 bg-accent rounded-full blur-3xl animate-float" />
+        </div>
+        <div className="container mx-auto px-4 relative">
+          <div className="text-center mb-16 animate-fade-in-down">
+            <Badge variant="outline" className="mb-4 hover-glow">Principais Pragas</Badge>
             <h2 className="text-3xl lg:text-4xl font-bold mb-6">
-              Guia completo das <span className="text-primary">pragas urbanas</span>
+              Guia completo das <span className="text-gradient">pragas urbanas</span>
             </h2>
           </div>
 
           <div className="space-y-12">
             {pests.map((pest, index) => (
-              <Card key={index} className="glass overflow-hidden">
+              <Card key={index} className="glass-strong overflow-hidden hover-lift group animate-fade-in-up" style={{animationDelay: `${index * 0.1}s`}}>
                 <CardContent className="p-0">
                   <div className="grid lg:grid-cols-3 gap-0">
                     {/* Pest Info */}

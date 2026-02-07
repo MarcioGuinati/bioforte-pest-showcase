@@ -159,7 +159,7 @@ const stats = [
 
 const AreaAtuacao = () => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-hidden">
       {/* Hero Section */}
       <section className="relative py-20 lg:py-32 overflow-hidden">
         <div className="absolute inset-0">
@@ -167,22 +167,24 @@ const AreaAtuacao = () => {
             src={heroImage}
             alt="Área de Atuação"
             className="w-full h-full object-cover"
-            loading="lazy"
+            loading="eager"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/60" />
+          <div className="absolute top-20 right-20 w-40 h-40 bg-primary/20 rounded-full blur-3xl animate-float" />
+          <div className="absolute bottom-10 left-20 w-32 h-32 bg-accent/20 rounded-full blur-2xl animate-float" style={{animationDelay: "2s"}} />
         </div>
         
         <div className="relative container mx-auto px-4">
           <div className="max-w-3xl">
-            <Badge variant="outline" className="mb-6">
+            <Badge variant="outline" className="mb-6 animate-fade-in hover-glow">
               Área de Atuação
             </Badge>
-            <h1 className="text-4xl lg:text-6xl font-bold mb-6 animate-fade-in">
+            <h1 className="text-4xl lg:text-6xl font-bold mb-6 animate-fade-in-up">
               Soluções Completas em
               <br />
-              <span className="text-primary"> Controle de Pragas</span>
+              <span className="text-gradient"> Controle de Pragas</span>
             </h1>
-            <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed animate-fade-in">
+            <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed animate-blur-in">
               Atendemos todos os segmentos com soluções personalizadas, 
               garantindo máxima eficiência e segurança para seu ambiente.
             </p>
@@ -193,14 +195,14 @@ const AreaAtuacao = () => {
       {/* Stats */}
       <section className="py-16 bg-background border-y border-border relative overflow-hidden">
         <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-5 right-5 w-40 h-40 bg-primary rounded-full blur-3xl animate-float"></div>
+          <div className="absolute top-5 right-5 w-40 h-40 bg-primary rounded-full blur-3xl animate-float" />
         </div>
         <div className="container mx-auto px-4 relative">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
-              <div key={index} className="text-center animate-scale-bounce hover-float group">
+              <div key={index} className="text-center hover-lift group animate-scale-bounce" style={{animationDelay: `${index * 0.1}s`}}>
                 <div className="flex items-center justify-center mb-4">
-                  <div className="gradient-animated p-3 rounded-full group-hover:animate-wiggle">
+                  <div className="gradient-animated p-3 rounded-full group-hover:scale-110 transition-transform duration-300">
                     <stat.icon className="h-6 w-6 text-primary-foreground" />
                   </div>
                 </div>
@@ -219,12 +221,12 @@ const AreaAtuacao = () => {
       {/* Services Grid */}
       <section className="py-20 relative overflow-hidden">
         <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-20 left-20 w-64 h-64 bg-accent rounded-full blur-3xl animate-float"></div>
-          <div className="absolute bottom-20 right-20 w-48 h-48 bg-primary rounded-full blur-3xl animate-float" style={{animationDelay: "3s"}}></div>
+          <div className="absolute top-20 left-20 w-64 h-64 bg-accent rounded-full blur-3xl animate-float" />
+          <div className="absolute bottom-20 right-20 w-48 h-48 bg-primary rounded-full blur-3xl animate-float" style={{animationDelay: "3s"}} />
         </div>
         <div className="container mx-auto px-4 relative">
           <div className="text-center mb-16 animate-fade-in-down">
-            <Badge variant="outline" className="mb-4 animate-bounce-slow">Nossos Serviços</Badge>
+            <Badge variant="outline" className="mb-4 hover-glow">Nossos Serviços</Badge>
             <h2 className="text-3xl lg:text-4xl font-bold mb-6">
               Especialistas em <span className="text-gradient">todos os segmentos</span>
             </h2>
@@ -236,11 +238,11 @@ const AreaAtuacao = () => {
 
           <div className="grid lg:grid-cols-2 gap-8">
             {services.map((service, index) => (
-              <Card key={index} className="glass-strong overflow-hidden animate-scale-bounce hover-glow group" style={{animationDelay: `${index * 0.1}s`}}>
+              <Card key={index} className="glass-strong overflow-hidden hover-lift group animate-scale-bounce" style={{animationDelay: `${index * 0.1}s`}}>
                 <CardContent className="p-0">
                   <div className="flex">
                     {/* Icon Section */}
-                    <div className={`${service.bgColor} p-8 flex items-center justify-center min-w-[120px] group-hover:animate-wiggle`}>
+                    <div className={`${service.bgColor} p-8 flex items-center justify-center min-w-[120px] group-hover:scale-105 transition-transform duration-300`}>
                       <service.icon className={`h-12 w-12 ${service.color} hover-scale`} />
                     </div>
 
@@ -279,7 +281,7 @@ const AreaAtuacao = () => {
                         </div>
                       </div>
 
-                      <Button variant="hero" size="sm" className="w-full hover-shine pulse-ring group-hover:animate-glow">
+                      <Button variant="hero" size="sm" className="w-full hover-shine pulse-ring">
                         Solicitar Orçamento
                         <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                       </Button>
