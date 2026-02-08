@@ -56,21 +56,21 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-accent/5 px-4">
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 px-4">
+      <Card className="w-full max-w-md border-slate-700 bg-slate-800/50 backdrop-blur">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
             <img src={logoImage} alt="Bioforte" className="h-16" />
           </div>
-          <CardTitle className="text-2xl">Área Administrativa</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-2xl text-white">Área Administrativa</CardTitle>
+          <CardDescription className="text-slate-400">
             Faça login para acessar o painel de administração
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">E-mail</Label>
+              <Label htmlFor="email" className="text-slate-200">E-mail</Label>
               <Input
                 id="email"
                 type="email"
@@ -79,10 +79,11 @@ const AdminLogin = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 disabled={isLoading}
+                className="bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-400"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Senha</Label>
+              <Label htmlFor="password" className="text-slate-200">Senha</Label>
               <Input
                 id="password"
                 type="password"
@@ -91,9 +92,10 @@ const AdminLogin = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 disabled={isLoading}
+                className="bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-400"
               />
             </div>
-            <Button type="submit" className="w-full" disabled={isLoading}>
+            <Button type="submit" className="w-full bg-green-600 hover:bg-green-700" disabled={isLoading}>
               {isLoading ? (
                 <>
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />
