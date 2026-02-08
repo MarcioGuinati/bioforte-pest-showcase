@@ -79,23 +79,24 @@ const pests = [
 
 const PestsSection = () => {
   return (
-    <section className="py-12 bg-primary relative overflow-hidden" aria-labelledby="pests-heading">
+    <section className="py-16 bg-muted/50 dark:bg-background relative overflow-hidden" aria-labelledby="pests-heading">
       {/* Background decoration */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-0 left-1/4 w-32 h-32 bg-white rounded-full blur-3xl" />
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-0 left-1/4 w-32 h-32 bg-primary rounded-full blur-3xl" />
         <div className="absolute bottom-0 right-1/4 w-24 h-24 bg-accent rounded-full blur-3xl" />
       </div>
       
       <div className="container mx-auto px-4 relative">
-        <div className="text-center mb-8">
-          <Badge variant="secondary" className="mb-3">Principais Pragas</Badge>
-          <h2 className="text-2xl lg:text-3xl font-bold text-primary-foreground" id="pests-heading">
-            Combatemos as pragas mais comuns
+        <div className="text-center mb-10">
+          <Badge variant="outline" className="mb-3">Principais Pragas</Badge>
+          <h2 className="text-2xl lg:text-3xl font-bold" id="pests-heading">
+            Combatemos as pragas 
+            <span className="text-gradient"> mais comuns</span>
           </h2>
         </div>
 
         <div 
-          className="flex flex-wrap justify-center gap-4 lg:gap-8" 
+          className="flex flex-wrap justify-center gap-6 lg:gap-10" 
           role="list" 
           aria-label="Pragas que combatemos"
         >
@@ -106,10 +107,10 @@ const PestsSection = () => {
               className="flex flex-col items-center group cursor-pointer animate-scale-bounce"
               style={{ animationDelay: `${index * 0.05}s` }}
             >
-              <div className="w-16 h-16 lg:w-20 lg:h-20 rounded-full bg-white/10 backdrop-blur-sm border-2 border-white/20 flex items-center justify-center mb-2 group-hover:bg-white/20 group-hover:border-white/40 group-hover:scale-110 transition-all duration-300">
-                <pest.icon className="w-8 h-8 lg:w-10 lg:h-10 text-primary-foreground group-hover:scale-110 transition-transform duration-300" />
+              <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center mb-3 group-hover:bg-primary/20 group-hover:border-primary/40 group-hover:scale-110 transition-all duration-300 shadow-md">
+                <pest.icon className="w-10 h-10 lg:w-12 lg:h-12 text-primary group-hover:scale-110 transition-transform duration-300" />
               </div>
-              <span className="text-xs lg:text-sm font-medium text-primary-foreground/90 group-hover:text-primary-foreground transition-colors">
+              <span className="text-sm lg:text-base font-semibold text-foreground group-hover:text-primary transition-colors">
                 {pest.name}
               </span>
             </div>
