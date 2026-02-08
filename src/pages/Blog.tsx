@@ -22,24 +22,29 @@ interface BlogPost {
 }
 
 const Blog = () => {
-  const { data: posts, isLoading } = useQuery({
+  const { data: posts, isLoading, error } = useQuery({
     queryKey: ["blog-posts"],
     queryFn: async () => {
       const postsRef = collection(db, "blog_posts");
       const q = query(
         postsRef,
-        where("published", "==", true),
-        orderBy("created_at", "desc")
+        where("published", "==", true)
       );
       
       const snapshot = await getDocs(q);
-      return snapshot.docs.map(doc => ({
+      const postsData = snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data(),
         created_at: doc.data().created_at?.toDate() || new Date(),
       })) as BlogPost[];
+      
+      // Sort by created_at descending on client side
+      return postsData.sort((a, b) => b.created_at.getTime() - a.created_at.getTime());
     },
   });
+
+  // Log for debugging
+  console.log("Blog posts:", posts, "Error:", error);
 
   return (
     <div className="min-h-screen bg-background">
