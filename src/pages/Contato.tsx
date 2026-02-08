@@ -8,7 +8,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
-import { 
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import {
   Phone, 
   Mail, 
   MapPin, 
@@ -19,7 +21,8 @@ import {
   Home,
   Building,
   Factory,
-  Utensils
+  Utensils,
+  Loader2
 } from "lucide-react";
 
 const contactInfo = [
@@ -76,7 +79,9 @@ const Contato = () => {
 
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.consent) {
       toast({
@@ -87,23 +92,49 @@ const Contato = () => {
       return;
     }
     
-    toast({
-      title: "Mensagem enviada!",
-      description: "Recebemos seu contato. Nossa equipe retornará em breve.",
-    });
+    setIsSubmitting(true);
     
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      service: "",
-      urgency: "",
-      property: "",
-      area: "",
-      problem: "",
-      message: "",
-      consent: false
-    });
+    try {
+      await addDoc(collection(db, "contacts"), {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        service: formData.service || null,
+        urgency: formData.urgency || null,
+        property: formData.property || null,
+        area: formData.area || null,
+        problem: formData.problem || null,
+        message: formData.message || null,
+        createdAt: serverTimestamp()
+      });
+
+      toast({
+        title: "Mensagem enviada!",
+        description: "Recebemos seu contato. Nossa equipe retornará em breve.",
+      });
+      
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        service: "",
+        urgency: "",
+        property: "",
+        area: "",
+        problem: "",
+        message: "",
+        consent: false
+      });
+    } catch (error) {
+      console.error("Erro ao enviar mensagem:", error);
+      toast({
+        title: "Erro ao enviar mensagem",
+        description: "Ocorreu um erro. Tente novamente ou entre em contato via WhatsApp.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleInputChange = (field: string, value: string | boolean) => {
@@ -366,9 +397,13 @@ Telefone: ${formData.phone || "Não informado"}`;
                       </div>
 
                       <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                        <Button type="submit" variant="hero" size="lg" className="flex-1 w-full sm:w-auto">
-                          <Send className="h-4 w-4 mr-2" />
-                          Enviar Mensagem
+                        <Button type="submit" variant="hero" size="lg" className="flex-1 w-full sm:w-auto" disabled={isSubmitting}>
+                          {isSubmitting ? (
+                            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                          ) : (
+                            <Send className="h-4 w-4 mr-2" />
+                          )}
+                          {isSubmitting ? "Enviando..." : "Enviar Mensagem"}
                         </Button>
                         <Button 
                           type="button" 
