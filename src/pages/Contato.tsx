@@ -155,8 +155,11 @@ Telefone: ${formData.phone || "Não informado"}`;
   return (
     <div className="min-h-screen overflow-hidden">
       {/* Hero Section */}
-      <section className="py-20 lg:py-32 gradient-hero relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
+      <section 
+        className="py-20 lg:py-32 gradient-hero relative overflow-hidden" 
+        aria-labelledby="contact-heading"
+      >
+        <div className="absolute inset-0 opacity-10" aria-hidden="true">
           <div className="absolute top-20 right-20 w-64 h-64 bg-white rounded-full blur-3xl animate-float" />
           <div className="absolute bottom-10 left-10 w-48 h-48 bg-accent rounded-full blur-3xl animate-float" style={{animationDelay: "2s"}} />
         </div>
@@ -164,7 +167,7 @@ Telefone: ${formData.phone || "Não informado"}`;
           <Badge variant="outline" className="mb-6 border-primary-foreground text-primary-foreground animate-fade-in">
             Entre em Contato
           </Badge>
-          <h1 className="text-4xl lg:text-6xl font-bold text-primary-foreground mb-6 animate-fade-in-up">
+          <h1 id="contact-heading" className="text-4xl lg:text-6xl font-bold text-primary-foreground mb-6 animate-fade-in-up">
             Solicite seu
             <br />
             <span className="text-accent"> Orçamento Gratuito</span>
@@ -177,31 +180,35 @@ Telefone: ${formData.phone || "Não informado"}`;
       </section>
 
       {/* Contact Info Cards */}
-      <section className="py-16 -mt-10 relative z-10">
+      <section className="py-16 -mt-10 relative z-10" aria-labelledby="contact-info-heading">
+        <h2 id="contact-info-heading" className="sr-only">Informações de Contato</h2>
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <ul className="grid md:grid-cols-2 lg:grid-cols-4 gap-8" role="list">
             {contactInfo.map((info, index) => (
-              <Card key={index} className="glass-strong text-center hover-lift group animate-scale-bounce" style={{animationDelay: `${index * 0.1}s`}}>
-                <CardContent className="p-6">
-                  <div className="gradient-animated p-3 rounded-full w-12 h-12 mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <info.icon className="h-6 w-6 text-primary-foreground" />
-                  </div>
-                  <h3 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors">{info.title}</h3>
-                  {info.action ? (
-                    <a 
-                      href={info.action}
-                      className="text-primary font-semibold hover:underline block mb-2"
-                    >
-                      {info.content}
-                    </a>
-                  ) : (
-                    <p className="font-semibold mb-2">{info.content}</p>
-                  )}
-                  <p className="text-muted-foreground text-sm group-hover:text-foreground transition-colors">{info.description}</p>
-                </CardContent>
-              </Card>
+              <li key={index}>
+                <Card className="glass-strong text-center hover-lift group animate-scale-bounce h-full" style={{animationDelay: `${index * 0.1}s`}}>
+                  <CardContent className="p-6">
+                    <div className="gradient-animated p-3 rounded-full w-12 h-12 mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300" aria-hidden="true">
+                      <info.icon className="h-6 w-6 text-primary-foreground" />
+                    </div>
+                    <h3 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors">{info.title}</h3>
+                    {info.action ? (
+                      <a 
+                        href={info.action}
+                        className="text-primary font-semibold hover:underline block mb-2 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded"
+                        aria-label={`${info.title}: ${info.content}`}
+                      >
+                        {info.content}
+                      </a>
+                    ) : (
+                      <p className="font-semibold mb-2">{info.content}</p>
+                    )}
+                    <p className="text-muted-foreground text-sm group-hover:text-foreground transition-colors">{info.description}</p>
+                  </CardContent>
+                </Card>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
@@ -397,22 +404,31 @@ Telefone: ${formData.phone || "Não informado"}`;
                       </div>
 
                       <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                        <Button type="submit" variant="hero" size="lg" className="flex-1 w-full sm:w-auto" disabled={isSubmitting}>
+                        <Button 
+                          type="submit" 
+                          variant="hero" 
+                          size="lg" 
+                          className="flex-1 w-full sm:w-auto min-h-[48px]" 
+                          disabled={isSubmitting}
+                          aria-describedby={isSubmitting ? "submit-status" : undefined}
+                        >
                           {isSubmitting ? (
-                            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                            <Loader2 className="h-4 w-4 mr-2 animate-spin" aria-hidden="true" />
                           ) : (
-                            <Send className="h-4 w-4 mr-2" />
+                            <Send className="h-4 w-4 mr-2" aria-hidden="true" />
                           )}
                           {isSubmitting ? "Enviando..." : "Enviar Mensagem"}
                         </Button>
+                        {isSubmitting && <span id="submit-status" className="sr-only">Enviando formulário, aguarde...</span>}
                         <Button 
                           type="button" 
                           variant="outline" 
                           size="lg" 
-                          className="flex-1 w-full sm:w-auto"
+                          className="flex-1 w-full sm:w-auto min-h-[48px]"
                           onClick={handleWhatsAppClick}
+                          aria-label="Entrar em contato via WhatsApp (abre em nova aba)"
                         >
-                          <MessageCircle className="h-4 w-4 mr-2" />
+                          <MessageCircle className="h-4 w-4 mr-2" aria-hidden="true" />
                           WhatsApp
                         </Button>
                       </div>
@@ -496,17 +512,17 @@ Telefone: ${formData.phone || "Não informado"}`;
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-20 bg-muted/30" aria-labelledby="faq-heading">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
               <Badge variant="outline" className="mb-4">Dúvidas Frequentes</Badge>
-              <h2 className="text-3xl lg:text-4xl font-bold mb-6">
+              <h2 id="faq-heading" className="text-3xl lg:text-4xl font-bold mb-6">
                 Perguntas <span className="text-primary">frequentes</span>
               </h2>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8">
+            <dl className="grid md:grid-cols-2 gap-8">
               {[
                 {
                   question: "Quanto custa um serviço de dedetização?",
@@ -535,22 +551,22 @@ Telefone: ${formData.phone || "Não informado"}`;
               ].map((faq, index) => (
                 <Card key={index} className="glass">
                   <CardContent className="p-6">
-                    <h4 className="font-semibold mb-3">{faq.question}</h4>
-                    <p className="text-muted-foreground text-sm leading-relaxed">
+                    <dt className="font-semibold mb-3">{faq.question}</dt>
+                    <dd className="text-muted-foreground text-sm leading-relaxed">
                       {faq.answer}
-                    </p>
+                    </dd>
                   </CardContent>
                 </Card>
               ))}
-            </div>
+            </dl>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 gradient-hero">
+      <section className="py-20 gradient-hero" aria-labelledby="cta-contact-heading">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold text-primary-foreground mb-6">
+          <h2 id="cta-contact-heading" className="text-3xl lg:text-4xl font-bold text-primary-foreground mb-6">
             Precisa de ajuda urgente?
           </h2>
           <p className="text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
@@ -558,18 +574,24 @@ Telefone: ${formData.phone || "Não informado"}`;
             Entre em contato agora mesmo!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="secondary" size="lg" className="font-semibold" asChild>
-              <a href="tel:+5516974007842">
+            <Button 
+              variant="secondary" 
+              size="lg" 
+              className="font-semibold min-h-[48px]" 
+              asChild
+            >
+              <a href="tel:+5516974007842" aria-label="Ligar para (16) 97400-7842">
                 (16) 97400-7842
               </a>
             </Button>
             <Button 
               variant="outline" 
               size="lg" 
-              className="font-semibold bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
+              className="font-semibold bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary min-h-[48px]"
               onClick={handleWhatsAppClick}
+              aria-label="Entrar em contato via WhatsApp (abre em nova aba)"
             >
-              <MessageCircle className="mr-2 h-5 w-5" />
+              <MessageCircle className="mr-2 h-5 w-5" aria-hidden="true" />
               WhatsApp
             </Button>
           </div>

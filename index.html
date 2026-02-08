@@ -9,21 +9,29 @@
     <meta name="keywords" content="dedetização, controle de pragas, desratização, São Paulo, bioforte, pest control" />
     <meta name="theme-color" content="#2d7a4a" />
 
-    <!-- Preconnect para otimizar carregamento -->
+    <!-- Preconnect for critical resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://firestore.googleapis.com" />
+
+    <!-- Critical CSS inline for faster FCP -->
+    <style>
+      /* Critical above-the-fold styles */
+      body { margin: 0; font-family: system-ui, -apple-system, sans-serif; }
+      .critical-loader { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+      .critical-spinner { width: 40px; height: 40px; border: 4px solid #e5e7eb; border-top-color: #2d7a4a; border-radius: 50%; animation: spin 1s linear infinite; }
+      @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
     
-    <!-- Font loaded via stylesheet below -->
-    
-    <!-- Font com display swap para evitar render-blocking -->
+    <!-- Font with display swap and reduced weights -->
     <link 
-      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap" 
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap" 
       rel="stylesheet" 
       media="print" 
       onload="this.media='all'" 
     />
     <noscript>
-      <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap" rel="stylesheet" />
     </noscript>
 
     <!-- Open Graph -->
@@ -43,7 +51,12 @@
   </head>
 
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Critical loading state for faster perceived performance -->
+      <div class="critical-loader" aria-label="Carregando aplicação">
+        <div class="critical-spinner"></div>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
