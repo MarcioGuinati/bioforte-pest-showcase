@@ -347,7 +347,7 @@ const Home = () => {
             </h2>
             <p className="text-xl text-primary-foreground/90 mb-8">
               Entre em contato conosco e receba um orçamento personalizado. 
-              Atendemos em toda a região metropolitana.
+              Atendemos em Ribeirão Preto, Franca, Uberaba, Araraquara e Guarapuava.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/contato">

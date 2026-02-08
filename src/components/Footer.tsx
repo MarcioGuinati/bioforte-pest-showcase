@@ -135,8 +135,8 @@ const Footer = () => {
                   <MapPin className="h-4 w-4 text-primary" />
                 </div>
                 <div>
-                  <p className="font-medium">São Paulo - SP</p>
-                  <p className="text-sm text-muted-foreground">Atendemos toda região metropolitana</p>
+                  <p className="font-medium">Nossas Unidades</p>
+                  <p className="text-sm text-muted-foreground">Ribeirão Preto, Franca, Uberaba, Araraquara e Guarapuava</p>
                 </div>
               </div>
 
