@@ -133,6 +133,12 @@ const Header = () => {
                   Solicitar Orçamento
                 </Button>
               </Link>
+              
+              {/* Theme Toggle for Mobile */}
+              <div className="flex items-center justify-between pt-4 mt-2 border-t border-border/30">
+                <span className="text-sm text-muted-foreground">Modo de exibição</span>
+                <ThemeToggle />
+              </div>
             </nav>
           </div>
         )}
