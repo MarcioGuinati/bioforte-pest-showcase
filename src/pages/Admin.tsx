@@ -60,10 +60,16 @@ import {
   Key,
   Save,
   FileText,
+  Sun,
+  Moon,
+  BarChart3,
+  User,
 } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import logoImage from "@/assets/logo-bioforte.png";
+import { useAdminTheme } from "@/hooks/useAdminTheme";
+import { AnalyticsDashboard } from "@/components/admin/AnalyticsDashboard";
 
 interface BlogPost {
   id: string;
@@ -76,18 +82,17 @@ interface BlogPost {
   created_at: Date;
   updated_at: Date;
   author_email: string | null;
-}
-
-interface Settings {
-  openai_api_key: string;
+  author_name: string | null;
 }
 
 const Admin = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { theme, toggleTheme } = useAdminTheme();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [currentUserEmail, setCurrentUserEmail] = useState<string | null>(null);
+  const [currentUserName, setCurrentUserName] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState("posts");
 
   // Form state
@@ -128,6 +133,7 @@ const Admin = () => {
         }
 
         setCurrentUserEmail(user.email);
+        setCurrentUserName(adminDoc.data()?.name || user.displayName || user.email?.split('@')[0] || 'Admin');
         setIsAuthenticated(true);
 
         // Load settings
@@ -184,6 +190,7 @@ const Admin = () => {
         ...post,
         slug: generateSlug(post.title),
         author_email: currentUserEmail,
+        author_name: currentUserName,
         created_at: now,
         updated_at: now,
       });
@@ -399,6 +406,7 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
         cover_image_url: coverImageUrl || null,
         published,
         author_email: currentUserEmail,
+        author_name: currentUserName,
       });
     }
   };
@@ -410,8 +418,8 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
 
   if (isCheckingAuth) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-900">
-        <Loader2 className="w-8 h-8 animate-spin text-green-500" />
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
       </div>
     );
   }
@@ -421,24 +429,38 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
   }
 
   return (
-    <div className="min-h-screen bg-slate-900">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-slate-800 border-b border-slate-700 sticky top-0 z-50">
+      <header className="bg-card border-b border-border sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <img src={logoImage} alt="Bioforte" className="h-10" />
             <div>
-              <h1 className="text-lg font-semibold text-white">Painel Administrativo</h1>
-              <p className="text-sm text-slate-400">Gerenciamento do Blog</p>
+              <h1 className="text-lg font-semibold text-foreground">Painel Administrativo</h1>
+              <p className="text-sm text-muted-foreground">Gerenciamento do Blog</p>
             </div>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            {/* Theme Toggle */}
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={toggleTheme}
+              className="border-border"
+            >
+              {theme === 'dark' ? (
+                <Sun className="h-4 w-4 text-foreground" />
+              ) : (
+                <Moon className="h-4 w-4 text-foreground" />
+              )}
+            </Button>
+            
             {currentUserEmail && (
-              <span className="text-sm text-slate-400 hidden md:block">
-                {currentUserEmail}
+              <span className="text-sm text-muted-foreground hidden md:block">
+                {currentUserName || currentUserEmail}
               </span>
             )}
-            <Button variant="outline" onClick={handleLogout} className="border-slate-600 text-slate-300 hover:bg-slate-700">
+            <Button variant="outline" onClick={handleLogout} className="border-border text-foreground hover:bg-muted">
               <LogOut className="w-4 h-4 mr-2" />
               Sair
             </Button>
@@ -448,12 +470,16 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
 
       <main className="container mx-auto px-4 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="bg-slate-800 border-slate-700 mb-6">
-            <TabsTrigger value="posts" className="data-[state=active]:bg-green-600 data-[state=active]:text-white">
+          <TabsList className="bg-muted border-border mb-6">
+            <TabsTrigger value="posts" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <FileText className="w-4 h-4 mr-2" />
               Posts
             </TabsTrigger>
-            <TabsTrigger value="settings" className="data-[state=active]:bg-green-600 data-[state=active]:text-white">
+            <TabsTrigger value="analytics" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <BarChart3 className="w-4 h-4 mr-2" />
+              Analytics
+            </TabsTrigger>
+            <TabsTrigger value="settings" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <Settings className="w-4 h-4 mr-2" />
               Configurações
             </TabsTrigger>
@@ -462,20 +488,20 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
           {/* Posts Tab */}
           <TabsContent value="posts">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-white">Posts do Blog</h2>
+              <h2 className="text-2xl font-bold text-foreground">Posts do Blog</h2>
               <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                 <DialogTrigger asChild>
-                  <Button onClick={() => handleOpenDialog()} className="bg-green-600 hover:bg-green-700">
+                  <Button onClick={() => handleOpenDialog()} className="bg-primary hover:bg-primary/90 text-primary-foreground">
                     <Plus className="w-4 h-4 mr-2" />
                     Novo Post
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto bg-slate-800 border-slate-700 text-white">
+                <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto bg-card border-border text-foreground">
                   <DialogHeader>
-                    <DialogTitle className="text-white">
+                    <DialogTitle className="text-foreground">
                       {editingPost ? "Editar Post" : "Novo Post"}
                     </DialogTitle>
-                    <DialogDescription className="text-slate-400">
+                    <DialogDescription className="text-muted-foreground">
                       {editingPost
                         ? "Edite as informações do post"
                         : "Crie um novo post para o blog. Você pode usar o ChatGPT para gerar o conteúdo."}
@@ -484,10 +510,10 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
 
                   <div className="space-y-6 py-4">
                     {/* AI Section */}
-                    <Card className="border-dashed border-slate-600 bg-slate-700/50">
+                    <Card className="border-dashed border-border bg-muted/50">
                       <CardHeader className="pb-3">
-                        <CardTitle className="text-sm flex items-center gap-2 text-white">
-                          <Sparkles className="w-4 h-4 text-green-500" />
+                        <CardTitle className="text-sm flex items-center gap-2 text-foreground">
+                          <Sparkles className="w-4 h-4 text-primary" />
                           Gerar com ChatGPT
                         </CardTitle>
                       </CardHeader>
@@ -497,14 +523,14 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
                           value={aiPrompt}
                           onChange={(e) => setAiPrompt(e.target.value)}
                           rows={2}
-                          className="bg-slate-600 border-slate-500 text-white placeholder:text-slate-400"
+                          className="bg-background border-border text-foreground placeholder:text-muted-foreground"
                         />
                         <Button
                           type="button"
                           variant="secondary"
                           onClick={generateWithAI}
                           disabled={isGenerating}
-                          className="w-full bg-slate-600 hover:bg-slate-500 text-white"
+                          className="w-full"
                         >
                           {isGenerating ? (
                             <>
@@ -521,56 +547,56 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
                       </CardContent>
                     </Card>
 
-                    <Separator className="bg-slate-700" />
+                    <Separator className="bg-border" />
 
                     {/* Form Fields */}
                     <div className="space-y-4">
                       <div className="space-y-2">
-                        <Label htmlFor="title" className="text-slate-200">Título *</Label>
+                        <Label htmlFor="title" className="text-foreground">Título *</Label>
                         <Input
                           id="title"
                           value={title}
                           onChange={(e) => setTitle(e.target.value)}
                           placeholder="Título do artigo"
-                          className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
+                          className="bg-background border-border text-foreground placeholder:text-muted-foreground"
                         />
                       </div>
 
                       <div className="space-y-2">
-                        <Label htmlFor="excerpt" className="text-slate-200">Resumo</Label>
+                        <Label htmlFor="excerpt" className="text-foreground">Resumo</Label>
                         <Textarea
                           id="excerpt"
                           value={excerpt}
                           onChange={(e) => setExcerpt(e.target.value)}
                           placeholder="Breve descrição do artigo"
                           rows={2}
-                          className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
+                          className="bg-background border-border text-foreground placeholder:text-muted-foreground"
                         />
                       </div>
 
                       <div className="space-y-2">
-                        <Label htmlFor="content" className="text-slate-200">Conteúdo * (Markdown suportado)</Label>
+                        <Label htmlFor="content" className="text-foreground">Conteúdo * (Markdown suportado)</Label>
                         <Textarea
                           id="content"
                           value={content}
                           onChange={(e) => setContent(e.target.value)}
                           placeholder="Conteúdo completo do artigo..."
                           rows={10}
-                          className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
+                          className="bg-background border-border text-foreground placeholder:text-muted-foreground"
                         />
                       </div>
 
                       <div className="space-y-2">
-                        <Label htmlFor="coverImageUrl" className="text-slate-200">URL da Imagem de Capa</Label>
+                        <Label htmlFor="coverImageUrl" className="text-foreground">URL da Imagem de Capa</Label>
                         <Input
                           id="coverImageUrl"
                           value={coverImageUrl}
                           onChange={(e) => setCoverImageUrl(e.target.value)}
                           placeholder="https://exemplo.com/imagem.jpg"
-                          className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
+                          className="bg-background border-border text-foreground placeholder:text-muted-foreground"
                         />
                         {coverImageUrl && (
-                          <div className="mt-2 rounded-lg overflow-hidden border border-slate-600">
+                          <div className="mt-2 rounded-lg overflow-hidden border border-border">
                             <img
                               src={coverImageUrl}
                               alt="Preview"
@@ -583,10 +609,10 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
                         )}
                       </div>
 
-                      <div className="flex items-center justify-between rounded-lg border border-slate-600 p-4 bg-slate-700/50">
+                      <div className="flex items-center justify-between rounded-lg border border-border p-4 bg-muted/50">
                         <div className="space-y-0.5">
-                          <Label className="text-slate-200">Publicar</Label>
-                          <p className="text-sm text-slate-400">
+                          <Label className="text-foreground">Publicar</Label>
+                          <p className="text-sm text-muted-foreground">
                             O post ficará visível no site
                           </p>
                         </div>
@@ -599,13 +625,13 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
                   </div>
 
                   <DialogFooter>
-                    <Button variant="outline" onClick={() => setIsDialogOpen(false)} className="border-slate-600 text-slate-300 hover:bg-slate-700">
+                    <Button variant="outline" onClick={() => setIsDialogOpen(false)} className="border-border text-foreground hover:bg-muted">
                       Cancelar
                     </Button>
                     <Button
                       onClick={handleSubmit}
                       disabled={createPostMutation.isPending || updatePostMutation.isPending}
-                      className="bg-green-600 hover:bg-green-700"
+                      className="bg-primary hover:bg-primary/90 text-primary-foreground"
                     >
                       {(createPostMutation.isPending || updatePostMutation.isPending) && (
                         <Loader2 className="w-4 h-4 mr-2 animate-spin" />
@@ -621,11 +647,11 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
             {isLoadingPosts ? (
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {[1, 2, 3].map((i) => (
-                  <Card key={i} className="animate-pulse bg-slate-800 border-slate-700">
-                    <div className="h-40 bg-slate-700" />
+                  <Card key={i} className="animate-pulse bg-card border-border">
+                    <div className="h-40 bg-muted" />
                     <CardHeader>
-                      <div className="h-5 bg-slate-700 rounded w-3/4" />
-                      <div className="h-4 bg-slate-700 rounded w-1/2 mt-2" />
+                      <div className="h-5 bg-muted rounded w-3/4" />
+                      <div className="h-4 bg-muted rounded w-1/2 mt-2" />
                     </CardHeader>
                   </Card>
                 ))}
@@ -633,7 +659,7 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
             ) : posts && posts.length > 0 ? (
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {posts.map((post) => (
-                  <Card key={post.id} className="overflow-hidden bg-slate-800 border-slate-700">
+                  <Card key={post.id} className="overflow-hidden bg-card border-border">
                     {post.cover_image_url && (
                       <div className="h-40 overflow-hidden">
                         <img
@@ -645,10 +671,10 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
                     )}
                     <CardHeader className="pb-2">
                       <div className="flex items-start justify-between gap-2">
-                        <CardTitle className="text-base line-clamp-2 text-white">
+                        <CardTitle className="text-base line-clamp-2 text-foreground">
                           {post.title}
                         </CardTitle>
-                        <Badge variant={post.published ? "default" : "secondary"} className={post.published ? "bg-green-600" : "bg-slate-600"}>
+                        <Badge variant={post.published ? "default" : "secondary"} className={post.published ? "bg-primary" : ""}>
                           {post.published ? (
                             <Eye className="w-3 h-3 mr-1" />
                           ) : (
@@ -657,14 +683,22 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
                           {post.published ? "Publicado" : "Rascunho"}
                         </Badge>
                       </div>
-                      <CardDescription className="flex items-center gap-1 text-xs text-slate-400">
-                        <Calendar className="w-3 h-3" />
-                        {format(post.created_at, "dd/MM/yyyy", { locale: ptBR })}
+                      <CardDescription className="flex flex-col gap-1 text-xs text-muted-foreground">
+                        <span className="flex items-center gap-1">
+                          <Calendar className="w-3 h-3" />
+                          {format(post.created_at, "dd/MM/yyyy", { locale: ptBR })}
+                        </span>
+                        {post.author_name && (
+                          <span className="flex items-center gap-1">
+                            <User className="w-3 h-3" />
+                            {post.author_name}
+                          </span>
+                        )}
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="pt-0">
                       {post.excerpt && (
-                        <p className="text-sm text-slate-400 line-clamp-2 mb-4">
+                        <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
                           {post.excerpt}
                         </p>
                       )}
@@ -672,7 +706,7 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
                         <Button
                           variant="outline"
                           size="sm"
-                          className="flex-1 border-slate-600 text-slate-300 hover:bg-slate-700"
+                          className="flex-1 border-border text-foreground hover:bg-muted"
                           onClick={() => handleOpenDialog(post)}
                         >
                           <Pencil className="w-3 h-3 mr-1" />
@@ -680,22 +714,22 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
                         </Button>
                         <AlertDialog>
                           <AlertDialogTrigger asChild>
-                            <Button variant="outline" size="sm" className="border-slate-600 text-slate-300 hover:bg-slate-700">
+                            <Button variant="outline" size="sm" className="border-border text-foreground hover:bg-muted">
                               <Trash2 className="w-3 h-3" />
                             </Button>
                           </AlertDialogTrigger>
-                          <AlertDialogContent className="bg-slate-800 border-slate-700">
+                          <AlertDialogContent className="bg-card border-border">
                             <AlertDialogHeader>
-                              <AlertDialogTitle className="text-white">Excluir post?</AlertDialogTitle>
-                              <AlertDialogDescription className="text-slate-400">
+                              <AlertDialogTitle className="text-foreground">Excluir post?</AlertDialogTitle>
+                              <AlertDialogDescription className="text-muted-foreground">
                                 Esta ação não pode ser desfeita. O post será permanentemente excluído.
                               </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
-                              <AlertDialogCancel className="border-slate-600 text-slate-300 hover:bg-slate-700">Cancelar</AlertDialogCancel>
+                              <AlertDialogCancel className="border-border text-foreground hover:bg-muted">Cancelar</AlertDialogCancel>
                               <AlertDialogAction
                                 onClick={() => deletePostMutation.mutate(post.id)}
-                                className="bg-red-600 hover:bg-red-700"
+                                className="bg-destructive hover:bg-destructive/90 text-destructive-foreground"
                               >
                                 Excluir
                               </AlertDialogAction>
@@ -708,16 +742,16 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
                 ))}
               </div>
             ) : (
-              <Card className="text-center py-12 bg-slate-800 border-slate-700">
+              <Card className="text-center py-12 bg-card border-border">
                 <CardContent>
-                  <div className="w-16 h-16 bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Plus className="w-8 h-8 text-slate-400" />
+                  <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Plus className="w-8 h-8 text-muted-foreground" />
                   </div>
-                  <h3 className="text-lg font-semibold mb-2 text-white">Nenhum post criado</h3>
-                  <p className="text-slate-400 mb-4">
+                  <h3 className="text-lg font-semibold mb-2 text-foreground">Nenhum post criado</h3>
+                  <p className="text-muted-foreground mb-4">
                     Comece criando seu primeiro post para o blog
                   </p>
-                  <Button onClick={() => handleOpenDialog()} className="bg-green-600 hover:bg-green-700">
+                  <Button onClick={() => handleOpenDialog()} className="bg-primary hover:bg-primary/90 text-primary-foreground">
                     <Plus className="w-4 h-4 mr-2" />
                     Criar Primeiro Post
                   </Button>
@@ -726,21 +760,30 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
             )}
           </TabsContent>
 
+          {/* Analytics Tab */}
+          <TabsContent value="analytics">
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold text-foreground">Analytics do Blog</h2>
+              <p className="text-muted-foreground">Métricas de visualização e interação dos últimos 30 dias</p>
+            </div>
+            <AnalyticsDashboard />
+          </TabsContent>
+
           {/* Settings Tab */}
           <TabsContent value="settings">
-            <Card className="bg-slate-800 border-slate-700">
+            <Card className="bg-card border-border">
               <CardHeader>
-                <CardTitle className="text-white flex items-center gap-2">
-                  <Key className="w-5 h-5 text-green-500" />
+                <CardTitle className="text-foreground flex items-center gap-2">
+                  <Key className="w-5 h-5 text-primary" />
                   Configurações do ChatGPT
                 </CardTitle>
-                <CardDescription className="text-slate-400">
+                <CardDescription className="text-muted-foreground">
                   Configure sua API Key do OpenAI para gerar conteúdo com inteligência artificial
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="apiKey" className="text-slate-200">API Key do OpenAI</Label>
+                  <Label htmlFor="apiKey" className="text-foreground">API Key do OpenAI</Label>
                   <div className="flex gap-2">
                     <div className="relative flex-1">
                       <Input
@@ -749,13 +792,13 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
                         value={openaiApiKey}
                         onChange={(e) => setOpenaiApiKey(e.target.value)}
                         placeholder="sk-..."
-                        className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400 pr-10"
+                        className="bg-background border-border text-foreground placeholder:text-muted-foreground pr-10"
                       />
                       <Button
                         type="button"
                         variant="ghost"
                         size="sm"
-                        className="absolute right-1 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
+                        className="absolute right-1 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                         onClick={() => setShowApiKey(!showApiKey)}
                       >
                         {showApiKey ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -764,7 +807,7 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
                     <Button
                       onClick={saveSettings}
                       disabled={isSavingSettings}
-                      className="bg-green-600 hover:bg-green-700"
+                      className="bg-primary hover:bg-primary/90 text-primary-foreground"
                     >
                       {isSavingSettings ? (
                         <Loader2 className="w-4 h-4 animate-spin" />
@@ -776,13 +819,13 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
                       )}
                     </Button>
                   </div>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-muted-foreground">
                     Obtenha sua API Key em{" "}
                     <a
                       href="https://platform.openai.com/api-keys"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-green-500 hover:underline"
+                      className="text-primary hover:underline"
                     >
                       platform.openai.com/api-keys
                     </a>
