@@ -22,6 +22,8 @@ export default defineConfig(({ mode }) => ({
         manualChunks: {
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
           'ui-vendor': ['lucide-react', '@radix-ui/react-slot'],
+          'map-vendor': ['leaflet', 'react-leaflet'],
+          'firebase-vendor': ['firebase/app', 'firebase/firestore'],
         },
       },
     },
@@ -30,8 +32,10 @@ export default defineConfig(({ mode }) => ({
     minify: 'esbuild',
     target: 'esnext',
     cssMinify: true,
+    chunkSizeWarningLimit: 500,
   },
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom', 'leaflet', 'react-leaflet'],
+    exclude: ['firebase'],
   },
 }));

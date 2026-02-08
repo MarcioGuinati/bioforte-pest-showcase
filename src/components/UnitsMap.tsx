@@ -39,12 +39,19 @@ const typeConfig = {
   },
 };
 
-// Lazy load the map component
+// Lazy load the map component with intersection observer
 const LazyMap = lazy(() => import("./LazyMapContent"));
 
 const MapSkeleton = () => (
-  <div className="h-[500px] bg-muted animate-pulse rounded-lg flex items-center justify-center">
-    <p className="text-muted-foreground">Carregando mapa...</p>
+  <div 
+    className="h-[500px] bg-muted rounded-lg flex items-center justify-center" 
+    role="status" 
+    aria-label="Carregando mapa"
+  >
+    <div className="text-center">
+      <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+      <p className="text-muted-foreground text-sm">Carregando mapa...</p>
+    </div>
   </div>
 );
 

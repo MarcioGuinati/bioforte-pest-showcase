@@ -1,10 +1,12 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, memo } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Shield, Users, Award, Clock, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import slide06 from "@/assets/038f9b42-2503-4e8d-afa4-9bd64e7ef10b.jpg";
-import slide07 from "@/assets/d0398b49-0224-4067-af90-a1f2c4a6c0db.jpg";
-import companyBuilding from "@/assets/company-building.jpg";
+
+// Lazy load non-critical images
+const slide06 = "/src/assets/038f9b42-2503-4e8d-afa4-9bd64e7ef10b.jpg";
+const slide07 = "/src/assets/d0398b49-0224-4067-af90-a1f2c4a6c0db.jpg";
+const companyBuilding = "/src/assets/company-building.jpg";
 
 const slides = [
   {
@@ -59,9 +61,10 @@ const features = [
   }
 ];
 
-const HeroSlider = () => {
+const HeroSlider = memo(() => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [imagesLoaded, setImagesLoaded] = useState<boolean[]>([true, false, false]);
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -70,6 +73,22 @@ const HeroSlider = () => {
   const prevSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
   }, []);
+
+  // Preload next slide image
+  useEffect(() => {
+    const nextIndex = (currentSlide + 1) % slides.length;
+    if (!imagesLoaded[nextIndex]) {
+      const img = new Image();
+      img.onload = () => {
+        setImagesLoaded(prev => {
+          const newState = [...prev];
+          newState[nextIndex] = true;
+          return newState;
+        });
+      };
+      img.src = slides[nextIndex].image;
+    }
+  }, [currentSlide, imagesLoaded]);
 
   useEffect(() => {
     if (isPaused) return;
@@ -207,6 +226,8 @@ const HeroSlider = () => {
       </nav>
     </section>
   );
-};
+});
+
+HeroSlider.displayName = "HeroSlider";
 
 export default HeroSlider;
