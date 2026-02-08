@@ -1,5 +1,6 @@
 import HeroSlider from "@/components/HeroSlider";
 import UnitsMap from "@/components/UnitsMap";
+import SealsSection from "@/components/SealsSection";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -250,6 +251,9 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* Seals/Certifications Section */}
+      <SealsSection />
 
       {/* Google Reviews Section */}
       <section className="py-20 bg-muted/30 relative overflow-hidden" aria-labelledby="reviews-heading">
