@@ -1,4 +1,5 @@
 import HeroSlider from "@/components/HeroSlider";
+import PestsSection from "@/components/PestsSection";
 import UnitsMap from "@/components/UnitsMap";
 import SealsSection from "@/components/SealsSection";
 import { Button } from "@/components/ui/button";
@@ -95,6 +96,9 @@ const Home = () => {
     <main className="overflow-hidden">
       {/* Hero Slider */}
       <HeroSlider />
+
+      {/* Pests Icons Section */}
+      <PestsSection />
 
       {/* Stats Section */}
       <section className="py-20 bg-primary relative overflow-hidden" aria-labelledby="stats-heading">
