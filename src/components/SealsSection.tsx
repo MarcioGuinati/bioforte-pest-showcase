@@ -84,7 +84,7 @@ const SealMedal = ({ seal, index }: { seal: typeof seals[0]; index: number }) =>
 
 const SealsSection = () => {
   return (
-    <section className="py-20 bg-muted/30 relative overflow-hidden" aria-labelledby="seals-heading">
+    <section className="py-20 bg-secondary dark:bg-muted/30 relative overflow-hidden" aria-labelledby="seals-heading">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16 animate-fade-in">
           <Badge variant="outline" className="mb-4">Certificações e Licenças</Badge>
