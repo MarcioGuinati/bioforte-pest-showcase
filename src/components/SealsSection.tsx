@@ -1,35 +1,92 @@
-import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Shield, Flame, Leaf, Award } from "lucide-react";
 
 const seals = [
   {
     title: "Vigilância Sanitária",
-    description: "Empresa licenciada pela Vigilância Sanitária",
+    subtitle: "Empresa Licenciada",
     icon: Shield
   },
   {
     title: "Corpo de Bombeiros",
-    description: "Empresa licenciada pelo Corpo de Bombeiros",
+    subtitle: "Empresa Licenciada",
     icon: Flame
   },
   {
     title: "APRAG",
-    description: "Associada à APRAG - Associação dos Controladores de Vetores e Pragas Urbanas",
+    subtitle: "Associada",
     icon: Award
   },
   {
     title: "Licença Ambiental",
-    description: "Empresa com Licença Ambiental regularizada",
+    subtitle: "Regularizada",
     icon: Leaf
   }
 ];
 
+const SealMedal = ({ seal, index }: { seal: typeof seals[0]; index: number }) => {
+  return (
+    <div 
+      className="flex flex-col items-center group animate-scale-bounce"
+      style={{ animationDelay: `${index * 0.1}s` }}
+    >
+      {/* Medal Container */}
+      <div className="relative">
+        {/* Outer Ring */}
+        <div className="w-28 h-28 lg:w-36 lg:h-36 rounded-full bg-gradient-to-br from-gold-light via-gold to-gold-dark p-1 shadow-xl group-hover:scale-105 transition-transform duration-300">
+          {/* Inner Ring with dots pattern */}
+          <div className="w-full h-full rounded-full bg-gradient-to-br from-gold via-gold-light to-gold p-1 relative">
+            {/* Dotted border effect */}
+            <div 
+              className="absolute inset-1 rounded-full border-2 border-gold-dark/30"
+              style={{
+                borderStyle: 'dotted'
+              }}
+            />
+            {/* Center Circle */}
+            <div className="w-full h-full rounded-full bg-gradient-to-br from-gold-light via-gold to-gold-dark flex flex-col items-center justify-center relative overflow-hidden">
+              {/* Shine effect */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent" />
+              
+              {/* Icon */}
+              <seal.icon className="w-8 h-8 lg:w-10 lg:h-10 text-gold-foreground mb-1 relative z-10" />
+              
+              {/* Text */}
+              <span className="text-[8px] lg:text-[10px] font-bold text-gold-foreground uppercase tracking-wider text-center px-2 relative z-10">
+                {seal.subtitle}
+              </span>
+            </div>
+          </div>
+        </div>
+        
+        {/* Ribbon */}
+        <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 flex">
+          {/* Left ribbon */}
+          <div className="w-6 h-12 lg:w-8 lg:h-14 bg-gradient-to-b from-gold to-gold-dark transform -skew-x-12 -mr-1 shadow-md relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 h-3 bg-primary/20" />
+          </div>
+          {/* Right ribbon */}
+          <div className="w-6 h-12 lg:w-8 lg:h-14 bg-gradient-to-b from-gold to-gold-dark transform skew-x-12 -ml-1 shadow-md relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 h-3 bg-primary/20" />
+          </div>
+        </div>
+      </div>
+      
+      {/* Title below medal */}
+      <h3 className="mt-8 font-bold text-sm lg:text-base text-center group-hover:text-primary transition-colors">
+        {seal.title}
+      </h3>
+    </div>
+  );
+};
+
 const SealsSection = () => {
   return (
-    <section className="py-16 bg-background relative overflow-hidden" aria-labelledby="seals-heading">
+    <section className="py-20 bg-muted/30 relative overflow-hidden" aria-labelledby="seals-heading">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12 animate-fade-in">
+        <div className="text-center mb-16 animate-fade-in">
           <Badge variant="outline" className="mb-4">Certificações e Licenças</Badge>
           <h2 className="text-3xl lg:text-4xl font-bold mb-4" id="seals-heading">
             Empresa 
@@ -41,29 +98,11 @@ const SealsSection = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6" role="list" aria-label="Certificações e licenças da empresa">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12" role="list" aria-label="Certificações e licenças da empresa">
           {seals.map((seal, index) => (
-            <Card 
-              key={index} 
-              className="glass-strong hover-lift group animate-scale-bounce text-center" 
-              style={{ animationDelay: `${index * 0.1}s` }}
-              role="listitem"
-            >
-              <CardContent className="p-6 flex flex-col items-center">
-                <div 
-                  className="w-20 h-20 lg:w-24 lg:h-24 rounded-full bg-gradient-to-br from-gold-light via-gold to-gold-dark flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg ring-4 ring-gold/30"
-                  aria-hidden="true"
-                >
-                  <seal.icon className="w-10 h-10 lg:w-12 lg:h-12 text-gold-foreground" />
-                </div>
-                <h3 className="font-bold text-sm lg:text-base mb-2 group-hover:text-primary transition-colors">
-                  {seal.title}
-                </h3>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  {seal.description}
-                </p>
-              </CardContent>
-            </Card>
+            <div key={index} role="listitem">
+              <SealMedal seal={seal} index={index} />
+            </div>
           ))}
         </div>
       </div>
