@@ -49,9 +49,9 @@ const contactInfo = [
   },
   {
     icon: MapPin,
-    title: "Endereço",
-    content: "São Paulo - SP",
-    description: "Atendemos toda a Grande São Paulo",
+    title: "Nossas Unidades",
+    content: "Ribeirão Preto, Franca, Uberaba, Araraquara e Guarapuava",
+    description: "Atendemos em todas as regiões",
     action: null
   }
 ];
@@ -551,7 +551,7 @@ Telefone: ${formData.phone || "Não informado"}`;
                 },
                 {
                   question: "Atendem em que regiões?",
-                  answer: "Atendemos toda a Grande São Paulo: capital, ABC, Guarulhos, Osasco e região metropolitana."
+                  answer: "Atendemos nas unidades de Ribeirão Preto, Franca, Uberaba, Araraquara e Guarapuava, e suas respectivas regiões."
                 }
               ].map((faq, index) => (
                 <Card key={index} className="glass">
