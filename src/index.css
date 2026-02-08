@@ -44,6 +44,12 @@
     --success: 127 48% 40%;
     --success-foreground: 0 0% 100%;
 
+    /* Gold Seal Colors */
+    --gold: 43 74% 49%;
+    --gold-light: 45 93% 58%;
+    --gold-dark: 38 80% 40%;
+    --gold-foreground: 30 60% 15%;
+
     /* UI Elements */
     --border: 220 13% 85%;
     --input: 220 13% 85%;
@@ -114,6 +120,12 @@
 
     --success: 127 48% 55%;
     --success-foreground: 0 0% 7%;
+
+    /* Gold Seal Colors */
+    --gold: 43 74% 55%;
+    --gold-light: 45 93% 65%;
+    --gold-dark: 38 80% 45%;
+    --gold-foreground: 30 60% 10%;
 
     /* UI Elements */
     --border: 220 13% 18%;
