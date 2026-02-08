@@ -14,6 +14,7 @@ const Header = () => {
     { name: "Biologia das Pragas", path: "/biologia-pragas" },
     { name: "Área de Atuação", path: "/area-atuacao" },
     { name: "Nosso Time", path: "/nosso-time" },
+    { name: "Blog", path: "/blog" },
     { name: "Trabalhe Conosco", path: "/trabalhe-conosco" },
     { name: "Área do Cliente", path: "/area-cliente" },
     { name: "Contato", path: "/contato" },
