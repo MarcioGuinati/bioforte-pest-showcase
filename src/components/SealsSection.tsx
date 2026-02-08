@@ -6,26 +6,22 @@ const seals = [
   {
     title: "Vigilância Sanitária",
     description: "Empresa licenciada pela Vigilância Sanitária",
-    icon: Shield,
-    color: "from-blue-500 to-blue-600"
+    icon: Shield
   },
   {
     title: "Corpo de Bombeiros",
     description: "Empresa licenciada pelo Corpo de Bombeiros",
-    icon: Flame,
-    color: "from-red-500 to-red-600"
+    icon: Flame
   },
   {
     title: "APRAG",
     description: "Associada à APRAG - Associação dos Controladores de Vetores e Pragas Urbanas",
-    icon: Award,
-    color: "from-amber-500 to-amber-600"
+    icon: Award
   },
   {
     title: "Licença Ambiental",
     description: "Empresa com Licença Ambiental regularizada",
-    icon: Leaf,
-    color: "from-green-500 to-green-600"
+    icon: Leaf
   }
 ];
 
@@ -55,10 +51,10 @@ const SealsSection = () => {
             >
               <CardContent className="p-6 flex flex-col items-center">
                 <div 
-                  className={`w-20 h-20 lg:w-24 lg:h-24 rounded-full bg-gradient-to-br ${seal.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg`}
+                  className="w-20 h-20 lg:w-24 lg:h-24 rounded-full bg-gradient-to-br from-gold-light via-gold to-gold-dark flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg ring-4 ring-gold/30"
                   aria-hidden="true"
                 >
-                  <seal.icon className="w-10 h-10 lg:w-12 lg:h-12 text-white" />
+                  <seal.icon className="w-10 h-10 lg:w-12 lg:h-12 text-gold-foreground" />
                 </div>
                 <h3 className="font-bold text-sm lg:text-base mb-2 group-hover:text-primary transition-colors">
                   {seal.title}
