@@ -39,6 +39,14 @@ const PageLoader = () => (
   </div>
 );
 
+// Full screen loader for admin pages
+const AdminLoader = () => (
+  <div className="min-h-screen flex items-center justify-center bg-muted/30" role="status" aria-label="Carregando">
+    <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+    <span className="sr-only">Carregando...</span>
+  </div>
+);
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
@@ -47,6 +55,11 @@ const App = () => (
         <Sonner />
         <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <Routes>
+            {/* Admin routes - separate from main layout */}
+            <Route path="/admin/login" element={<Suspense fallback={<AdminLoader />}><AdminLogin /></Suspense>} />
+            <Route path="/admin" element={<Suspense fallback={<AdminLoader />}><Admin /></Suspense>} />
+            
+            {/* Main site routes with layout */}
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
               <Route path="quem-somos" element={<Suspense fallback={<PageLoader />}><QuemSomos /></Suspense>} />
@@ -58,8 +71,6 @@ const App = () => (
               <Route path="contato" element={<Suspense fallback={<PageLoader />}><Contato /></Suspense>} />
               <Route path="blog" element={<Suspense fallback={<PageLoader />}><Blog /></Suspense>} />
               <Route path="blog/:slug" element={<Suspense fallback={<PageLoader />}><BlogPost /></Suspense>} />
-              <Route path="admin/login" element={<Suspense fallback={<PageLoader />}><AdminLogin /></Suspense>} />
-              <Route path="admin" element={<Suspense fallback={<PageLoader />}><Admin /></Suspense>} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<Suspense fallback={<PageLoader />}><NotFound /></Suspense>} />
             </Route>

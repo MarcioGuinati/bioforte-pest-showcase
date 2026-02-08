@@ -11,6 +11,7 @@ import {
   deleteDoc, 
   doc,
   getDoc,
+  setDoc,
   Timestamp 
 } from "firebase/firestore";
 import { onAuthStateChanged, signOut } from "firebase/auth";
@@ -23,6 +24,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Dialog,
   DialogContent,
@@ -54,6 +56,10 @@ import {
   Eye,
   EyeOff,
   Calendar,
+  Settings,
+  Key,
+  Save,
+  FileText,
 } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -72,12 +78,17 @@ interface BlogPost {
   author_email: string | null;
 }
 
+interface Settings {
+  openai_api_key: string;
+}
+
 const Admin = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [currentUserEmail, setCurrentUserEmail] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState("posts");
 
   // Form state
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -91,6 +102,11 @@ const Admin = () => {
   // AI state
   const [aiPrompt, setAiPrompt] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
+
+  // Settings state
+  const [openaiApiKey, setOpenaiApiKey] = useState("");
+  const [isSavingSettings, setIsSavingSettings] = useState(false);
+  const [showApiKey, setShowApiKey] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -113,6 +129,13 @@ const Admin = () => {
 
         setCurrentUserEmail(user.email);
         setIsAuthenticated(true);
+
+        // Load settings
+        const settingsDoc = await getDoc(doc(db, "settings", "openai"));
+        if (settingsDoc.exists()) {
+          const data = settingsDoc.data();
+          setOpenaiApiKey(data.api_key || "");
+        }
       } catch (error) {
         console.error("Auth check error:", error);
         await signOut(auth);
@@ -169,6 +192,7 @@ const Admin = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-blog-posts"] });
+      queryClient.invalidateQueries({ queryKey: ["blog-posts"] });
       toast.success("Post criado com sucesso!");
       resetForm();
       setIsDialogOpen(false);
@@ -188,6 +212,7 @@ const Admin = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-blog-posts"] });
+      queryClient.invalidateQueries({ queryKey: ["blog-posts"] });
       toast.success("Post atualizado com sucesso!");
       resetForm();
       setIsDialogOpen(false);
@@ -204,6 +229,7 @@ const Admin = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-blog-posts"] });
+      queryClient.invalidateQueries({ queryKey: ["blog-posts"] });
       toast.success("Post excluído com sucesso!");
     },
     onError: (error) => {
@@ -211,37 +237,110 @@ const Admin = () => {
     },
   });
 
+  const saveSettings = async () => {
+    setIsSavingSettings(true);
+    try {
+      await setDoc(doc(db, "settings", "openai"), {
+        api_key: openaiApiKey,
+        updated_at: Timestamp.now(),
+      });
+      toast.success("Configurações salvas com sucesso!");
+    } catch (error) {
+      console.error("Error saving settings:", error);
+      toast.error("Erro ao salvar configurações");
+    } finally {
+      setIsSavingSettings(false);
+    }
+  };
+
   const generateWithAI = async () => {
     if (!aiPrompt.trim()) {
       toast.error("Por favor, insira um prompt");
       return;
     }
 
+    // Check if API key is configured
+    const settingsDoc = await getDoc(doc(db, "settings", "openai"));
+    const apiKey = settingsDoc.exists() ? settingsDoc.data().api_key : null;
+
+    if (!apiKey) {
+      toast.error("Configure sua API Key do ChatGPT nas configurações");
+      setActiveTab("settings");
+      return;
+    }
+
     setIsGenerating(true);
 
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/generate-blog-content`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-          },
-          body: JSON.stringify({ prompt: aiPrompt }),
-        }
-      );
+      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          model: "gpt-4o-mini",
+          messages: [
+            {
+              role: "system",
+              content: `Você é um especialista em controle de pragas e escreve artigos de blog para a empresa Bioforte Controle de Pragas e Ambiental. 
+            
+Suas respostas devem ser em português brasileiro e no formato JSON com a seguinte estrutura:
+{
+  "title": "Título do artigo",
+  "excerpt": "Resumo curto do artigo (máximo 200 caracteres)",
+  "content": "Conteúdo completo do artigo em formato markdown"
+}
+
+O conteúdo deve ser informativo, profissional e educativo, focando em:
+- Prevenção de pragas
+- Métodos de controle
+- Saúde e segurança
+- Dicas práticas para residências e empresas
+
+Use formatação markdown no content: títulos (##), listas, negrito, etc.`
+            },
+            {
+              role: "user",
+              content: aiPrompt
+            }
+          ],
+          temperature: 0.7,
+          max_tokens: 2000,
+        }),
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || "Erro ao gerar conteúdo");
+        if (response.status === 401) {
+          throw new Error("API Key inválida. Verifique nas configurações.");
+        }
+        throw new Error(errorData.error?.message || "Erro ao gerar conteúdo");
       }
 
       const data = await response.json();
+      const messageContent = data.choices?.[0]?.message?.content;
 
-      setTitle(data.title || "");
-      setExcerpt(data.excerpt || "");
-      setContent(data.content || "");
+      if (!messageContent) {
+        throw new Error("Nenhum conteúdo recebido da IA");
+      }
+
+      // Try to parse the JSON response
+      let parsedContent;
+      try {
+        const cleanContent = messageContent.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+        parsedContent = JSON.parse(cleanContent);
+      } catch {
+        parsedContent = {
+          title: "Artigo Gerado",
+          excerpt: messageContent.substring(0, 200),
+          content: messageContent
+        };
+      }
+
+      setTitle(parsedContent.title || "");
+      setExcerpt(parsedContent.excerpt || "");
+      setContent(parsedContent.content || "");
       
       toast.success("Conteúdo gerado com sucesso!");
     } catch (error) {
@@ -294,7 +393,7 @@ const Admin = () => {
     } else {
       createPostMutation.mutate({
         title,
-        slug: "", // Will be generated in mutation
+        slug: "",
         excerpt: excerpt || null,
         content,
         cover_image_url: coverImageUrl || null,
@@ -311,8 +410,8 @@ const Admin = () => {
 
   if (isCheckingAuth) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      <div className="min-h-screen flex items-center justify-center bg-slate-900">
+        <Loader2 className="w-8 h-8 animate-spin text-green-500" />
       </div>
     );
   }
@@ -322,24 +421,24 @@ const Admin = () => {
   }
 
   return (
-    <div className="min-h-screen bg-muted/30">
+    <div className="min-h-screen bg-slate-900">
       {/* Header */}
-      <header className="bg-background border-b sticky top-0 z-50">
+      <header className="bg-slate-800 border-b border-slate-700 sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <img src={logoImage} alt="Bioforte" className="h-10" />
             <div>
-              <h1 className="text-lg font-semibold">Painel Administrativo</h1>
-              <p className="text-sm text-muted-foreground">Gerenciamento do Blog</p>
+              <h1 className="text-lg font-semibold text-white">Painel Administrativo</h1>
+              <p className="text-sm text-slate-400">Gerenciamento do Blog</p>
             </div>
           </div>
           <div className="flex items-center gap-4">
             {currentUserEmail && (
-              <span className="text-sm text-muted-foreground hidden md:block">
+              <span className="text-sm text-slate-400 hidden md:block">
                 {currentUserEmail}
               </span>
             )}
-            <Button variant="outline" onClick={handleLogout}>
+            <Button variant="outline" onClick={handleLogout} className="border-slate-600 text-slate-300 hover:bg-slate-700">
               <LogOut className="w-4 h-4 mr-2" />
               Sair
             </Button>
@@ -348,264 +447,351 @@ const Admin = () => {
       </header>
 
       <main className="container mx-auto px-4 py-8">
-        {/* Actions */}
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold">Posts do Blog</h2>
-          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-            <DialogTrigger asChild>
-              <Button onClick={() => handleOpenDialog()}>
-                <Plus className="w-4 h-4 mr-2" />
-                Novo Post
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
-              <DialogHeader>
-                <DialogTitle>
-                  {editingPost ? "Editar Post" : "Novo Post"}
-                </DialogTitle>
-                <DialogDescription>
-                  {editingPost
-                    ? "Edite as informações do post"
-                    : "Crie um novo post para o blog. Você pode usar a IA para gerar o conteúdo."}
-                </DialogDescription>
-              </DialogHeader>
+        <Tabs value={activeTab} onValueChange={setActiveTab}>
+          <TabsList className="bg-slate-800 border-slate-700 mb-6">
+            <TabsTrigger value="posts" className="data-[state=active]:bg-green-600 data-[state=active]:text-white">
+              <FileText className="w-4 h-4 mr-2" />
+              Posts
+            </TabsTrigger>
+            <TabsTrigger value="settings" className="data-[state=active]:bg-green-600 data-[state=active]:text-white">
+              <Settings className="w-4 h-4 mr-2" />
+              Configurações
+            </TabsTrigger>
+          </TabsList>
 
-              <div className="space-y-6 py-4">
-                {/* AI Section */}
-                <Card className="border-dashed">
-                  <CardHeader className="pb-3">
-                    <CardTitle className="text-sm flex items-center gap-2">
-                      <Sparkles className="w-4 h-4 text-primary" />
-                      Gerar com Inteligência Artificial
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
-                    <Textarea
-                      placeholder="Ex: Escreva um artigo sobre como prevenir infestação de baratas em cozinhas industriais"
-                      value={aiPrompt}
-                      onChange={(e) => setAiPrompt(e.target.value)}
-                      rows={2}
-                    />
-                    <Button
-                      type="button"
-                      variant="secondary"
-                      onClick={generateWithAI}
-                      disabled={isGenerating}
-                      className="w-full"
-                    >
-                      {isGenerating ? (
-                        <>
-                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                          Gerando conteúdo...
-                        </>
-                      ) : (
-                        <>
-                          <Sparkles className="w-4 h-4 mr-2" />
-                          Gerar Conteúdo
-                        </>
-                      )}
+          {/* Posts Tab */}
+          <TabsContent value="posts">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold text-white">Posts do Blog</h2>
+              <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button onClick={() => handleOpenDialog()} className="bg-green-600 hover:bg-green-700">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Novo Post
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto bg-slate-800 border-slate-700 text-white">
+                  <DialogHeader>
+                    <DialogTitle className="text-white">
+                      {editingPost ? "Editar Post" : "Novo Post"}
+                    </DialogTitle>
+                    <DialogDescription className="text-slate-400">
+                      {editingPost
+                        ? "Edite as informações do post"
+                        : "Crie um novo post para o blog. Você pode usar o ChatGPT para gerar o conteúdo."}
+                    </DialogDescription>
+                  </DialogHeader>
+
+                  <div className="space-y-6 py-4">
+                    {/* AI Section */}
+                    <Card className="border-dashed border-slate-600 bg-slate-700/50">
+                      <CardHeader className="pb-3">
+                        <CardTitle className="text-sm flex items-center gap-2 text-white">
+                          <Sparkles className="w-4 h-4 text-green-500" />
+                          Gerar com ChatGPT
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-3">
+                        <Textarea
+                          placeholder="Ex: Escreva um artigo sobre como prevenir infestação de baratas em cozinhas industriais"
+                          value={aiPrompt}
+                          onChange={(e) => setAiPrompt(e.target.value)}
+                          rows={2}
+                          className="bg-slate-600 border-slate-500 text-white placeholder:text-slate-400"
+                        />
+                        <Button
+                          type="button"
+                          variant="secondary"
+                          onClick={generateWithAI}
+                          disabled={isGenerating}
+                          className="w-full bg-slate-600 hover:bg-slate-500 text-white"
+                        >
+                          {isGenerating ? (
+                            <>
+                              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                              Gerando conteúdo...
+                            </>
+                          ) : (
+                            <>
+                              <Sparkles className="w-4 h-4 mr-2" />
+                              Gerar Conteúdo
+                            </>
+                          )}
+                        </Button>
+                      </CardContent>
+                    </Card>
+
+                    <Separator className="bg-slate-700" />
+
+                    {/* Form Fields */}
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="title" className="text-slate-200">Título *</Label>
+                        <Input
+                          id="title"
+                          value={title}
+                          onChange={(e) => setTitle(e.target.value)}
+                          placeholder="Título do artigo"
+                          className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="excerpt" className="text-slate-200">Resumo</Label>
+                        <Textarea
+                          id="excerpt"
+                          value={excerpt}
+                          onChange={(e) => setExcerpt(e.target.value)}
+                          placeholder="Breve descrição do artigo"
+                          rows={2}
+                          className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="content" className="text-slate-200">Conteúdo * (Markdown suportado)</Label>
+                        <Textarea
+                          id="content"
+                          value={content}
+                          onChange={(e) => setContent(e.target.value)}
+                          placeholder="Conteúdo completo do artigo..."
+                          rows={10}
+                          className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="coverImageUrl" className="text-slate-200">URL da Imagem de Capa</Label>
+                        <Input
+                          id="coverImageUrl"
+                          value={coverImageUrl}
+                          onChange={(e) => setCoverImageUrl(e.target.value)}
+                          placeholder="https://exemplo.com/imagem.jpg"
+                          className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
+                        />
+                        {coverImageUrl && (
+                          <div className="mt-2 rounded-lg overflow-hidden border border-slate-600">
+                            <img
+                              src={coverImageUrl}
+                              alt="Preview"
+                              className="w-full h-32 object-cover"
+                              onError={(e) => {
+                                e.currentTarget.style.display = "none";
+                              }}
+                            />
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="flex items-center justify-between rounded-lg border border-slate-600 p-4 bg-slate-700/50">
+                        <div className="space-y-0.5">
+                          <Label className="text-slate-200">Publicar</Label>
+                          <p className="text-sm text-slate-400">
+                            O post ficará visível no site
+                          </p>
+                        </div>
+                        <Switch
+                          checked={published}
+                          onCheckedChange={setPublished}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <DialogFooter>
+                    <Button variant="outline" onClick={() => setIsDialogOpen(false)} className="border-slate-600 text-slate-300 hover:bg-slate-700">
+                      Cancelar
                     </Button>
-                  </CardContent>
-                </Card>
+                    <Button
+                      onClick={handleSubmit}
+                      disabled={createPostMutation.isPending || updatePostMutation.isPending}
+                      className="bg-green-600 hover:bg-green-700"
+                    >
+                      {(createPostMutation.isPending || updatePostMutation.isPending) && (
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      )}
+                      {editingPost ? "Salvar" : "Criar Post"}
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+            </div>
 
-                <Separator />
-
-                {/* Form Fields */}
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="title">Título *</Label>
-                    <Input
-                      id="title"
-                      value={title}
-                      onChange={(e) => setTitle(e.target.value)}
-                      placeholder="Título do artigo"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="excerpt">Resumo</Label>
-                    <Textarea
-                      id="excerpt"
-                      value={excerpt}
-                      onChange={(e) => setExcerpt(e.target.value)}
-                      placeholder="Breve descrição do artigo"
-                      rows={2}
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="content">Conteúdo * (Markdown suportado)</Label>
-                    <Textarea
-                      id="content"
-                      value={content}
-                      onChange={(e) => setContent(e.target.value)}
-                      placeholder="Conteúdo completo do artigo..."
-                      rows={10}
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="coverImageUrl">URL da Imagem de Capa</Label>
-                    <Input
-                      id="coverImageUrl"
-                      value={coverImageUrl}
-                      onChange={(e) => setCoverImageUrl(e.target.value)}
-                      placeholder="https://exemplo.com/imagem.jpg"
-                    />
-                    {coverImageUrl && (
-                      <div className="mt-2 rounded-lg overflow-hidden border">
+            {/* Posts List */}
+            {isLoadingPosts ? (
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                {[1, 2, 3].map((i) => (
+                  <Card key={i} className="animate-pulse bg-slate-800 border-slate-700">
+                    <div className="h-40 bg-slate-700" />
+                    <CardHeader>
+                      <div className="h-5 bg-slate-700 rounded w-3/4" />
+                      <div className="h-4 bg-slate-700 rounded w-1/2 mt-2" />
+                    </CardHeader>
+                  </Card>
+                ))}
+              </div>
+            ) : posts && posts.length > 0 ? (
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                {posts.map((post) => (
+                  <Card key={post.id} className="overflow-hidden bg-slate-800 border-slate-700">
+                    {post.cover_image_url && (
+                      <div className="h-40 overflow-hidden">
                         <img
-                          src={coverImageUrl}
-                          alt="Preview"
-                          className="w-full h-32 object-cover"
-                          onError={(e) => {
-                            e.currentTarget.style.display = "none";
-                          }}
+                          src={post.cover_image_url}
+                          alt={post.title}
+                          className="w-full h-full object-cover"
                         />
                       </div>
                     )}
-                  </div>
-
-                  <div className="flex items-center justify-between rounded-lg border p-4">
-                    <div className="space-y-0.5">
-                      <Label>Publicar</Label>
-                      <p className="text-sm text-muted-foreground">
-                        O post ficará visível no site
-                      </p>
-                    </div>
-                    <Switch
-                      checked={published}
-                      onCheckedChange={setPublished}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <DialogFooter>
-                <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
-                  Cancelar
-                </Button>
-                <Button
-                  onClick={handleSubmit}
-                  disabled={createPostMutation.isPending || updatePostMutation.isPending}
-                >
-                  {(createPostMutation.isPending || updatePostMutation.isPending) && (
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  )}
-                  {editingPost ? "Salvar" : "Criar Post"}
-                </Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
-        </div>
-
-        {/* Posts List */}
-        {isLoadingPosts ? (
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {[1, 2, 3].map((i) => (
-              <Card key={i} className="animate-pulse">
-                <div className="h-40 bg-muted" />
-                <CardHeader>
-                  <div className="h-5 bg-muted rounded w-3/4" />
-                  <div className="h-4 bg-muted rounded w-1/2 mt-2" />
-                </CardHeader>
-              </Card>
-            ))}
-          </div>
-        ) : posts && posts.length > 0 ? (
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {posts.map((post) => (
-              <Card key={post.id} className="overflow-hidden">
-                {post.cover_image_url && (
-                  <div className="h-40 overflow-hidden">
-                    <img
-                      src={post.cover_image_url}
-                      alt={post.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                )}
-                <CardHeader className="pb-2">
-                  <div className="flex items-start justify-between gap-2">
-                    <CardTitle className="text-base line-clamp-2">
-                      {post.title}
-                    </CardTitle>
-                    <Badge variant={post.published ? "default" : "secondary"}>
-                      {post.published ? (
-                        <Eye className="w-3 h-3 mr-1" />
-                      ) : (
-                        <EyeOff className="w-3 h-3 mr-1" />
+                    <CardHeader className="pb-2">
+                      <div className="flex items-start justify-between gap-2">
+                        <CardTitle className="text-base line-clamp-2 text-white">
+                          {post.title}
+                        </CardTitle>
+                        <Badge variant={post.published ? "default" : "secondary"} className={post.published ? "bg-green-600" : "bg-slate-600"}>
+                          {post.published ? (
+                            <Eye className="w-3 h-3 mr-1" />
+                          ) : (
+                            <EyeOff className="w-3 h-3 mr-1" />
+                          )}
+                          {post.published ? "Publicado" : "Rascunho"}
+                        </Badge>
+                      </div>
+                      <CardDescription className="flex items-center gap-1 text-xs text-slate-400">
+                        <Calendar className="w-3 h-3" />
+                        {format(post.created_at, "dd/MM/yyyy", { locale: ptBR })}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="pt-0">
+                      {post.excerpt && (
+                        <p className="text-sm text-slate-400 line-clamp-2 mb-4">
+                          {post.excerpt}
+                        </p>
                       )}
-                      {post.published ? "Publicado" : "Rascunho"}
-                    </Badge>
-                  </div>
-                  <CardDescription className="flex items-center gap-1 text-xs">
-                    <Calendar className="w-3 h-3" />
-                    {format(post.created_at, "dd/MM/yyyy", { locale: ptBR })}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="pt-0">
-                  {post.excerpt && (
-                    <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
-                      {post.excerpt}
-                    </p>
-                  )}
-                  <div className="flex gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="flex-1"
-                      onClick={() => handleOpenDialog(post)}
-                    >
-                      <Pencil className="w-3 h-3 mr-1" />
-                      Editar
-                    </Button>
-                    <AlertDialog>
-                      <AlertDialogTrigger asChild>
-                        <Button variant="outline" size="sm">
-                          <Trash2 className="w-3 h-3" />
+                      <div className="flex gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="flex-1 border-slate-600 text-slate-300 hover:bg-slate-700"
+                          onClick={() => handleOpenDialog(post)}
+                        >
+                          <Pencil className="w-3 h-3 mr-1" />
+                          Editar
                         </Button>
-                      </AlertDialogTrigger>
-                      <AlertDialogContent>
-                        <AlertDialogHeader>
-                          <AlertDialogTitle>Excluir post?</AlertDialogTitle>
-                          <AlertDialogDescription>
-                            Esta ação não pode ser desfeita. O post será permanentemente excluído.
-                          </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                          <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                          <AlertDialogAction
-                            onClick={() => deletePostMutation.mutate(post.id)}
-                            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                          >
-                            Excluir
-                          </AlertDialogAction>
-                        </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialog>
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button variant="outline" size="sm" className="border-slate-600 text-slate-300 hover:bg-slate-700">
+                              <Trash2 className="w-3 h-3" />
+                            </Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent className="bg-slate-800 border-slate-700">
+                            <AlertDialogHeader>
+                              <AlertDialogTitle className="text-white">Excluir post?</AlertDialogTitle>
+                              <AlertDialogDescription className="text-slate-400">
+                                Esta ação não pode ser desfeita. O post será permanentemente excluído.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel className="border-slate-600 text-slate-300 hover:bg-slate-700">Cancelar</AlertDialogCancel>
+                              <AlertDialogAction
+                                onClick={() => deletePostMutation.mutate(post.id)}
+                                className="bg-red-600 hover:bg-red-700"
+                              >
+                                Excluir
+                              </AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            ) : (
+              <Card className="text-center py-12 bg-slate-800 border-slate-700">
+                <CardContent>
+                  <div className="w-16 h-16 bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Plus className="w-8 h-8 text-slate-400" />
                   </div>
+                  <h3 className="text-lg font-semibold mb-2 text-white">Nenhum post criado</h3>
+                  <p className="text-slate-400 mb-4">
+                    Comece criando seu primeiro post para o blog
+                  </p>
+                  <Button onClick={() => handleOpenDialog()} className="bg-green-600 hover:bg-green-700">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Criar Primeiro Post
+                  </Button>
                 </CardContent>
               </Card>
-            ))}
-          </div>
-        ) : (
-          <Card className="text-center py-12">
-            <CardContent>
-              <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
-                <Plus className="w-8 h-8 text-muted-foreground" />
-              </div>
-              <h3 className="text-lg font-semibold mb-2">Nenhum post criado</h3>
-              <p className="text-muted-foreground mb-4">
-                Comece criando seu primeiro post para o blog
-              </p>
-              <Button onClick={() => handleOpenDialog()}>
-                <Plus className="w-4 h-4 mr-2" />
-                Criar Primeiro Post
-              </Button>
-            </CardContent>
-          </Card>
-        )}
+            )}
+          </TabsContent>
+
+          {/* Settings Tab */}
+          <TabsContent value="settings">
+            <Card className="bg-slate-800 border-slate-700">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center gap-2">
+                  <Key className="w-5 h-5 text-green-500" />
+                  Configurações do ChatGPT
+                </CardTitle>
+                <CardDescription className="text-slate-400">
+                  Configure sua API Key do OpenAI para gerar conteúdo com inteligência artificial
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="apiKey" className="text-slate-200">API Key do OpenAI</Label>
+                  <div className="flex gap-2">
+                    <div className="relative flex-1">
+                      <Input
+                        id="apiKey"
+                        type={showApiKey ? "text" : "password"}
+                        value={openaiApiKey}
+                        onChange={(e) => setOpenaiApiKey(e.target.value)}
+                        placeholder="sk-..."
+                        className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400 pr-10"
+                      />
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="absolute right-1 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
+                        onClick={() => setShowApiKey(!showApiKey)}
+                      >
+                        {showApiKey ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                      </Button>
+                    </div>
+                    <Button
+                      onClick={saveSettings}
+                      disabled={isSavingSettings}
+                      className="bg-green-600 hover:bg-green-700"
+                    >
+                      {isSavingSettings ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        <>
+                          <Save className="w-4 h-4 mr-2" />
+                          Salvar
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                  <p className="text-xs text-slate-500">
+                    Obtenha sua API Key em{" "}
+                    <a
+                      href="https://platform.openai.com/api-keys"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-green-500 hover:underline"
+                    >
+                      platform.openai.com/api-keys
+                    </a>
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </main>
     </div>
   );
