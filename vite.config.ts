@@ -22,7 +22,6 @@ export default defineConfig(({ mode }) => ({
         manualChunks: {
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
           'ui-vendor': ['lucide-react', '@radix-ui/react-slot'],
-          'map-vendor': ['leaflet', 'react-leaflet'],
         },
       },
     },
@@ -33,7 +32,6 @@ export default defineConfig(({ mode }) => ({
     cssMinify: true,
   },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom'],
-    exclude: ['leaflet', 'react-leaflet'],
+    include: ['react', 'react-dom', 'react-router-dom', 'leaflet', 'react-leaflet'],
   },
 }));

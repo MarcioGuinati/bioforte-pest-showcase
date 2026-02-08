@@ -1,5 +1,5 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import { DivIcon } from "leaflet";
+import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
 interface Unit {
@@ -30,7 +30,7 @@ const colorMap: Record<string, string> = {
 
 const createCustomIcon = (type: string) => {
   const color = colorMap[type] || "#64748b";
-  return new DivIcon({
+  return L.divIcon({
     className: "custom-marker",
     html: `<div style="
       background-color: ${color};
@@ -41,9 +41,9 @@ const createCustomIcon = (type: string) => {
       border: 2px solid white;
       box-shadow: 0 2px 6px rgba(0,0,0,0.3);
     "></div>`,
-    iconSize: [24, 24],
-    iconAnchor: [12, 24],
-    popupAnchor: [0, -24],
+    iconSize: [24, 24] as L.PointTuple,
+    iconAnchor: [12, 24] as L.PointTuple,
+    popupAnchor: [0, -24] as L.PointTuple,
   });
 };
 
