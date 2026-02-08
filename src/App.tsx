@@ -16,6 +16,10 @@ const NossoTime = lazy(() => import("./pages/NossoTime"));
 const TrabalheConosco = lazy(() => import("./pages/TrabalheConosco"));
 const AreaCliente = lazy(() => import("./pages/AreaCliente"));
 const Contato = lazy(() => import("./pages/Contato"));
+const Blog = lazy(() => import("./pages/Blog"));
+const BlogPost = lazy(() => import("./pages/BlogPost"));
+const AdminLogin = lazy(() => import("./pages/AdminLogin"));
+const Admin = lazy(() => import("./pages/Admin"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient({
@@ -52,6 +56,10 @@ const App = () => (
               <Route path="trabalhe-conosco" element={<Suspense fallback={<PageLoader />}><TrabalheConosco /></Suspense>} />
               <Route path="area-cliente" element={<Suspense fallback={<PageLoader />}><AreaCliente /></Suspense>} />
               <Route path="contato" element={<Suspense fallback={<PageLoader />}><Contato /></Suspense>} />
+              <Route path="blog" element={<Suspense fallback={<PageLoader />}><Blog /></Suspense>} />
+              <Route path="blog/:slug" element={<Suspense fallback={<PageLoader />}><BlogPost /></Suspense>} />
+              <Route path="admin/login" element={<Suspense fallback={<PageLoader />}><AdminLogin /></Suspense>} />
+              <Route path="admin" element={<Suspense fallback={<PageLoader />}><Admin /></Suspense>} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<Suspense fallback={<PageLoader />}><NotFound /></Suspense>} />
             </Route>
