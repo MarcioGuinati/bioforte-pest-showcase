@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { collection, query, where, orderBy, getDocs } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -16,22 +17,27 @@ interface BlogPost {
   content: string;
   cover_image_url: string | null;
   published: boolean;
-  created_at: string;
-  author_id: string | null;
+  created_at: Date;
+  author_email: string | null;
 }
 
 const Blog = () => {
   const { data: posts, isLoading } = useQuery({
     queryKey: ["blog-posts"],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("blog_posts")
-        .select("*")
-        .eq("published", true)
-        .order("created_at", { ascending: false });
-
-      if (error) throw error;
-      return data as BlogPost[];
+      const postsRef = collection(db, "blog_posts");
+      const q = query(
+        postsRef,
+        where("published", "==", true),
+        orderBy("created_at", "desc")
+      );
+      
+      const snapshot = await getDocs(q);
+      return snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+        created_at: doc.data().created_at?.toDate() || new Date(),
+      })) as BlogPost[];
     },
   });
 
@@ -87,7 +93,7 @@ const Blog = () => {
                       <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
                         <Calendar className="w-3 h-3" />
                         <span>
-                          {format(new Date(post.created_at), "dd 'de' MMMM, yyyy", { locale: ptBR })}
+                          {format(post.created_at, "dd 'de' MMMM, yyyy", { locale: ptBR })}
                         </span>
                       </div>
                       <CardTitle className="text-lg group-hover:text-primary transition-colors line-clamp-2">

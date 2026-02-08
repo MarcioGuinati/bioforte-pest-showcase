@@ -1,7 +1,20 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { 
+  collection, 
+  query, 
+  orderBy, 
+  getDocs, 
+  addDoc, 
+  updateDoc, 
+  deleteDoc, 
+  doc,
+  getDoc,
+  Timestamp 
+} from "firebase/firestore";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth, db } from "@/lib/firebase";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -54,9 +67,9 @@ interface BlogPost {
   content: string;
   cover_image_url: string | null;
   published: boolean;
-  created_at: string;
-  updated_at: string;
-  author_id: string | null;
+  created_at: Date;
+  updated_at: Date;
+  author_email: string | null;
 }
 
 const Admin = () => {
@@ -64,6 +77,7 @@ const Admin = () => {
   const queryClient = useQueryClient();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+  const [currentUserEmail, setCurrentUserEmail] = useState<string | null>(null);
 
   // Form state
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -79,88 +93,79 @@ const Admin = () => {
   const [isGenerating, setIsGenerating] = useState(false);
 
   useEffect(() => {
-    checkAuth();
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (event === "SIGNED_OUT" || !session) {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (!user) {
         setIsAuthenticated(false);
+        setIsCheckingAuth(false);
         navigate("/admin/login");
+        return;
+      }
+
+      try {
+        // Check if user has admin role
+        const adminDoc = await getDoc(doc(db, "admins", user.uid));
+        
+        if (!adminDoc.exists() || !adminDoc.data()?.isAdmin) {
+          await signOut(auth);
+          navigate("/admin/login");
+          return;
+        }
+
+        setCurrentUserEmail(user.email);
+        setIsAuthenticated(true);
+      } catch (error) {
+        console.error("Auth check error:", error);
+        await signOut(auth);
+        navigate("/admin/login");
+      } finally {
+        setIsCheckingAuth(false);
       }
     });
 
-    return () => subscription.unsubscribe();
+    return () => unsubscribe();
   }, [navigate]);
-
-  const checkAuth = async () => {
-    try {
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (!session) {
-        navigate("/admin/login");
-        return;
-      }
-
-      const { data: roleData, error: roleError } = await supabase
-        .from("user_roles")
-        .select("role")
-        .eq("user_id", session.user.id)
-        .eq("role", "admin")
-        .single();
-
-      if (roleError || !roleData) {
-        await supabase.auth.signOut();
-        navigate("/admin/login");
-        return;
-      }
-
-      setIsAuthenticated(true);
-    } catch (error) {
-      console.error("Auth check error:", error);
-      navigate("/admin/login");
-    } finally {
-      setIsCheckingAuth(false);
-    }
-  };
 
   const { data: posts, isLoading: isLoadingPosts } = useQuery({
     queryKey: ["admin-blog-posts"],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("blog_posts")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-      if (error) throw error;
-      return data as BlogPost[];
+      const postsRef = collection(db, "blog_posts");
+      const q = query(postsRef, orderBy("created_at", "desc"));
+      
+      const snapshot = await getDocs(q);
+      return snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+        created_at: doc.data().created_at?.toDate() || new Date(),
+        updated_at: doc.data().updated_at?.toDate() || new Date(),
+      })) as BlogPost[];
     },
     enabled: isAuthenticated,
   });
 
+  const generateSlug = (text: string) => {
+    return text
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9\s]/g, "")
+      .replace(/\s+/g, "-")
+      .substring(0, 50) + "-" + Date.now().toString(36);
+  };
+
   const createPostMutation = useMutation({
-    mutationFn: async (post: Omit<BlogPost, "id" | "created_at" | "updated_at" | "author_id">) => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) throw new Error("Not authenticated");
-
-      const slug = title
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .replace(/[^a-z0-9\s]/g, "")
-        .replace(/\s+/g, "-")
-        .substring(0, 50) + "-" + Date.now().toString(36);
-
-      const { data, error } = await supabase
-        .from("blog_posts")
-        .insert({
-          ...post,
-          slug,
-          author_id: session.user.id,
-        })
-        .select()
-        .single();
-
-      if (error) throw error;
-      return data;
+    mutationFn: async (post: Omit<BlogPost, "id" | "created_at" | "updated_at">) => {
+      const postsRef = collection(db, "blog_posts");
+      const now = Timestamp.now();
+      
+      const docRef = await addDoc(postsRef, {
+        ...post,
+        slug: generateSlug(post.title),
+        author_email: currentUserEmail,
+        created_at: now,
+        updated_at: now,
+      });
+      
+      return { id: docRef.id };
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-blog-posts"] });
@@ -175,15 +180,11 @@ const Admin = () => {
 
   const updatePostMutation = useMutation({
     mutationFn: async ({ id, ...post }: Partial<BlogPost> & { id: string }) => {
-      const { data, error } = await supabase
-        .from("blog_posts")
-        .update(post)
-        .eq("id", id)
-        .select()
-        .single();
-
-      if (error) throw error;
-      return data;
+      const postRef = doc(db, "blog_posts", id);
+      await updateDoc(postRef, {
+        ...post,
+        updated_at: Timestamp.now(),
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-blog-posts"] });
@@ -198,12 +199,8 @@ const Admin = () => {
 
   const deletePostMutation = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase
-        .from("blog_posts")
-        .delete()
-        .eq("id", id);
-
-      if (error) throw error;
+      const postRef = doc(db, "blog_posts", id);
+      await deleteDoc(postRef);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-blog-posts"] });
@@ -302,12 +299,13 @@ const Admin = () => {
         content,
         cover_image_url: coverImageUrl || null,
         published,
+        author_email: currentUserEmail,
       });
     }
   };
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    await signOut(auth);
     navigate("/admin/login");
   };
 
@@ -335,10 +333,17 @@ const Admin = () => {
               <p className="text-sm text-muted-foreground">Gerenciamento do Blog</p>
             </div>
           </div>
-          <Button variant="outline" onClick={handleLogout}>
-            <LogOut className="w-4 h-4 mr-2" />
-            Sair
-          </Button>
+          <div className="flex items-center gap-4">
+            {currentUserEmail && (
+              <span className="text-sm text-muted-foreground hidden md:block">
+                {currentUserEmail}
+              </span>
+            )}
+            <Button variant="outline" onClick={handleLogout}>
+              <LogOut className="w-4 h-4 mr-2" />
+              Sair
+            </Button>
+          </div>
         </div>
       </header>
 
@@ -536,7 +541,7 @@ const Admin = () => {
                   </div>
                   <CardDescription className="flex items-center gap-1 text-xs">
                     <Calendar className="w-3 h-3" />
-                    {format(new Date(post.created_at), "dd/MM/yyyy", { locale: ptBR })}
+                    {format(post.created_at, "dd/MM/yyyy", { locale: ptBR })}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="pt-0">

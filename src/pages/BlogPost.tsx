@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -18,9 +19,9 @@ interface BlogPost {
   content: string;
   cover_image_url: string | null;
   published: boolean;
-  created_at: string;
-  updated_at: string;
-  author_id: string | null;
+  created_at: Date;
+  updated_at: Date;
+  author_email: string | null;
 }
 
 const BlogPostPage = () => {
@@ -29,15 +30,26 @@ const BlogPostPage = () => {
   const { data: post, isLoading, error } = useQuery({
     queryKey: ["blog-post", slug],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("blog_posts")
-        .select("*")
-        .eq("slug", slug)
-        .eq("published", true)
-        .single();
-
-      if (error) throw error;
-      return data as BlogPost;
+      const postsRef = collection(db, "blog_posts");
+      const q = query(
+        postsRef,
+        where("slug", "==", slug),
+        where("published", "==", true)
+      );
+      
+      const snapshot = await getDocs(q);
+      
+      if (snapshot.empty) {
+        throw new Error("Post not found");
+      }
+      
+      const doc = snapshot.docs[0];
+      return {
+        id: doc.id,
+        ...doc.data(),
+        created_at: doc.data().created_at?.toDate() || new Date(),
+        updated_at: doc.data().updated_at?.toDate() || new Date(),
+      } as BlogPost;
     },
     enabled: !!slug,
   });
@@ -114,7 +126,7 @@ const BlogPostPage = () => {
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4" />
               <span>
-                {format(new Date(post.created_at), "dd 'de' MMMM, yyyy", { locale: ptBR })}
+                {format(post.created_at, "dd 'de' MMMM, yyyy", { locale: ptBR })}
               </span>
             </div>
             <Button variant="ghost" size="sm" onClick={handleShare}>
