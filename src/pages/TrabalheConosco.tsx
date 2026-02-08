@@ -7,9 +7,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import { supabase } from "@/integrations/supabase/client";
 import { 
   Users, 
   Award, 
@@ -107,25 +106,23 @@ const TrabalheConosco = () => {
     fetchJobs();
   }, [toast]);
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
     
     try {
-      const { error } = await supabase
-        .from('applications')
-        .insert([
-          {
-            name: formData.name,
-            email: formData.email,
-            phone: formData.phone,
-            position: formData.position || null,
-            experience: formData.experience || null,
-            education: formData.education || null,
-            message: formData.message || null
-          }
-        ]);
-
-      if (error) throw error;
+      await addDoc(collection(db, "applications"), {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        position: formData.position || null,
+        experience: formData.experience || null,
+        education: formData.education || null,
+        message: formData.message || null,
+        createdAt: serverTimestamp()
+      });
 
       toast({
         title: "Candidatura Enviada!",
@@ -148,6 +145,8 @@ const TrabalheConosco = () => {
         description: "Ocorreu um erro ao enviar sua candidatura. Tente novamente.",
         variant: "destructive"
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -430,8 +429,15 @@ const TrabalheConosco = () => {
                     </Button>
                   </div>
 
-                  <Button type="submit" variant="hero" size="lg" className="w-full">
-                    Enviar Candidatura
+                  <Button type="submit" variant="hero" size="lg" className="w-full" disabled={isSubmitting}>
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        Enviando...
+                      </>
+                    ) : (
+                      "Enviar Candidatura"
+                    )}
                   </Button>
                 </form>
               </CardContent>
