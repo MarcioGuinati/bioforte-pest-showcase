@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { auth, db } from "@/lib/firebase";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -20,29 +22,14 @@ const AdminLogin = () => {
     setIsLoading(true);
 
     try {
-      const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
 
-      if (authError) {
-        throw authError;
-      }
-
-      if (!authData.user) {
-        throw new Error("Erro ao fazer login");
-      }
-
-      // Check if user has admin role
-      const { data: roleData, error: roleError } = await supabase
-        .from("user_roles")
-        .select("role")
-        .eq("user_id", authData.user.id)
-        .eq("role", "admin")
-        .single();
-
-      if (roleError || !roleData) {
-        await supabase.auth.signOut();
+      // Check if user has admin role in Firestore
+      const adminDoc = await getDoc(doc(db, "admins", user.uid));
+      
+      if (!adminDoc.exists() || !adminDoc.data()?.isAdmin) {
+        await auth.signOut();
         throw new Error("Acesso negado. Você não tem permissão de administrador.");
       }
 
@@ -50,7 +37,19 @@ const AdminLogin = () => {
       navigate("/admin");
     } catch (error) {
       console.error("Login error:", error);
-      toast.error(error instanceof Error ? error.message : "Erro ao fazer login");
+      if (error instanceof Error) {
+        if (error.message.includes("auth/invalid-credential")) {
+          toast.error("E-mail ou senha incorretos");
+        } else if (error.message.includes("auth/user-not-found")) {
+          toast.error("Usuário não encontrado");
+        } else if (error.message.includes("auth/wrong-password")) {
+          toast.error("Senha incorreta");
+        } else {
+          toast.error(error.message);
+        }
+      } else {
+        toast.error("Erro ao fazer login");
+      }
     } finally {
       setIsLoading(false);
     }
