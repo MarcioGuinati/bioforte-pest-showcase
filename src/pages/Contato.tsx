@@ -95,18 +95,23 @@ const Contato = () => {
     setIsSubmitting(true);
     
     try {
-      await addDoc(collection(db, "contacts"), {
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        service: formData.service || null,
-        urgency: formData.urgency || null,
-        property: formData.property || null,
-        area: formData.area || null,
-        problem: formData.problem || null,
-        message: formData.message || null,
+      // Build contact data, only including non-empty optional fields
+      const contactData: Record<string, unknown> = {
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        phone: formData.phone.trim(),
         createdAt: serverTimestamp()
-      });
+      };
+
+      // Only add optional fields if they have values
+      if (formData.service) contactData.service = formData.service;
+      if (formData.urgency) contactData.urgency = formData.urgency;
+      if (formData.property) contactData.property = formData.property;
+      if (formData.area) contactData.area = formData.area;
+      if (formData.problem) contactData.problem = formData.problem;
+      if (formData.message?.trim()) contactData.message = formData.message.trim();
+
+      await addDoc(collection(db, "contacts"), contactData);
 
       toast({
         title: "Mensagem enviada!",
