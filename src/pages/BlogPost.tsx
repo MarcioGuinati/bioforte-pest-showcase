@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { collection, query, where, getDocs } from "firebase/firestore";
@@ -5,11 +6,12 @@ import { db } from "@/lib/firebase";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Calendar, ArrowLeft, Share2 } from "lucide-react";
+import { Calendar, ArrowLeft, Share2, User } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import ReactMarkdown from "react-markdown";
 import { toast } from "sonner";
+import { useBlogAnalytics } from "@/hooks/useBlogAnalytics";
 
 interface BlogPost {
   id: string;
@@ -22,10 +24,12 @@ interface BlogPost {
   created_at: Date;
   updated_at: Date;
   author_email: string | null;
+  author_name: string | null;
 }
 
 const BlogPostPage = () => {
   const { slug } = useParams<{ slug: string }>();
+  const { trackView } = useBlogAnalytics();
 
   const { data: post, isLoading, error } = useQuery({
     queryKey: ["blog-post", slug],
@@ -53,6 +57,13 @@ const BlogPostPage = () => {
     },
     enabled: !!slug,
   });
+
+  // Track view when post loads
+  useEffect(() => {
+    if (post) {
+      trackView(post.id, post.slug, post.title);
+    }
+  }, [post, trackView]);
 
   const handleShare = async () => {
     try {
@@ -122,13 +133,19 @@ const BlogPostPage = () => {
             {post.title}
           </h1>
 
-          <div className="flex items-center gap-4 text-sm text-muted-foreground">
+          <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4" />
               <span>
                 {format(post.created_at, "dd 'de' MMMM, yyyy", { locale: ptBR })}
               </span>
             </div>
+            {post.author_name && (
+              <div className="flex items-center gap-2">
+                <User className="w-4 h-4" />
+                <span>{post.author_name}</span>
+              </div>
+            )}
             <Button variant="ghost" size="sm" onClick={handleShare}>
               <Share2 className="w-4 h-4 mr-2" />
               Compartilhar

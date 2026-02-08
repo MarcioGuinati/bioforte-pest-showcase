@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { collection, query, where, orderBy, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -8,6 +8,7 @@ import { Calendar, User, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { useBlogAnalytics } from "@/hooks/useBlogAnalytics";
 
 interface BlogPost {
   id: string;
@@ -19,9 +20,12 @@ interface BlogPost {
   published: boolean;
   created_at: Date;
   author_email: string | null;
+  author_name: string | null;
 }
 
 const Blog = () => {
+  const { trackClick } = useBlogAnalytics();
+
   const { data: posts, isLoading, error } = useQuery({
     queryKey: ["blog-posts"],
     queryFn: async () => {
@@ -45,6 +49,10 @@ const Blog = () => {
 
   // Log for debugging
   console.log("Blog posts:", posts, "Error:", error);
+
+  const handlePostClick = (post: BlogPost) => {
+    trackClick(post.id, post.slug, post.title);
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -83,7 +91,11 @@ const Blog = () => {
           ) : posts && posts.length > 0 ? (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {posts.map((post) => (
-                <Link key={post.id} to={`/blog/${post.slug}`}>
+                <Link 
+                  key={post.id} 
+                  to={`/blog/${post.slug}`}
+                  onClick={() => handlePostClick(post)}
+                >
                   <Card className="overflow-hidden h-full group">
                     {post.cover_image_url && (
                       <div className="relative h-48 overflow-hidden">
@@ -95,11 +107,17 @@ const Blog = () => {
                       </div>
                     )}
                     <CardHeader>
-                      <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
-                        <Calendar className="w-3 h-3" />
-                        <span>
+                      <div className="flex flex-col gap-1 text-xs text-muted-foreground mb-2">
+                        <span className="flex items-center gap-2">
+                          <Calendar className="w-3 h-3" />
                           {format(post.created_at, "dd 'de' MMMM, yyyy", { locale: ptBR })}
                         </span>
+                        {post.author_name && (
+                          <span className="flex items-center gap-2">
+                            <User className="w-3 h-3" />
+                            {post.author_name}
+                          </span>
+                        )}
                       </div>
                       <CardTitle className="text-lg group-hover:text-primary transition-colors line-clamp-2">
                         {post.title}
