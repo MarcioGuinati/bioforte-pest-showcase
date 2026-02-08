@@ -3,10 +3,10 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Shield, Users, Award, Clock, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
-// Lazy load non-critical images
-const slide06 = "/src/assets/038f9b42-2503-4e8d-afa4-9bd64e7ef10b.jpg";
-const slide07 = "/src/assets/d0398b49-0224-4067-af90-a1f2c4a6c0db.jpg";
-const companyBuilding = "/src/assets/company-building.jpg";
+// Import images as ES6 modules for better bundling
+import slide06 from "@/assets/038f9b42-2503-4e8d-afa4-9bd64e7ef10b.jpg";
+import slide07 from "@/assets/d0398b49-0224-4067-af90-a1f2c4a6c0db.jpg";
+import companyBuilding from "@/assets/company-building.jpg";
 
 const slides = [
   {
@@ -61,10 +61,21 @@ const features = [
   }
 ];
 
+// Preload all images immediately on module load
+const preloadedImages: HTMLImageElement[] = [];
+slides.forEach((slide, index) => {
+  const img = new Image();
+  img.src = slide.image;
+  if (index === 0) {
+    img.fetchPriority = "high";
+  }
+  preloadedImages.push(img);
+});
+
 const HeroSlider = memo(() => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [imagesLoaded, setImagesLoaded] = useState<boolean[]>([true, false, false]);
+  const [firstImageLoaded, setFirstImageLoaded] = useState(false);
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -74,21 +85,14 @@ const HeroSlider = memo(() => {
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
   }, []);
 
-  // Preload next slide image
+  // Check if first image is loaded
   useEffect(() => {
-    const nextIndex = (currentSlide + 1) % slides.length;
-    if (!imagesLoaded[nextIndex]) {
-      const img = new Image();
-      img.onload = () => {
-        setImagesLoaded(prev => {
-          const newState = [...prev];
-          newState[nextIndex] = true;
-          return newState;
-        });
-      };
-      img.src = slides[nextIndex].image;
+    if (preloadedImages[0].complete) {
+      setFirstImageLoaded(true);
+    } else {
+      preloadedImages[0].onload = () => setFirstImageLoaded(true);
     }
-  }, [currentSlide, imagesLoaded]);
+  }, []);
 
   useEffect(() => {
     if (isPaused) return;
@@ -123,12 +127,18 @@ const HeroSlider = memo(() => {
             aria-hidden={index !== currentSlide}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/70 to-transparent z-10" />
+            {/* Show placeholder until first image loads */}
+            {index === 0 && !firstImageLoaded && (
+              <div className="absolute inset-0 bg-primary/20 animate-pulse" />
+            )}
             <img
               src={slide.image}
               alt=""
               width={1920}
               height={1080}
-              className="w-full h-full object-cover object-center"
+              className={`w-full h-full object-cover object-center transition-opacity duration-300 ${
+                index === 0 && !firstImageLoaded ? 'opacity-0' : 'opacity-100'
+              }`}
               loading={index === 0 ? "eager" : "lazy"}
               fetchPriority={index === 0 ? "high" : "auto"}
               decoding={index === 0 ? "sync" : "async"}
