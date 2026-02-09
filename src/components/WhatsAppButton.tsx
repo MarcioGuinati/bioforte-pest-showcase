@@ -17,7 +17,7 @@ const WhatsAppButton = () => {
       title="Falar no WhatsApp"
     >
       <MessageCircle className="h-6 w-6 text-primary-foreground group-hover:scale-110 transition-transform" aria-hidden="true" />
-      <span className="absolute -top-1 -right-1 w-3 h-3 bg-success rounded-full animate-ping" />
+      <span className="absolute -top-1 -right-1 w-3 h-3 bg-success rounded-full animate-ping" aria-hidden="true" />
       <span className="absolute -top-1 -right-1 w-3 h-3 bg-success rounded-full" />
     </button>
   );

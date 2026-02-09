@@ -95,15 +95,13 @@ const PestsSection = () => {
           </h2>
         </div>
 
-        <div 
-          className="flex flex-wrap justify-center gap-6 lg:gap-10" 
-          role="list" 
+        <ul 
+          className="flex flex-wrap justify-center gap-6 lg:gap-10 list-none p-0 m-0"
           aria-label="Pragas que combatemos"
         >
           {pests.map((pest, index) => (
-            <div
+            <li
               key={pest.name}
-              role="listitem"
               className="flex flex-col items-center group cursor-pointer animate-scale-bounce"
               style={{ animationDelay: `${index * 0.05}s` }}
             >
@@ -113,9 +111,9 @@ const PestsSection = () => {
               <span className="text-sm lg:text-base font-semibold text-foreground group-hover:text-primary transition-colors">
                 {pest.name}
               </span>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );

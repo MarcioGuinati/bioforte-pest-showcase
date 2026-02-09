@@ -98,13 +98,13 @@ const SealsSection = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12" role="list" aria-label="Certificações e licenças da empresa">
+        <ul className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 list-none p-0 m-0" aria-label="Certificações e licenças da empresa">
           {seals.map((seal, index) => (
-            <div key={index} role="listitem">
+            <li key={index}>
               <SealMedal seal={seal} index={index} />
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );

@@ -52,6 +52,9 @@ const Footer = () => {
               <img 
                 src={logoBioforte} 
                 alt="Bioforte Controle de Pragas" 
+                width={180}
+                height={56}
+                loading="lazy"
                 className="h-14 w-auto max-w-[180px] object-contain"
               />
             </Link>
@@ -177,14 +180,14 @@ const Footer = () => {
           </div>
           <nav className="flex items-center gap-6 text-sm" aria-label="Links legais">
             <a 
-              href="#" 
-              className="text-muted-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded px-1 py-0.5"
+              href="/politica-privacidade" 
+              className="text-muted-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded px-1 py-0.5 min-h-[44px] inline-flex items-center"
             >
               Política de Privacidade
             </a>
             <a 
-              href="#" 
-              className="text-muted-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded px-1 py-0.5"
+              href="/termos-uso" 
+              className="text-muted-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded px-1 py-0.5 min-h-[44px] inline-flex items-center"
             >
               Termos de Uso
             </a>
