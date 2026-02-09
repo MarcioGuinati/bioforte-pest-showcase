@@ -150,115 +150,78 @@ const NossoTime = () => {
               <Loader2 className="h-8 w-8 animate-spin text-primary" />
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-16 justify-items-center pt-16">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {teamMembers.map((member, index) => (
-                <div 
-                  key={index} 
-                  className="relative w-[280px]"
-                >
-                  {/* Lanyard/Cordinha */}
-                  <div className="absolute -top-14 left-1/2 -translate-x-1/2 flex flex-col items-center z-0">
-                    {/* Cord going up */}
-                    <div className="w-6 h-8 bg-gradient-to-b from-primary to-primary/80 rounded-t-sm" />
-                    {/* Metal clip */}
-                    <div className="relative">
-                      <div className="w-10 h-5 bg-gradient-to-b from-muted to-muted-foreground/30 rounded-sm border border-muted-foreground/40 shadow-md" />
-                      <div className="absolute top-1 left-1/2 -translate-x-1/2 w-4 h-2 bg-gradient-to-b from-muted to-muted-foreground/20 rounded-sm" />
-                    </div>
-                    {/* Hook connecting to badge */}
-                    <div className="w-3 h-3 border-2 border-muted-foreground/40 rounded-full bg-muted" />
-                  </div>
-
-                  {/* Badge Card */}
-                  <div className="relative bg-card rounded-2xl shadow-xl overflow-hidden border border-border hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
-                    {/* Badge Clip Hole */}
-                    <div className="absolute top-3 left-1/2 -translate-x-1/2 z-10">
-                      <div className="w-8 h-4 bg-muted rounded-full border-2 border-border shadow-inner" />
-                    </div>
-                    
-                    {/* Header with Logo */}
-                    <div className="pt-10 pb-4 px-6 text-center bg-gradient-to-b from-muted/50 to-transparent">
-                      <span className="text-primary font-bold text-lg tracking-wide">Bioforte</span>
-                      <p className="text-[10px] text-muted-foreground">Controle de Pragas e Ambiental</p>
-                    </div>
-
-                  {/* Photo Frame */}
-                  <div className="flex justify-center px-6 pb-4">
-                    <div className="relative">
-                      {/* Green frame corners */}
-                      <div className="absolute -top-1 -left-1 w-6 h-6 border-t-4 border-l-4 border-primary rounded-tl-lg" />
-                      <div className="absolute -top-1 -right-1 w-6 h-6 border-t-4 border-r-4 border-primary rounded-tr-lg" />
-                      <div className="absolute -bottom-1 -left-1 w-6 h-6 border-b-4 border-l-4 border-primary rounded-bl-lg" />
-                      <div className="absolute -bottom-1 -right-1 w-6 h-6 border-b-4 border-r-4 border-primary rounded-br-lg" />
-                      
+                <Card key={index} className="glass overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                  <CardContent className="p-0">
+                    {/* Photo & Name Header */}
+                    <div className="gradient-primary p-6 text-center">
                       {member.photo_url ? (
                         <img 
                           src={member.photo_url} 
                           alt={member.name}
-                          className="w-28 h-28 object-cover bg-muted"
+                          className="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-primary-foreground/30 shadow-lg"
                           onError={(e) => {
                             (e.target as HTMLImageElement).style.display = 'none';
                             (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
                           }}
                         />
                       ) : null}
-                      <div className={`w-28 h-28 bg-muted flex items-center justify-center ${member.photo_url ? 'hidden' : ''}`}>
-                        <Users className="h-12 w-12 text-muted-foreground" />
+                      <div className={`w-24 h-24 rounded-full mx-auto mb-4 bg-primary-foreground/20 flex items-center justify-center ${member.photo_url ? 'hidden' : ''}`}>
+                        <Users className="h-10 w-10 text-primary-foreground" />
                       </div>
+                      <h3 className="text-xl font-bold text-primary-foreground">
+                        {member.name}
+                      </h3>
+                      <p className="text-primary-foreground/80 font-medium">
+                        {member.position}
+                      </p>
                     </div>
-                  </div>
 
-                  {/* Name Banner */}
-                  <div className="gradient-primary py-3 px-4 text-center">
-                    <h3 className="text-lg font-bold text-primary-foreground uppercase tracking-wide">
-                      {member.name}
-                    </h3>
-                    <p className="text-primary-foreground/80 text-sm font-medium">
-                      {member.position}
-                    </p>
-                  </div>
+                    {/* Info Section */}
+                    <div className="p-6 space-y-4">
+                      {member.area && (
+                        <div className="flex items-center gap-3">
+                          <Briefcase className="h-5 w-5 text-primary flex-shrink-0" />
+                          <div>
+                            <p className="text-xs text-muted-foreground">Departamento</p>
+                            <p className="font-medium text-foreground">{member.area}</p>
+                          </div>
+                        </div>
+                      )}
+                      
+                      {member.experience && (
+                        <div className="flex items-center gap-3">
+                          <Clock className="h-5 w-5 text-primary flex-shrink-0" />
+                          <div>
+                            <p className="text-xs text-muted-foreground">Experiência</p>
+                            <p className="font-medium text-foreground">{member.experience}</p>
+                          </div>
+                        </div>
+                      )}
 
-                  {/* Info Section */}
-                  <div className="p-4 space-y-2 bg-card">
-                    {member.area && (
-                      <div className="flex items-center text-sm">
-                        <span className="text-muted-foreground w-28 flex-shrink-0">Departamento :</span>
-                        <span className="font-medium text-foreground">{member.area}</span>
-                      </div>
-                    )}
-                    
-                    {member.experience && (
-                      <div className="flex items-center text-sm">
-                        <span className="text-muted-foreground w-28 flex-shrink-0">Experiência :</span>
-                        <span className="font-medium text-foreground">{member.experience}</span>
-                      </div>
-                    )}
+                      {member.description && (
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          {member.description}
+                        </p>
+                      )}
 
-                    {member.certifications && member.certifications.length > 0 && (
-                      <div className="flex items-start text-sm">
-                        <span className="text-muted-foreground w-28 flex-shrink-0">Certificações :</span>
-                        <span className="font-medium text-foreground">{member.certifications.join(", ")}</span>
-                      </div>
-                    )}
-                  </div>
-
-                    {/* Barcode Footer */}
-                    <div className="gradient-primary px-4 py-3">
-                      <div className="flex justify-center gap-[2px]">
-                        {Array.from({ length: 30 }).map((_, i) => (
-                          <div 
-                            key={i} 
-                            className="bg-primary-foreground/90"
-                            style={{ 
-                              width: i % 3 === 0 ? '2px' : '1px', 
-                              height: '20px' 
-                            }}
-                          />
-                        ))}
-                      </div>
+                      {member.certifications && member.certifications.length > 0 && (
+                        <div>
+                          <p className="text-xs text-muted-foreground mb-2">Certificações</p>
+                          <div className="flex flex-wrap gap-1.5">
+                            {member.certifications.map((cert, idx) => (
+                              <Badge key={idx} variant="secondary" className="text-xs">
+                                <Star className="h-3 w-3 mr-1 text-accent" />
+                                {cert}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  </div>
-                </div>
+                  </CardContent>
+                </Card>
               ))}
             </div>
           )}
