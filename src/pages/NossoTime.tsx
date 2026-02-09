@@ -150,25 +150,37 @@ const NossoTime = () => {
               <Loader2 className="h-8 w-8 animate-spin text-primary" />
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 justify-items-center">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-16 justify-items-center pt-16">
               {teamMembers.map((member, index) => (
                 <div 
                   key={index} 
-                  className="relative w-[280px] bg-card rounded-2xl shadow-xl overflow-hidden border border-border hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+                  className="relative w-[280px]"
                 >
-                  {/* Badge Clip Hole */}
-                  <div className="absolute top-2 left-1/2 -translate-x-1/2 w-8 h-4 bg-muted rounded-full border border-border z-10" />
-                  
-                  {/* Header with Logo */}
-                  <div className="pt-8 pb-4 px-6 text-center bg-gradient-to-b from-muted/50 to-transparent">
-                    <img 
-                      src="/lovable-uploads/logo-bioforte.png" 
-                      alt="Bioforte" 
-                      className="h-8 mx-auto mb-1 hidden"
-                    />
-                    <span className="text-primary font-bold text-lg tracking-wide">Bioforte</span>
-                    <p className="text-[10px] text-muted-foreground">Controle de Pragas e Ambiental</p>
+                  {/* Lanyard/Cordinha */}
+                  <div className="absolute -top-14 left-1/2 -translate-x-1/2 flex flex-col items-center z-0">
+                    {/* Cord going up */}
+                    <div className="w-6 h-8 bg-gradient-to-b from-primary to-primary/80 rounded-t-sm" />
+                    {/* Metal clip */}
+                    <div className="relative">
+                      <div className="w-10 h-5 bg-gradient-to-b from-muted to-muted-foreground/30 rounded-sm border border-muted-foreground/40 shadow-md" />
+                      <div className="absolute top-1 left-1/2 -translate-x-1/2 w-4 h-2 bg-gradient-to-b from-muted to-muted-foreground/20 rounded-sm" />
+                    </div>
+                    {/* Hook connecting to badge */}
+                    <div className="w-3 h-3 border-2 border-muted-foreground/40 rounded-full bg-muted" />
                   </div>
+
+                  {/* Badge Card */}
+                  <div className="relative bg-card rounded-2xl shadow-xl overflow-hidden border border-border hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+                    {/* Badge Clip Hole */}
+                    <div className="absolute top-3 left-1/2 -translate-x-1/2 z-10">
+                      <div className="w-8 h-4 bg-muted rounded-full border-2 border-border shadow-inner" />
+                    </div>
+                    
+                    {/* Header with Logo */}
+                    <div className="pt-10 pb-4 px-6 text-center bg-gradient-to-b from-muted/50 to-transparent">
+                      <span className="text-primary font-bold text-lg tracking-wide">Bioforte</span>
+                      <p className="text-[10px] text-muted-foreground">Controle de Pragas e Ambiental</p>
+                    </div>
 
                   {/* Photo Frame */}
                   <div className="flex justify-center px-6 pb-4">
@@ -230,19 +242,20 @@ const NossoTime = () => {
                     )}
                   </div>
 
-                  {/* Barcode Footer */}
-                  <div className="gradient-primary px-4 py-3">
-                    <div className="flex justify-center gap-[2px]">
-                      {Array.from({ length: 30 }).map((_, i) => (
-                        <div 
-                          key={i} 
-                          className="bg-primary-foreground/90"
-                          style={{ 
-                            width: Math.random() > 0.5 ? '2px' : '1px', 
-                            height: '20px' 
-                          }}
-                        />
-                      ))}
+                    {/* Barcode Footer */}
+                    <div className="gradient-primary px-4 py-3">
+                      <div className="flex justify-center gap-[2px]">
+                        {Array.from({ length: 30 }).map((_, i) => (
+                          <div 
+                            key={i} 
+                            className="bg-primary-foreground/90"
+                            style={{ 
+                              width: i % 3 === 0 ? '2px' : '1px', 
+                              height: '20px' 
+                            }}
+                          />
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
