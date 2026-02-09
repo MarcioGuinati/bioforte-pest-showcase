@@ -108,24 +108,23 @@ const Home = () => {
         </div>
         <h2 id="stats-heading" className="sr-only">Nossos Números</h2>
         <div className="container mx-auto px-4 relative">
-          <dl className="grid grid-cols-2 lg:grid-cols-4 gap-8" role="list">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
-              <div key={index} className="text-center group hover-lift animate-scale-bounce" style={{animationDelay: `${index * 0.1}s`}} role="listitem">
-                <dt className="sr-only">{stat.label}</dt>
+              <div key={index} className="text-center group hover-lift animate-scale-bounce" style={{animationDelay: `${index * 0.1}s`}}>
                 <div className="mb-4 inline-block" aria-hidden="true">
                   <div className="w-20 h-20 lg:w-24 lg:h-24 mx-auto bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white/20 group-hover:border-white/50 group-hover:bg-white/20 transition-all duration-300">
                     <stat.icon className="w-10 h-10 lg:w-12 lg:h-12 text-white" />
                   </div>
                 </div>
-                <dd className="text-4xl lg:text-5xl font-bold text-white mb-2 drop-shadow-lg">
+                <p className="text-4xl lg:text-5xl font-bold text-white mb-2 drop-shadow-lg">
                   {stat.number}
-                </dd>
-                <dd className="text-white/90 font-medium text-sm lg:text-base">
+                </p>
+                <p className="text-white/90 font-medium text-sm lg:text-base">
                   {stat.label}
-                </dd>
+                </p>
               </div>
             ))}
-          </dl>
+          </div>
         </div>
       </section>
 
@@ -148,9 +147,9 @@ const Home = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8" role="list">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {services.map((service, index) => (
-              <Card key={index} className="glass-strong hover-lift group animate-scale-bounce" style={{animationDelay: `${index * 0.1}s`}} role="listitem">
+              <Card key={index} className="glass-strong hover-lift group animate-scale-bounce" style={{animationDelay: `${index * 0.1}s`}}>
                 <CardContent className="p-6 text-center">
                   <div className="gradient-animated p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300" aria-hidden="true">
                     <service.icon className="h-8 w-8 text-primary-foreground" />
@@ -287,9 +286,9 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" role="list" aria-label="Avaliações de clientes">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {googleReviews.map((review, index) => (
-              <Card key={index} className="glass-strong hover-lift group animate-scale-bounce" style={{animationDelay: `${index * 0.1}s`}} role="listitem">
+              <Card key={index} className="glass-strong hover-lift group animate-scale-bounce" style={{animationDelay: `${index * 0.1}s`}}>
                 <CardContent className="p-6">
                   <div className="flex items-center gap-3 mb-4">
                     <div 

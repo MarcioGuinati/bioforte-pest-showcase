@@ -21,7 +21,7 @@ const Header = () => {
   ];
 
   return (
-    <header className="sticky top-0 z-50 glass-strong border-b border-border/50 transition-all duration-300">
+    <header className="sticky top-0 z-50 glass-strong border-b border-border/50 transition-all duration-300" style={{ contain: 'layout style' }}>
       <div className="container mx-auto px-4">
         {/* Top Bar */}
         <div className="flex items-center justify-between py-2 text-sm text-muted-foreground border-b border-border/30">
@@ -60,6 +60,8 @@ const Header = () => {
             <img
               src={logoBioforte}
               alt="Bioforte Controle de Pragas"
+              width={180}
+              height={56}
               className="h-14 w-auto max-w-[180px] object-contain"
             />
           </Link>

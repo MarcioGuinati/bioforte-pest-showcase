@@ -78,9 +78,12 @@ const NossoTime = () => {
         <div className="absolute inset-0">
           <img
             src={heroImage}
-            alt="Nosso Time"
+            alt=""
+            width={1920}
+            height={1080}
             className="w-full h-full object-cover"
             loading="lazy"
+            decoding="async"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/60" />
         </div>
@@ -114,17 +117,17 @@ const NossoTime = () => {
               { icon: Award, number: "50+", label: "Certificações" }
             ].map((stat, index) => (
               <div key={index} className="text-center animate-scale-in">
-                <div className="flex items-center justify-center mb-4">
+                <div className="flex items-center justify-center mb-4" aria-hidden="true">
                   <div className="gradient-primary p-3 rounded-full">
                     <stat.icon className="h-6 w-6 text-primary-foreground" />
                   </div>
                 </div>
-                <div className="text-3xl font-bold text-foreground mb-2">
+                <p className="text-3xl font-bold text-foreground mb-2">
                   {stat.number}
-                </div>
-                <div className="text-muted-foreground font-medium">
+                </p>
+                <p className="text-muted-foreground font-medium">
                   {stat.label}
-                </div>
+                </p>
               </div>
             ))}
           </div>
@@ -159,7 +162,11 @@ const NossoTime = () => {
                       {member.photo_url ? (
                         <img 
                           src={member.photo_url} 
-                          alt={member.name}
+                          alt={`Foto de ${member.name}`}
+                          width={96}
+                          height={96}
+                          loading="lazy"
+                          decoding="async"
                           className="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-primary-foreground/30 shadow-lg"
                           onError={(e) => {
                             (e.target as HTMLImageElement).style.display = 'none';
