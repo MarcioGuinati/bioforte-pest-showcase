@@ -152,59 +152,98 @@ const NossoTime = () => {
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {teamMembers.map((member, index) => (
-                <Card key={index} className="glass overflow-hidden">
+                <Card key={index} className="glass overflow-hidden hover-lift">
                   <CardContent className="p-0">
-                    {/* Profile Header */}
-                    <div className="gradient-primary p-6 text-center">
+                    {/* Badge Header - Company Logo/Name */}
+                    <div className="gradient-primary px-4 py-3 text-center border-b-4 border-accent">
+                      <span className="text-primary-foreground font-bold text-sm tracking-wider uppercase">
+                        Bioforte
+                      </span>
+                    </div>
+
+                    {/* Photo Section */}
+                    <div className="bg-gradient-to-b from-primary/10 to-background p-6 flex justify-center">
                       {member.photo_url ? (
                         <img 
                           src={member.photo_url} 
                           alt={member.name}
-                          className="w-20 h-20 rounded-full mx-auto mb-4 object-cover border-4 border-primary-foreground/20"
+                          className="w-32 h-32 rounded-full object-cover border-4 border-primary shadow-lg"
                           onError={(e) => {
                             (e.target as HTMLImageElement).style.display = 'none';
                             (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
                           }}
                         />
                       ) : null}
-                      <div className={`w-20 h-20 bg-primary-foreground rounded-full mx-auto mb-4 flex items-center justify-center ${member.photo_url ? 'hidden' : ''}`}>
-                        <Users className="h-8 w-8 text-primary" />
+                      <div className={`w-32 h-32 rounded-full bg-muted flex items-center justify-center border-4 border-primary shadow-lg ${member.photo_url ? 'hidden' : ''}`}>
+                        <Users className="h-12 w-12 text-muted-foreground" />
                       </div>
-                      <h3 className="text-xl font-bold text-primary-foreground mb-1">
-                        {member.name}
-                      </h3>
-                      <p className="text-primary-foreground/80 font-medium">
-                        {member.position}
-                      </p>
                     </div>
 
-                    {/* Profile Content */}
-                    <div className="p-6">
-                      <div className="flex items-center gap-2 mb-3">
-                        <Briefcase className="h-4 w-4 text-primary" />
-                        <span className="text-sm font-medium">{member.area}</span>
-                      </div>
+                    {/* Name & Position */}
+                    <div className="text-center px-6 pb-4 border-b border-border">
+                      <h3 className="text-xl font-bold text-foreground mb-1">
+                        {member.name}
+                      </h3>
+                      <Badge className="gradient-primary text-primary-foreground">
+                        {member.position}
+                      </Badge>
+                    </div>
 
-                      <div className="flex items-center gap-2 mb-4">
-                        <Clock className="h-4 w-4 text-primary" />
-                        <span className="text-sm text-muted-foreground">{member.experience}</span>
-                      </div>
-
-                      <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
-                        {member.description}
-                      </p>
-
-                      <div>
-                        <h4 className="font-semibold mb-2 text-sm">Certificações</h4>
-                        <div className="space-y-1">
-                          {member.certifications.map((cert, idx) => (
-                            <div key={idx} className="flex items-center gap-2 text-xs">
-                              <Star className="h-3 w-3 text-accent" />
-                              <span>{cert}</span>
-                            </div>
-                          ))}
+                    {/* Info Grid */}
+                    <div className="p-4 space-y-3">
+                      {member.area && (
+                        <div className="flex items-center gap-3 p-2 rounded-lg bg-muted/50">
+                          <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                            <Briefcase className="h-4 w-4 text-primary" />
+                          </div>
+                          <div>
+                            <p className="text-xs text-muted-foreground uppercase tracking-wider">Área</p>
+                            <p className="text-sm font-medium text-foreground">{member.area}</p>
+                          </div>
                         </div>
-                      </div>
+                      )}
+
+                      {member.experience && (
+                        <div className="flex items-center gap-3 p-2 rounded-lg bg-muted/50">
+                          <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                            <Clock className="h-4 w-4 text-primary" />
+                          </div>
+                          <div>
+                            <p className="text-xs text-muted-foreground uppercase tracking-wider">Experiência</p>
+                            <p className="text-sm font-medium text-foreground">{member.experience}</p>
+                          </div>
+                        </div>
+                      )}
+
+                      {member.description && (
+                        <div className="p-2 rounded-lg bg-muted/50">
+                          <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Sobre</p>
+                          <p className="text-sm text-foreground leading-relaxed">
+                            {member.description}
+                          </p>
+                        </div>
+                      )}
+
+                      {member.certifications && member.certifications.length > 0 && (
+                        <div className="p-2 rounded-lg bg-muted/50">
+                          <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2">Certificações</p>
+                          <div className="flex flex-wrap gap-1.5">
+                            {member.certifications.map((cert, idx) => (
+                              <Badge key={idx} variant="outline" className="text-xs bg-background">
+                                <Star className="h-2.5 w-2.5 mr-1 text-accent" />
+                                {cert}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Badge Footer */}
+                    <div className="gradient-primary px-4 py-2 text-center">
+                      <span className="text-primary-foreground/80 text-xs">
+                        Profissional Certificado
+                      </span>
                     </div>
                   </CardContent>
                 </Card>
