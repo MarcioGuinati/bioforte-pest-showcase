@@ -150,103 +150,102 @@ const NossoTime = () => {
               <Loader2 className="h-8 w-8 animate-spin text-primary" />
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 justify-items-center">
               {teamMembers.map((member, index) => (
-                <Card key={index} className="glass overflow-hidden hover-lift">
-                  <CardContent className="p-0">
-                    {/* Badge Header - Company Logo/Name */}
-                    <div className="gradient-primary px-4 py-3 text-center border-b-4 border-accent">
-                      <span className="text-primary-foreground font-bold text-sm tracking-wider uppercase">
-                        Bioforte
-                      </span>
-                    </div>
+                <div 
+                  key={index} 
+                  className="relative w-[280px] bg-card rounded-2xl shadow-xl overflow-hidden border border-border hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+                >
+                  {/* Badge Clip Hole */}
+                  <div className="absolute top-2 left-1/2 -translate-x-1/2 w-8 h-4 bg-muted rounded-full border border-border z-10" />
+                  
+                  {/* Header with Logo */}
+                  <div className="pt-8 pb-4 px-6 text-center bg-gradient-to-b from-muted/50 to-transparent">
+                    <img 
+                      src="/lovable-uploads/logo-bioforte.png" 
+                      alt="Bioforte" 
+                      className="h-8 mx-auto mb-1 hidden"
+                    />
+                    <span className="text-primary font-bold text-lg tracking-wide">Bioforte</span>
+                    <p className="text-[10px] text-muted-foreground">Controle de Pragas e Ambiental</p>
+                  </div>
 
-                    {/* Photo Section */}
-                    <div className="bg-gradient-to-b from-primary/10 to-background p-6 flex justify-center">
+                  {/* Photo Frame */}
+                  <div className="flex justify-center px-6 pb-4">
+                    <div className="relative">
+                      {/* Green frame corners */}
+                      <div className="absolute -top-1 -left-1 w-6 h-6 border-t-4 border-l-4 border-primary rounded-tl-lg" />
+                      <div className="absolute -top-1 -right-1 w-6 h-6 border-t-4 border-r-4 border-primary rounded-tr-lg" />
+                      <div className="absolute -bottom-1 -left-1 w-6 h-6 border-b-4 border-l-4 border-primary rounded-bl-lg" />
+                      <div className="absolute -bottom-1 -right-1 w-6 h-6 border-b-4 border-r-4 border-primary rounded-br-lg" />
+                      
                       {member.photo_url ? (
                         <img 
                           src={member.photo_url} 
                           alt={member.name}
-                          className="w-32 h-32 rounded-full object-cover border-4 border-primary shadow-lg"
+                          className="w-28 h-28 object-cover bg-muted"
                           onError={(e) => {
                             (e.target as HTMLImageElement).style.display = 'none';
                             (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
                           }}
                         />
                       ) : null}
-                      <div className={`w-32 h-32 rounded-full bg-muted flex items-center justify-center border-4 border-primary shadow-lg ${member.photo_url ? 'hidden' : ''}`}>
+                      <div className={`w-28 h-28 bg-muted flex items-center justify-center ${member.photo_url ? 'hidden' : ''}`}>
                         <Users className="h-12 w-12 text-muted-foreground" />
                       </div>
                     </div>
+                  </div>
 
-                    {/* Name & Position */}
-                    <div className="text-center px-6 pb-4 border-b border-border">
-                      <h3 className="text-xl font-bold text-foreground mb-1">
-                        {member.name}
-                      </h3>
-                      <Badge className="gradient-primary text-primary-foreground">
-                        {member.position}
-                      </Badge>
+                  {/* Name Banner */}
+                  <div className="gradient-primary py-3 px-4 text-center">
+                    <h3 className="text-lg font-bold text-primary-foreground uppercase tracking-wide">
+                      {member.name}
+                    </h3>
+                    <p className="text-primary-foreground/80 text-sm font-medium">
+                      {member.position}
+                    </p>
+                  </div>
+
+                  {/* Info Section */}
+                  <div className="p-4 space-y-2 bg-card">
+                    {member.area && (
+                      <div className="flex items-center text-sm">
+                        <span className="text-muted-foreground w-28 flex-shrink-0">Departamento :</span>
+                        <span className="font-medium text-foreground">{member.area}</span>
+                      </div>
+                    )}
+                    
+                    {member.experience && (
+                      <div className="flex items-center text-sm">
+                        <span className="text-muted-foreground w-28 flex-shrink-0">Experiência :</span>
+                        <span className="font-medium text-foreground">{member.experience}</span>
+                      </div>
+                    )}
+
+                    {member.certifications && member.certifications.length > 0 && (
+                      <div className="flex items-start text-sm">
+                        <span className="text-muted-foreground w-28 flex-shrink-0">Certificações :</span>
+                        <span className="font-medium text-foreground">{member.certifications.join(", ")}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Barcode Footer */}
+                  <div className="gradient-primary px-4 py-3">
+                    <div className="flex justify-center gap-[2px]">
+                      {Array.from({ length: 30 }).map((_, i) => (
+                        <div 
+                          key={i} 
+                          className="bg-primary-foreground/90"
+                          style={{ 
+                            width: Math.random() > 0.5 ? '2px' : '1px', 
+                            height: '20px' 
+                          }}
+                        />
+                      ))}
                     </div>
-
-                    {/* Info Grid */}
-                    <div className="p-4 space-y-3">
-                      {member.area && (
-                        <div className="flex items-center gap-3 p-2 rounded-lg bg-muted/50">
-                          <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                            <Briefcase className="h-4 w-4 text-primary" />
-                          </div>
-                          <div>
-                            <p className="text-xs text-muted-foreground uppercase tracking-wider">Área</p>
-                            <p className="text-sm font-medium text-foreground">{member.area}</p>
-                          </div>
-                        </div>
-                      )}
-
-                      {member.experience && (
-                        <div className="flex items-center gap-3 p-2 rounded-lg bg-muted/50">
-                          <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                            <Clock className="h-4 w-4 text-primary" />
-                          </div>
-                          <div>
-                            <p className="text-xs text-muted-foreground uppercase tracking-wider">Experiência</p>
-                            <p className="text-sm font-medium text-foreground">{member.experience}</p>
-                          </div>
-                        </div>
-                      )}
-
-                      {member.description && (
-                        <div className="p-2 rounded-lg bg-muted/50">
-                          <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Sobre</p>
-                          <p className="text-sm text-foreground leading-relaxed">
-                            {member.description}
-                          </p>
-                        </div>
-                      )}
-
-                      {member.certifications && member.certifications.length > 0 && (
-                        <div className="p-2 rounded-lg bg-muted/50">
-                          <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2">Certificações</p>
-                          <div className="flex flex-wrap gap-1.5">
-                            {member.certifications.map((cert, idx) => (
-                              <Badge key={idx} variant="outline" className="text-xs bg-background">
-                                <Star className="h-2.5 w-2.5 mr-1 text-accent" />
-                                {cert}
-                              </Badge>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Badge Footer */}
-                    <div className="gradient-primary px-4 py-2 text-center">
-                      <span className="text-primary-foreground/80 text-xs">
-                        Profissional Certificado
-                      </span>
-                    </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               ))}
             </div>
           )}
