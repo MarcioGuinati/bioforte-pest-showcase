@@ -26,6 +26,7 @@ interface TeamMember {
   experience: string;
   certifications: string[];
   description: string;
+  photo_url?: string;
 }
 
 const certifications = [
@@ -155,7 +156,18 @@ const NossoTime = () => {
                   <CardContent className="p-0">
                     {/* Profile Header */}
                     <div className="gradient-primary p-6 text-center">
-                      <div className="w-20 h-20 bg-primary-foreground rounded-full mx-auto mb-4 flex items-center justify-center">
+                      {member.photo_url ? (
+                        <img 
+                          src={member.photo_url} 
+                          alt={member.name}
+                          className="w-20 h-20 rounded-full mx-auto mb-4 object-cover border-4 border-primary-foreground/20"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).style.display = 'none';
+                            (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
+                          }}
+                        />
+                      ) : null}
+                      <div className={`w-20 h-20 bg-primary-foreground rounded-full mx-auto mb-4 flex items-center justify-center ${member.photo_url ? 'hidden' : ''}`}>
                         <Users className="h-8 w-8 text-primary" />
                       </div>
                       <h3 className="text-xl font-bold text-primary-foreground mb-1">

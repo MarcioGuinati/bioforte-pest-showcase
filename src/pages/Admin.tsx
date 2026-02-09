@@ -64,12 +64,20 @@ import {
   Moon,
   BarChart3,
   User,
+  Users,
+  Briefcase,
+  MessageSquare,
+  ClipboardList,
 } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import logoImage from "@/assets/logo-bioforte.png";
 import { useAdminTheme } from "@/hooks/useAdminTheme";
 import { AnalyticsDashboard } from "@/components/admin/AnalyticsDashboard";
+import { TeamManager } from "@/components/admin/TeamManager";
+import { JobsManager } from "@/components/admin/JobsManager";
+import { ApplicationsManager } from "@/components/admin/ApplicationsManager";
+import { ContactsManager } from "@/components/admin/ContactsManager";
 
 interface BlogPost {
   id: string;
@@ -433,11 +441,11 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
       {/* Header */}
       <header className="bg-card border-b border-border sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4">
             <img src={logoImage} alt="Bioforte" className="h-10" />
             <div>
               <h1 className="text-lg font-semibold text-foreground">Painel Administrativo</h1>
-              <p className="text-sm text-muted-foreground">Gerenciamento do Blog</p>
+              <p className="text-sm text-muted-foreground">Gerenciamento do Site</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
@@ -470,10 +478,26 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
 
       <main className="container mx-auto px-4 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="bg-muted border-border mb-6">
+          <TabsList className="bg-muted border-border mb-6 flex-wrap h-auto gap-1 p-1">
             <TabsTrigger value="posts" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <FileText className="w-4 h-4 mr-2" />
               Posts
+            </TabsTrigger>
+            <TabsTrigger value="team" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <Users className="w-4 h-4 mr-2" />
+              Equipe
+            </TabsTrigger>
+            <TabsTrigger value="jobs" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <Briefcase className="w-4 h-4 mr-2" />
+              Vagas
+            </TabsTrigger>
+            <TabsTrigger value="applications" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <ClipboardList className="w-4 h-4 mr-2" />
+              Candidaturas
+            </TabsTrigger>
+            <TabsTrigger value="contacts" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <MessageSquare className="w-4 h-4 mr-2" />
+              Contatos
             </TabsTrigger>
             <TabsTrigger value="analytics" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <BarChart3 className="w-4 h-4 mr-2" />
@@ -758,6 +782,26 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
                 </CardContent>
               </Card>
             )}
+          </TabsContent>
+
+          {/* Team Tab */}
+          <TabsContent value="team">
+            <TeamManager />
+          </TabsContent>
+
+          {/* Jobs Tab */}
+          <TabsContent value="jobs">
+            <JobsManager />
+          </TabsContent>
+
+          {/* Applications Tab */}
+          <TabsContent value="applications">
+            <ApplicationsManager />
+          </TabsContent>
+
+          {/* Contacts Tab */}
+          <TabsContent value="contacts">
+            <ContactsManager />
           </TabsContent>
 
           {/* Analytics Tab */}
