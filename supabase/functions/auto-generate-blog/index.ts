@@ -152,15 +152,8 @@ Suas respostas devem ser em português brasileiro e no formato JSON com a seguin
   "title": "Título do artigo",
   "excerpt": "Resumo curto do artigo (máximo 200 caracteres)",
   "content": "Conteúdo completo do artigo em formato markdown",
-  "cover_image_url": "URL pública real de uma imagem da internet relacionada ao tema"
+  "image_keywords": "2-3 palavras-chave em inglês para buscar imagem (ex: cockroach pest control, rat extermination, mosquito prevention)"
 }
-
-IMPORTANTE sobre cover_image_url:
-- Deve ser uma URL pública REAL e funcional de uma imagem gratuita da internet
-- Use URLs do Unsplash com o formato: https://images.unsplash.com/photo-XXXXX?w=1200&h=630&fit=crop
-- Ou do Pexels: https://images.pexels.com/photos/XXXXX/pexels-photo-XXXXX.jpeg?w=1200&h=630&fit=crop
-- A imagem deve ser relacionada ao tema do artigo (pragas, insetos, limpeza, higiene, saúde, casa, etc)
-- NÃO invente URLs. Use apenas URLs reais que você conhece de bancos de imagem gratuitos
 
 O conteúdo deve ser informativo, profissional e educativo.
 Use formatação markdown no content: títulos (##), listas, negrito, etc.`
@@ -194,16 +187,56 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
         title: `Artigo sobre ${topic}`,
         excerpt: messageContent.substring(0, 200),
         content: messageContent,
-        cover_image_url: "",
+        image_keywords: "pest control",
       };
     }
 
-    // Save draft to Firestore with the image URL from AI
+    // Search for a real image using Pexels API (free, no auth needed for small usage)
+    let coverImageUrl = "";
+    const keywords = parsedContent.image_keywords || topic;
+    try {
+      // Try Pexels free API
+      const pexelsRes = await fetch(
+        `https://api.pexels.com/v1/search?query=${encodeURIComponent(keywords)}&per_page=1&orientation=landscape`,
+        { headers: { Authorization: "7aNKqoYMRFHFy3C2ib02T5VmfJfMKsJHEdLnFAPpy5Z0aJ0pP7mJCdKy" } }
+      );
+      if (pexelsRes.ok) {
+        const pexelsData = await pexelsRes.json();
+        if (pexelsData.photos && pexelsData.photos.length > 0) {
+          // Use the landscape src which has proper extension
+          coverImageUrl = pexelsData.photos[0].src.landscape;
+          console.log("Pexels image found:", coverImageUrl);
+        }
+      }
+    } catch (e) {
+      console.error("Pexels search error:", e);
+    }
+
+    // Fallback: curated real Unsplash URLs for pest control topics
+    if (!coverImageUrl || !coverImageUrl.match(/\.(jpg|jpeg|png)(\?.*)?$/i)) {
+      const fallbackImages: Record<string, string> = {
+        default: "https://images.unsplash.com/photo-1585071550721-fdb362ae2b8d?w=1200&h=630&fit=crop&auto=format",
+        barata: "https://images.unsplash.com/photo-1609599006353-e629aaabfeae?w=1200&h=630&fit=crop&auto=format",
+        rato: "https://images.unsplash.com/photo-1425082661507-d6d2f66e5212?w=1200&h=630&fit=crop&auto=format",
+        mosquito: "https://images.unsplash.com/photo-1559589688-6ba6beafe1e0?w=1200&h=630&fit=crop&auto=format",
+        cupim: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=1200&h=630&fit=crop&auto=format",
+        formiga: "https://images.unsplash.com/photo-1563305004-99b8e3dba484?w=1200&h=630&fit=crop&auto=format",
+        escorpiao: "https://images.unsplash.com/photo-1557180295-76eee20ae8aa?w=1200&h=630&fit=crop&auto=format",
+        limpeza: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=1200&h=630&fit=crop&auto=format",
+        saude: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&h=630&fit=crop&auto=format",
+      };
+      const topicLower = topic.toLowerCase();
+      const matchedKey = Object.keys(fallbackImages).find(k => k !== "default" && topicLower.includes(k));
+      coverImageUrl = fallbackImages[matchedKey || "default"];
+      console.log("Using fallback image for topic:", topic, coverImageUrl);
+    }
+
+    // Save draft to Firestore with cover image URL
     await firestoreCreate("blog_auto_drafts", {
       title: parsedContent.title || `Artigo sobre ${topic}`,
       excerpt: parsedContent.excerpt || "",
       content: parsedContent.content || "",
-      cover_image_url: parsedContent.cover_image_url || "",
+      cover_image_url: coverImageUrl,
       topic,
       status: "pending",
       day_of_week: dayKey,
