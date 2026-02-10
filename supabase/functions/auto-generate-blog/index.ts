@@ -192,11 +192,58 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
       };
     }
 
+    // Generate cover image using AI
+    let coverImageUrl = "";
+    try {
+      const imagePrompt = parsedContent.cover_image_suggestion || `Imagem profissional sobre ${topic} para blog de controle de pragas`;
+      const imageResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${LOVABLE_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "google/gemini-2.5-flash-image",
+          messages: [{ role: "user", content: `Generate a professional blog cover image: ${imagePrompt}. Clean, modern style, 16:9 aspect ratio.` }],
+          modalities: ["image", "text"],
+        }),
+      });
+
+      if (imageResponse.ok) {
+        const imageData = await imageResponse.json();
+        const base64Image = imageData.choices?.[0]?.message?.images?.[0]?.image_url?.url;
+        
+        if (base64Image) {
+          // Upload to Firebase Storage
+          const base64Data = base64Image.replace(/^data:image\/\w+;base64,/, "");
+          const binaryData = Uint8Array.from(atob(base64Data), c => c.charCodeAt(0));
+          const fileName = `blog-covers/${Date.now()}-${Math.random().toString(36).substring(7)}.png`;
+          
+          const uploadUrl = `https://firebasestorage.googleapis.com/v0/b/${FIREBASE_PROJECT_ID}.firebasestorage.app/o?name=${encodeURIComponent(fileName)}`;
+          const uploadRes = await fetch(uploadUrl, {
+            method: "POST",
+            headers: { "Content-Type": "image/png" },
+            body: binaryData,
+          });
+
+          if (uploadRes.ok) {
+            coverImageUrl = `https://firebasestorage.googleapis.com/v0/b/${FIREBASE_PROJECT_ID}.firebasestorage.app/o/${encodeURIComponent(fileName)}?alt=media`;
+            console.log("Image uploaded to Firebase Storage:", coverImageUrl);
+          } else {
+            console.error("Firebase Storage upload failed:", await uploadRes.text());
+          }
+        }
+      }
+    } catch (imgError) {
+      console.error("Image generation error:", imgError);
+    }
+
     // Save draft to Firestore
     await firestoreCreate("blog_auto_drafts", {
       title: parsedContent.title || `Artigo sobre ${topic}`,
       excerpt: parsedContent.excerpt || "",
       content: parsedContent.content || "",
+      cover_image_url: coverImageUrl || "",
       cover_image_suggestion: parsedContent.cover_image_suggestion || `Imagem sobre ${topic}`,
       topic,
       status: "pending",
