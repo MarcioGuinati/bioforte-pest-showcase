@@ -108,12 +108,31 @@ interface BlogAutoGeneratorProps {
   currentUserName: string | null;
 }
 
+const SCHEDULED_HOUR_BRT = 6; // 06:00 horário de Brasília
+
+function getBrazilDate(): Date {
+  const now = new Date();
+  const brazilOffset = -3 * 60;
+  return new Date(now.getTime() + (brazilOffset + now.getTimezoneOffset()) * 60000);
+}
+
+function getTodayDateKey(): string {
+  const brt = getBrazilDate();
+  return `${brt.getFullYear()}-${String(brt.getMonth() + 1).padStart(2, '0')}-${String(brt.getDate()).padStart(2, '0')}`;
+}
+
+const DAYS_MAP: Record<number, string> = {
+  0: "sunday", 1: "monday", 2: "tuesday", 3: "wednesday",
+  4: "thursday", 5: "friday", 6: "saturday",
+};
+
 export function BlogAutoGenerator({ currentUserEmail, currentUserName }: BlogAutoGeneratorProps) {
   const queryClient = useQueryClient();
   const [config, setConfig] = useState<ScheduleConfig>(DEFAULT_CONFIG);
   const [isSaving, setIsSaving] = useState(false);
   const [isGeneratingManual, setIsGeneratingManual] = useState(false);
   const [newTopicInputs, setNewTopicInputs] = useState<Record<string, string>>({});
+  const [autoGenStatus, setAutoGenStatus] = useState<string | null>(null);
 
   // Load config from Firestore
   useEffect(() => {
@@ -135,6 +154,58 @@ export function BlogAutoGenerator({ currentUserEmail, currentUserName }: BlogAut
     };
     loadConfig();
   }, []);
+
+  // Auto-generation check: runs on load, triggers if 06:00 BRT passed and today not yet generated
+  useEffect(() => {
+    const checkAndAutoGenerate = async () => {
+      try {
+        const configDoc = await getDoc(doc(db, "blog_schedule_config", "main"));
+        if (!configDoc.exists()) return;
+        const data = configDoc.data();
+        if (!data.enabled) return;
+
+        const brt = getBrazilDate();
+        if (brt.getHours() < SCHEDULED_HOUR_BRT) return; // Too early
+
+        const todayKey = getTodayDateKey();
+        const lastRunDoc = await getDoc(doc(db, "blog_schedule_config", "last_run"));
+        if (lastRunDoc.exists() && lastRunDoc.data().date === todayKey) return; // Already ran today
+
+        const dayKey = DAYS_MAP[brt.getDay()];
+        const topicsByDay = data.topics_by_day || {};
+        const todayTopics = topicsByDay[dayKey] || [];
+        if (todayTopics.length === 0) return;
+
+        const topic = todayTopics[Math.floor(Math.random() * todayTopics.length)];
+        setAutoGenStatus(`Gerando automaticamente sobre "${topic}"...`);
+
+        // Call edge function to generate
+        const { data: result, error } = await supabase.functions.invoke("auto-generate-blog");
+
+        if (error) {
+          console.error("Auto-gen error:", error);
+          setAutoGenStatus("Erro na geração automática");
+          return;
+        }
+
+        // Mark today as done
+        await setDoc(doc(db, "blog_schedule_config", "last_run"), {
+          date: todayKey,
+          topic,
+          generated_at: Timestamp.now(),
+        });
+
+        queryClient.invalidateQueries({ queryKey: ["blog-auto-drafts"] });
+        setAutoGenStatus(`✅ Gerado: "${result?.title || topic}"`);
+        toast.success("Conteúdo do dia gerado automaticamente!");
+      } catch (error) {
+        console.error("Auto-generate check error:", error);
+        setAutoGenStatus(null);
+      }
+    };
+
+    checkAndAutoGenerate();
+  }, [queryClient]);
 
   // Load drafts from Firestore
   const { data: drafts, isLoading: isLoadingDrafts } = useQuery({
@@ -294,6 +365,26 @@ O artigo deve ser relevante para o contexto de controle de pragas e dedetizaçã
 
   return (
     <div className="space-y-6">
+      {/* Auto-generation status */}
+      {autoGenStatus && (
+        <Card className="border-primary/30 bg-primary/5">
+          <CardContent className="p-4 flex items-center gap-3">
+            {autoGenStatus.startsWith("✅") ? (
+              <Check className="w-5 h-5 text-primary" />
+            ) : autoGenStatus.startsWith("Erro") ? (
+              <X className="w-5 h-5 text-destructive" />
+            ) : (
+              <Loader2 className="w-5 h-5 animate-spin text-primary" />
+            )}
+            <div>
+              <p className="text-sm font-medium text-foreground">{autoGenStatus}</p>
+              <p className="text-xs text-muted-foreground">
+                Agendamento automático diário às 06:00 (horário de Brasília)
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+      )}
       {/* Config Section */}
       <Card className="border-border">
         <CardHeader>
