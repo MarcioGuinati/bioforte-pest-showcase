@@ -191,20 +191,19 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
       };
     }
 
-    // Search for a real image using Pexels API (free, no auth needed for small usage)
+    // Search for a real image using Pexels API
     let coverImageUrl = "";
     const keywords = parsedContent.image_keywords || topic;
     try {
-      // Try Pexels free API
       const pexelsRes = await fetch(
-        `https://api.pexels.com/v1/search?query=${encodeURIComponent(keywords)}&per_page=1&orientation=landscape`,
+        `https://api.pexels.com/v1/search?query=${encodeURIComponent(keywords)}&per_page=3&orientation=landscape`,
         { headers: { Authorization: "7aNKqoYMRFHFy3C2ib02T5VmfJfMKsJHEdLnFAPpy5Z0aJ0pP7mJCdKy" } }
       );
       if (pexelsRes.ok) {
         const pexelsData = await pexelsRes.json();
         if (pexelsData.photos && pexelsData.photos.length > 0) {
-          // Use the landscape src which has proper extension
-          coverImageUrl = pexelsData.photos[0].src.landscape;
+          // Use original URL which always has .jpeg extension
+          coverImageUrl = pexelsData.photos[0].src.original;
           console.log("Pexels image found:", coverImageUrl);
         }
       }
@@ -212,18 +211,24 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
       console.error("Pexels search error:", e);
     }
 
-    // Fallback: curated real Unsplash URLs for pest control topics
-    if (!coverImageUrl || !coverImageUrl.match(/\.(jpg|jpeg|png)(\?.*)?$/i)) {
+    // Fallback: curated Unsplash URLs
+    if (!coverImageUrl) {
       const fallbackImages: Record<string, string> = {
-        default: "https://images.unsplash.com/photo-1585071550721-fdb362ae2b8d?w=1200&h=630&fit=crop&auto=format",
-        barata: "https://images.unsplash.com/photo-1609599006353-e629aaabfeae?w=1200&h=630&fit=crop&auto=format",
-        rato: "https://images.unsplash.com/photo-1425082661507-d6d2f66e5212?w=1200&h=630&fit=crop&auto=format",
-        mosquito: "https://images.unsplash.com/photo-1559589688-6ba6beafe1e0?w=1200&h=630&fit=crop&auto=format",
-        cupim: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=1200&h=630&fit=crop&auto=format",
-        formiga: "https://images.unsplash.com/photo-1563305004-99b8e3dba484?w=1200&h=630&fit=crop&auto=format",
-        escorpiao: "https://images.unsplash.com/photo-1557180295-76eee20ae8aa?w=1200&h=630&fit=crop&auto=format",
-        limpeza: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=1200&h=630&fit=crop&auto=format",
-        saude: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&h=630&fit=crop&auto=format",
+        default: "https://images.unsplash.com/photo-1585071550721-fdb362ae2b8d?w=1200&h=630&fit=crop&auto=format&fm=jpg",
+        barata: "https://images.unsplash.com/photo-1609599006353-e629aaabfeae?w=1200&h=630&fit=crop&auto=format&fm=jpg",
+        rato: "https://images.unsplash.com/photo-1425082661507-d6d2f66e5212?w=1200&h=630&fit=crop&auto=format&fm=jpg",
+        mosquito: "https://images.unsplash.com/photo-1559589688-6ba6beafe1e0?w=1200&h=630&fit=crop&auto=format&fm=jpg",
+        cupim: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=1200&h=630&fit=crop&auto=format&fm=jpg",
+        formiga: "https://images.unsplash.com/photo-1563305004-99b8e3dba484?w=1200&h=630&fit=crop&auto=format&fm=jpg",
+        escorpiao: "https://images.unsplash.com/photo-1557180295-76eee20ae8aa?w=1200&h=630&fit=crop&auto=format&fm=jpg",
+        limpeza: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=1200&h=630&fit=crop&auto=format&fm=jpg",
+        saude: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&h=630&fit=crop&auto=format&fm=jpg",
+        agua: "https://images.unsplash.com/photo-1504972441999-17548a1fbc40?w=1200&h=630&fit=crop&auto=format&fm=jpg",
+        caixa: "https://images.unsplash.com/photo-1504972441999-17548a1fbc40?w=1200&h=630&fit=crop&auto=format&fm=jpg",
+        dengue: "https://images.unsplash.com/photo-1559589688-6ba6beafe1e0?w=1200&h=630&fit=crop&auto=format&fm=jpg",
+        aranha: "https://images.unsplash.com/photo-1567596275753-92607c3ee47c?w=1200&h=630&fit=crop&auto=format&fm=jpg",
+        pombo: "https://images.unsplash.com/photo-1544923408-75c5cef46f14?w=1200&h=630&fit=crop&auto=format&fm=jpg",
+        morcego: "https://images.unsplash.com/photo-1593085260707-5377f0e8a120?w=1200&h=630&fit=crop&auto=format&fm=jpg",
       };
       const topicLower = topic.toLowerCase();
       const matchedKey = Object.keys(fallbackImages).find(k => k !== "default" && topicLower.includes(k));
