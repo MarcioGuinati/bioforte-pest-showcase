@@ -81,6 +81,7 @@ import { JobsManager } from "@/components/admin/JobsManager";
 import { ApplicationsManager } from "@/components/admin/ApplicationsManager";
 import { ContactsManager } from "@/components/admin/ContactsManager";
 import { ReportsDashboard } from "@/components/admin/ReportsDashboard";
+import { BlogAutoGenerator } from "@/components/admin/BlogAutoGenerator";
 
 interface BlogPost {
   id: string;
@@ -510,6 +511,10 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
                   <BarChart3 className="w-4 h-4 mr-2" />
                   Analytics
                 </TabsTrigger>
+                <TabsTrigger value="automacao" className="data-[state=active]:bg-card data-[state=active]:shadow-sm">
+                  <Sparkles className="w-4 h-4 mr-2" />
+                  Automação
+                </TabsTrigger>
               </TabsList>
 
               <TabsContent value="posts">
@@ -792,6 +797,14 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
                   <p className="text-muted-foreground">Métricas de visualização e interação dos últimos 30 dias</p>
                 </div>
                 <AnalyticsDashboard />
+              </TabsContent>
+
+              <TabsContent value="automacao">
+                <div className="mb-6">
+                  <h2 className="text-2xl font-bold text-foreground">Automação de Conteúdo</h2>
+                  <p className="text-muted-foreground">Configure a geração automática de posts por IA</p>
+                </div>
+                <BlogAutoGenerator currentUserEmail={currentUserEmail} currentUserName={currentUserName} />
               </TabsContent>
             </Tabs>
           </TabsContent>
