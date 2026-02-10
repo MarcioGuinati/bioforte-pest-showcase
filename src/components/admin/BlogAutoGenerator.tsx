@@ -280,7 +280,7 @@ O artigo deve ser relevante para o contexto de controle de pragas e dedetizaçã
         title: data.title || "Rascunho Gerado",
         excerpt: data.excerpt || "",
         content: data.content || "",
-        cover_image_suggestion: data.cover_image_suggestion || `Imagem sobre ${topic}`,
+        cover_image_url: data.cover_image_url || "",
         topic,
         status: "pending",
         day_of_week: dayKey,

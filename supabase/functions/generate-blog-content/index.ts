@@ -42,7 +42,8 @@ Suas respostas devem ser em português brasileiro e no formato JSON com a seguin
 {
   "title": "Título do artigo",
   "excerpt": "Resumo curto do artigo (máximo 200 caracteres)",
-  "content": "Conteúdo completo do artigo em formato markdown"
+  "content": "Conteúdo completo do artigo em formato markdown",
+  "image_keywords": "2-3 palavras-chave em inglês para buscar imagem (ex: cockroach pest control, rat extermination)"
 }
 
 O conteúdo deve ser informativo, profissional e educativo, focando em:
@@ -102,6 +103,30 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
         content: content
       };
     }
+
+    // Search for a cover image using Pexels
+    let coverImageUrl = "";
+    const keywords = parsedContent.image_keywords || "pest control";
+    try {
+      const pexelsRes = await fetch(
+        `https://api.pexels.com/v1/search?query=${encodeURIComponent(keywords)}&per_page=3&orientation=landscape`,
+        { headers: { Authorization: "7aNKqoYMRFHFy3C2ib02T5VmfJfMKsJHEdLnFAPpy5Z0aJ0pP7mJCdKy" } }
+      );
+      if (pexelsRes.ok) {
+        const pexelsData = await pexelsRes.json();
+        if (pexelsData.photos && pexelsData.photos.length > 0) {
+          coverImageUrl = pexelsData.photos[0].src.original;
+        }
+      }
+    } catch (e) {
+      console.error("Pexels search error:", e);
+    }
+
+    if (!coverImageUrl) {
+      coverImageUrl = "https://images.unsplash.com/photo-1585071550721-fdb362ae2b8d?w=1200&h=630&fit=crop&auto=format&fm=jpg";
+    }
+
+    parsedContent.cover_image_url = coverImageUrl;
 
     return new Response(
       JSON.stringify(parsedContent),
