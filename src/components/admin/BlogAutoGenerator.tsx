@@ -82,7 +82,8 @@ interface AutoDraft {
   title: string;
   excerpt: string;
   content: string;
-  cover_image_suggestion: string;
+  cover_image_url: string;
+  cover_image_suggestion?: string;
   topic: string;
   status: "pending" | "published" | "rejected";
   created_at: Date;
@@ -315,7 +316,7 @@ O artigo deve ser relevante para o contexto de controle de pragas e dedetizaçã
         slug: generateSlug(draft.title),
         excerpt: draft.excerpt,
         content: draft.content,
-        cover_image_url: null,
+        cover_image_url: draft.cover_image_url || null,
         published: true,
         author_email: currentUserEmail,
         author_name: currentUserName,
