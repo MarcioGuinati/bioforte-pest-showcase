@@ -132,8 +132,7 @@ serve(async (req) => {
 
     const prompt = `Escreva um artigo completo e detalhado sobre: ${topic}. 
 O artigo deve ser relevante para o contexto de controle de pragas e dedetização.
-Inclua dicas práticas, informações sobre prevenção e quando procurar ajuda profissional.
-Ao final, sugira uma descrição de imagem de capa ideal para o artigo no campo cover_image_suggestion.`;
+Inclua dicas práticas, informações sobre prevenção e quando procurar ajuda profissional.`;
 
     const aiResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -153,8 +152,15 @@ Suas respostas devem ser em português brasileiro e no formato JSON com a seguin
   "title": "Título do artigo",
   "excerpt": "Resumo curto do artigo (máximo 200 caracteres)",
   "content": "Conteúdo completo do artigo em formato markdown",
-  "cover_image_suggestion": "Descrição de uma imagem de capa ideal"
+  "cover_image_url": "URL pública real de uma imagem da internet relacionada ao tema"
 }
+
+IMPORTANTE sobre cover_image_url:
+- Deve ser uma URL pública REAL e funcional de uma imagem gratuita da internet
+- Use URLs do Unsplash com o formato: https://images.unsplash.com/photo-XXXXX?w=1200&h=630&fit=crop
+- Ou do Pexels: https://images.pexels.com/photos/XXXXX/pexels-photo-XXXXX.jpeg?w=1200&h=630&fit=crop
+- A imagem deve ser relacionada ao tema do artigo (pragas, insetos, limpeza, higiene, saúde, casa, etc)
+- NÃO invente URLs. Use apenas URLs reais que você conhece de bancos de imagem gratuitos
 
 O conteúdo deve ser informativo, profissional e educativo.
 Use formatação markdown no content: títulos (##), listas, negrito, etc.`
@@ -188,63 +194,16 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
         title: `Artigo sobre ${topic}`,
         excerpt: messageContent.substring(0, 200),
         content: messageContent,
-        cover_image_suggestion: `Imagem sobre ${topic}`,
+        cover_image_url: "",
       };
     }
 
-    // Generate cover image using AI
-    let coverImageUrl = "";
-    try {
-      const imagePrompt = parsedContent.cover_image_suggestion || `Imagem profissional sobre ${topic} para blog de controle de pragas`;
-      const imageResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${LOVABLE_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "google/gemini-2.5-flash-image",
-          messages: [{ role: "user", content: `Generate a professional blog cover image: ${imagePrompt}. Clean, modern style, 16:9 aspect ratio.` }],
-          modalities: ["image", "text"],
-        }),
-      });
-
-      if (imageResponse.ok) {
-        const imageData = await imageResponse.json();
-        const base64Image = imageData.choices?.[0]?.message?.images?.[0]?.image_url?.url;
-        
-        if (base64Image) {
-          // Upload to Firebase Storage
-          const base64Data = base64Image.replace(/^data:image\/\w+;base64,/, "");
-          const binaryData = Uint8Array.from(atob(base64Data), c => c.charCodeAt(0));
-          const fileName = `blog-covers/${Date.now()}-${Math.random().toString(36).substring(7)}.png`;
-          
-          const uploadUrl = `https://firebasestorage.googleapis.com/v0/b/${FIREBASE_PROJECT_ID}.firebasestorage.app/o?name=${encodeURIComponent(fileName)}`;
-          const uploadRes = await fetch(uploadUrl, {
-            method: "POST",
-            headers: { "Content-Type": "image/png" },
-            body: binaryData,
-          });
-
-          if (uploadRes.ok) {
-            coverImageUrl = `https://firebasestorage.googleapis.com/v0/b/${FIREBASE_PROJECT_ID}.firebasestorage.app/o/${encodeURIComponent(fileName)}?alt=media`;
-            console.log("Image uploaded to Firebase Storage:", coverImageUrl);
-          } else {
-            console.error("Firebase Storage upload failed:", await uploadRes.text());
-          }
-        }
-      }
-    } catch (imgError) {
-      console.error("Image generation error:", imgError);
-    }
-
-    // Save draft to Firestore
+    // Save draft to Firestore with the image URL from AI
     await firestoreCreate("blog_auto_drafts", {
       title: parsedContent.title || `Artigo sobre ${topic}`,
       excerpt: parsedContent.excerpt || "",
       content: parsedContent.content || "",
-      cover_image_url: coverImageUrl || "",
-      cover_image_suggestion: parsedContent.cover_image_suggestion || `Imagem sobre ${topic}`,
+      cover_image_url: parsedContent.cover_image_url || "",
       topic,
       status: "pending",
       day_of_week: dayKey,
