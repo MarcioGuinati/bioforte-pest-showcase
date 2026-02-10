@@ -104,7 +104,9 @@ const Admin = () => {
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [currentUserEmail, setCurrentUserEmail] = useState<string | null>(null);
   const [currentUserName, setCurrentUserName] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState("posts");
+  const [activeTab, setActiveTab] = useState("blog");
+  const [blogSubTab, setBlogSubTab] = useState("posts");
+  const [gestaoSubTab, setGestaoSubTab] = useState("team");
 
   // Form state
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -481,34 +483,14 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
 
       <main className="container mx-auto px-4 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="bg-muted border-border mb-6 flex-wrap h-auto gap-1 p-1">
-            <TabsTrigger value="posts" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+          <TabsList className="bg-muted border-border mb-6 h-auto gap-1 p-1">
+            <TabsTrigger value="blog" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <FileText className="w-4 h-4 mr-2" />
-              Posts
+              Blog
             </TabsTrigger>
-            <TabsTrigger value="team" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+            <TabsTrigger value="gestao" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <Users className="w-4 h-4 mr-2" />
-              Equipe
-            </TabsTrigger>
-            <TabsTrigger value="jobs" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              <Briefcase className="w-4 h-4 mr-2" />
-              Vagas
-            </TabsTrigger>
-            <TabsTrigger value="applications" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              <ClipboardList className="w-4 h-4 mr-2" />
-              Candidaturas
-            </TabsTrigger>
-            <TabsTrigger value="contacts" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              <MessageSquare className="w-4 h-4 mr-2" />
-              Contatos
-            </TabsTrigger>
-            <TabsTrigger value="reports" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              <TrendingUp className="w-4 h-4 mr-2" />
-              Relatórios
-            </TabsTrigger>
-            <TabsTrigger value="analytics" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              <BarChart3 className="w-4 h-4 mr-2" />
-              Analytics
+              Gestão
             </TabsTrigger>
             <TabsTrigger value="settings" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <Settings className="w-4 h-4 mr-2" />
@@ -516,8 +498,21 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
             </TabsTrigger>
           </TabsList>
 
-          {/* Posts Tab */}
-          <TabsContent value="posts">
+          {/* Blog Tab with sub-tabs */}
+          <TabsContent value="blog">
+            <Tabs value={blogSubTab} onValueChange={setBlogSubTab}>
+              <TabsList className="bg-muted/50 border-border mb-6 h-auto gap-1 p-1">
+                <TabsTrigger value="posts" className="data-[state=active]:bg-card data-[state=active]:shadow-sm">
+                  <FileText className="w-4 h-4 mr-2" />
+                  Posts
+                </TabsTrigger>
+                <TabsTrigger value="analytics" className="data-[state=active]:bg-card data-[state=active]:shadow-sm">
+                  <BarChart3 className="w-4 h-4 mr-2" />
+                  Analytics
+                </TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="posts">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-foreground">Posts do Blog</h2>
               <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -789,40 +784,64 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
                 </CardContent>
               </Card>
             )}
+              </TabsContent>
+
+              <TabsContent value="analytics">
+                <div className="mb-6">
+                  <h2 className="text-2xl font-bold text-foreground">Analytics do Blog</h2>
+                  <p className="text-muted-foreground">Métricas de visualização e interação dos últimos 30 dias</p>
+                </div>
+                <AnalyticsDashboard />
+              </TabsContent>
+            </Tabs>
           </TabsContent>
 
-          {/* Team Tab */}
-          <TabsContent value="team">
-            <TeamManager />
-          </TabsContent>
+          {/* Gestão Tab with sub-tabs */}
+          <TabsContent value="gestao">
+            <Tabs value={gestaoSubTab} onValueChange={setGestaoSubTab}>
+              <TabsList className="bg-muted/50 border-border mb-6 h-auto gap-1 p-1 flex-wrap">
+                <TabsTrigger value="team" className="data-[state=active]:bg-card data-[state=active]:shadow-sm">
+                  <Users className="w-4 h-4 mr-2" />
+                  Equipe
+                </TabsTrigger>
+                <TabsTrigger value="jobs" className="data-[state=active]:bg-card data-[state=active]:shadow-sm">
+                  <Briefcase className="w-4 h-4 mr-2" />
+                  Vagas
+                </TabsTrigger>
+                <TabsTrigger value="applications" className="data-[state=active]:bg-card data-[state=active]:shadow-sm">
+                  <ClipboardList className="w-4 h-4 mr-2" />
+                  Candidaturas
+                </TabsTrigger>
+                <TabsTrigger value="contacts" className="data-[state=active]:bg-card data-[state=active]:shadow-sm">
+                  <MessageSquare className="w-4 h-4 mr-2" />
+                  Contatos
+                </TabsTrigger>
+                <TabsTrigger value="reports" className="data-[state=active]:bg-card data-[state=active]:shadow-sm">
+                  <TrendingUp className="w-4 h-4 mr-2" />
+                  Relatórios
+                </TabsTrigger>
+              </TabsList>
 
-          {/* Jobs Tab */}
-          <TabsContent value="jobs">
-            <JobsManager />
-          </TabsContent>
+              <TabsContent value="team">
+                <TeamManager />
+              </TabsContent>
 
-          {/* Applications Tab */}
-          <TabsContent value="applications">
-            <ApplicationsManager />
-          </TabsContent>
+              <TabsContent value="jobs">
+                <JobsManager />
+              </TabsContent>
 
-          {/* Contacts Tab */}
-          <TabsContent value="contacts">
-            <ContactsManager />
-          </TabsContent>
+              <TabsContent value="applications">
+                <ApplicationsManager />
+              </TabsContent>
 
-          {/* Reports Tab */}
-          <TabsContent value="reports">
-            <ReportsDashboard />
-          </TabsContent>
+              <TabsContent value="contacts">
+                <ContactsManager />
+              </TabsContent>
 
-          {/* Analytics Tab */}
-          <TabsContent value="analytics">
-            <div className="mb-6">
-              <h2 className="text-2xl font-bold text-foreground">Analytics do Blog</h2>
-              <p className="text-muted-foreground">Métricas de visualização e interação dos últimos 30 dias</p>
-            </div>
-            <AnalyticsDashboard />
+              <TabsContent value="reports">
+                <ReportsDashboard />
+              </TabsContent>
+            </Tabs>
           </TabsContent>
 
           {/* Settings Tab */}
