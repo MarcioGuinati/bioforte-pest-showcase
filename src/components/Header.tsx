@@ -3,10 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, Phone, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
 import logoBioforte from "@/assets/logo-bioforte.png";
+import logoBioforteWhite from "@/assets/logo-bioforte-white.png";
 import { ThemeToggle } from "./ThemeToggle";
+import { useTheme } from "next-themes";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { resolvedTheme } = useTheme();
 
   const navItems = [
     { name: "Home", path: "/" },
@@ -58,7 +61,7 @@ const Header = () => {
             aria-label="Bioforte Controle de Pragas - Ir para página inicial"
           >
             <img
-              src={logoBioforte}
+              src={resolvedTheme === 'dark' ? logoBioforteWhite : logoBioforte}
               alt="Bioforte Controle de Pragas"
               width={180}
               height={56}
