@@ -10,6 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { toast } from "sonner";
 import { LogIn, Loader2, Shield, Sun, Moon } from "lucide-react";
 import logoImage from "@/assets/logo-bioforte.png";
+import logoImageWhite from "@/assets/logo-bioforte-white.png";
 import { useAdminTheme } from "@/hooks/useAdminTheme";
 
 const AdminLogin = () => {
@@ -70,7 +71,7 @@ const AdminLogin = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/70 to-primary/50" />
         <div className="relative z-10 flex flex-col justify-center p-12 text-primary-foreground">
           <div className="mb-8">
-            <img src={logoImage} alt="Bioforte" className="h-16 brightness-0 invert" />
+            <img src={logoImageWhite} alt="Bioforte" className="h-16" />
           </div>
           <h1 className="text-4xl font-bold mb-4">
             Painel Administrativo
@@ -113,7 +114,7 @@ const AdminLogin = () => {
 
           {/* Mobile Logo */}
           <div className="flex justify-center mb-8 lg:hidden">
-            <img src={logoImage} alt="Bioforte" className="h-16" />
+            <img src={theme === 'dark' ? logoImageWhite : logoImage} alt="Bioforte" className="h-16" />
           </div>
 
           <Card className="border-border bg-card/50 backdrop-blur">

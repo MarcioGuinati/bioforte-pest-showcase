@@ -68,16 +68,19 @@ import {
   Briefcase,
   MessageSquare,
   ClipboardList,
+  TrendingUp,
 } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import logoImage from "@/assets/logo-bioforte.png";
+import logoImageWhite from "@/assets/logo-bioforte-white.png";
 import { useAdminTheme } from "@/hooks/useAdminTheme";
 import { AnalyticsDashboard } from "@/components/admin/AnalyticsDashboard";
 import { TeamManager } from "@/components/admin/TeamManager";
 import { JobsManager } from "@/components/admin/JobsManager";
 import { ApplicationsManager } from "@/components/admin/ApplicationsManager";
 import { ContactsManager } from "@/components/admin/ContactsManager";
+import { ReportsDashboard } from "@/components/admin/ReportsDashboard";
 
 interface BlogPost {
   id: string;
@@ -442,7 +445,7 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
       <header className="bg-card border-b border-border sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
             <div className="flex items-center gap-4">
-            <img src={logoImage} alt="Bioforte" className="h-10" />
+            <img src={theme === 'dark' ? logoImageWhite : logoImage} alt="Bioforte" className="h-10" />
             <div>
               <h1 className="text-lg font-semibold text-foreground">Painel Administrativo</h1>
               <p className="text-sm text-muted-foreground">Gerenciamento do Site</p>
@@ -498,6 +501,10 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
             <TabsTrigger value="contacts" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <MessageSquare className="w-4 h-4 mr-2" />
               Contatos
+            </TabsTrigger>
+            <TabsTrigger value="reports" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <TrendingUp className="w-4 h-4 mr-2" />
+              Relatórios
             </TabsTrigger>
             <TabsTrigger value="analytics" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <BarChart3 className="w-4 h-4 mr-2" />
@@ -802,6 +809,11 @@ Use formatação markdown no content: títulos (##), listas, negrito, etc.`
           {/* Contacts Tab */}
           <TabsContent value="contacts">
             <ContactsManager />
+          </TabsContent>
+
+          {/* Reports Tab */}
+          <TabsContent value="reports">
+            <ReportsDashboard />
           </TabsContent>
 
           {/* Analytics Tab */}
