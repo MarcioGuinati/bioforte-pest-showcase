@@ -4,9 +4,10 @@ import { ChevronLeft, ChevronRight, Shield, Users, Award, Clock, ArrowRight } fr
 import { Link } from "react-router-dom";
 
 // Import images as ES6 modules for better bundling
-import slide06 from "@/assets/038f9b42-2503-4e8d-afa4-9bd64e7ef10b.jpg";
-import slide07 from "@/assets/d0398b49-0224-4067-af90-a1f2c4a6c0db.jpg";
-import companyBuilding from "@/assets/company-building.jpg";
+import slide06 from "@/assets/01.png";
+import slide04 from "@/assets/04.png";
+import slide07 from "@/assets/02.png";
+import companyBuilding from "@/assets/03.png";
 
 const slides = [
   {
@@ -29,6 +30,15 @@ const slides = [
   },
   {
     id: 3,
+    title: "Empresa Certificada",
+    subtitle: "Confiança e Qualidade Comprovadas",
+    description: "Certificações técnicas e ambientais que garantem a excelência dos nossos serviços.",
+    image: slide04,
+    cta: "Sobre a Bioforte",
+    ctaLink: "/quem-somos"
+  },
+  {
+    id: 4,
     title: "Empresa Certificada",
     subtitle: "Confiança e Qualidade Comprovadas",
     description: "Certificações técnicas e ambientais que garantem a excelência dos nossos serviços.",
