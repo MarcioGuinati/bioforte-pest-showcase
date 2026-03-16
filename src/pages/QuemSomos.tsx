@@ -9,31 +9,43 @@ import {
   CheckCircle,
   Target,
   Eye,
-  Heart
+  Heart,
+  HelpCircle,
+  MapPin,
+  Clock,
+  PawPrint,
+  DollarSign,
+  BadgeCheck
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import companyBuilding from "@/assets/company-building.jpg";
 
 const values = [
   {
     icon: Shield,
-    title: "Segurança",
-    description: "Priorizamos a segurança de nossos clientes, colaboradores e meio ambiente em todos os processos."
+    title: "Honestidade",
+    description: "Transparência e ética em todos os nossos processos e relações."
   },
   {
     icon: Award,
-    title: "Excelência",
-    description: "Buscamos sempre a excelência na prestação de serviços, superando expectativas."
+    title: "Qualidade",
+    description: "Perícia técnica e excelência na prestação de cada serviço."
   },
   {
     icon: Leaf,
-    title: "Sustentabilidade",
-    description: "Comprometidos com práticas sustentáveis e responsabilidade ambiental."
+    title: "Respeito",
+    description: "Cuidado ao próximo e ao meio ambiente em tudo que fazemos."
   },
   {
     icon: Heart,
-    title: "Cuidado",
-    description: "Tratamos cada cliente com cuidado, oferecendo soluções personalizadas."
+    title: "Servir",
+    description: "Encantamento e satisfação plena do cliente como propósito."
   }
 ];
 
@@ -51,7 +63,7 @@ const timeline = [
   {
     year: "2016",
     title: "Certificações",
-    description: "Conquista da ISO 9001 e licenças ambientais"
+    description: "Conquista de certificações e licenças ambientais"
   },
   {
     year: "2020",
@@ -62,6 +74,47 @@ const timeline = [
     year: "2024",
     title: "Liderança",
     description: "Reconhecimento como líder regional em controle de pragas"
+  }
+];
+
+const certifications = [
+  "NR 06, 10, 18, 26, 33 e 35",
+  "Licença Sanitária",
+  "Certificação ANVISA",
+  "CETESB",
+  "CRBio (Conselho Regional de Biologia)"
+];
+
+const faqs = [
+  {
+    question: "Quanto custa um serviço de dedetização?",
+    answer: "O preço varia conforme o tipo de praga, tamanho do local e nível de infestação. Nossos serviços iniciam a partir de R$ 450,00.",
+    icon: DollarSign
+  },
+  {
+    question: "Quanto tempo demora o atendimento?",
+    answer: "Em média, o serviço leva cerca de 1h30 para imóveis residenciais ou comerciais de até 300m². O tempo pode variar de acordo com o tamanho do espaço e a complexidade do serviço.",
+    icon: Clock
+  },
+  {
+    question: "Os produtos são seguros para pets?",
+    answer: "Sim. Utilizamos produtos regulamentados e seguros. É fundamental apenas seguir o protocolo de segurança que enviamos antes da aplicação, garantindo total proteção para pessoas e animais.",
+    icon: PawPrint
+  },
+  {
+    question: "Vocês oferecem garantia?",
+    answer: "Sim. Todos os nossos serviços possuem garantia conforme o tipo de tratamento realizado. A garantia e as condições são informadas no momento da contratação.",
+    icon: BadgeCheck
+  },
+  {
+    question: "É necessário sair de casa durante o serviço?",
+    answer: "Depende da metodologia aplicada. Alguns tratamentos exigem que o local fique vazio por um período determinado, enquanto outros permitem permanência parcial. Orientamos tudo previamente para sua segurança.",
+    icon: Shield
+  },
+  {
+    question: "Atendem em quais regiões?",
+    answer: "Atendemos: Região Metropolitana de Ribeirão Preto, Franca e região e Sul de Minas Gerais.",
+    icon: MapPin
   }
 ];
 
@@ -114,9 +167,9 @@ const QuemSomos = () => {
                 </div>
                 <h3 className="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">Nossa Missão</h3>
                 <p className="text-muted-foreground leading-relaxed group-hover:text-foreground transition-colors">
-                  Proteger a saúde e o bem-estar das pessoas através de soluções 
-                  inovadoras e sustentáveis em controle de pragas, sempre priorizando 
-                  a segurança e a qualidade.
+                  Encantar e oferecer satisfação plena aos clientes, através dos melhores 
+                  serviços de controle de pragas e saneamento ambiental, devolvendo a eles 
+                  sua saúde, tranquilidade e bem-estar.
                 </p>
               </CardContent>
             </Card>
@@ -129,9 +182,9 @@ const QuemSomos = () => {
                 </div>
                 <h3 className="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">Nossa Visão</h3>
                 <p className="text-muted-foreground leading-relaxed group-hover:text-foreground transition-colors">
-                  Ser reconhecida como a empresa líder em controle de pragas na região, 
-                  referência em inovação, sustentabilidade e excelência no atendimento 
-                  ao cliente.
+                  Ser a empresa líder em soluções de controle de pragas e saneamento 
+                  ambiental no Brasil, reconhecida pela excelência, inovação e compromisso 
+                  com a saúde e o meio ambiente.
                 </p>
               </CardContent>
             </Card>
@@ -144,9 +197,8 @@ const QuemSomos = () => {
                 </div>
                 <h3 className="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">Nossos Valores</h3>
                 <p className="text-muted-foreground leading-relaxed group-hover:text-foreground transition-colors">
-                  Integridade, transparência, compromisso com a qualidade, 
-                  respeito ao meio ambiente e dedicação total à satisfação 
-                  dos nossos clientes.
+                  Honestidade, encantamento e satisfação plena do cliente, qualidade, 
+                  perícia, integridade, servir, respeito e cuidado ao próximo.
                 </p>
               </CardContent>
             </Card>
@@ -161,14 +213,11 @@ const QuemSomos = () => {
         </div>
         <div className="container mx-auto px-4 relative">
           <div className="text-center mb-16 animate-fade-in-down">
-            <Badge variant="outline" className="mb-4 hover-glow">Nossos Valores</Badge>
+            <Badge variant="outline" className="mb-4 hover-glow">O que nos move</Badge>
             <h2 className="text-3xl lg:text-4xl font-bold mb-6">
-              O que nos <span className="text-gradient">move</span>
+              É servir a comunidade com excelência em
+              <span className="text-gradient"> saneamento ambiental</span>
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Nossos valores fundamentais orientam cada decisão e ação, 
-              garantindo serviços de excelência.
-            </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -234,22 +283,58 @@ const QuemSomos = () => {
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              "ISO 9001:2015",
-              "Licença Sanitária",
-              "Certificação ANVISA",
-              "Licença Ambiental"
-            ].map((cert, index) => (
+          <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
+            {certifications.map((cert, index) => (
               <Card key={index} className="glass-strong text-center hover-lift group animate-scale-bounce" style={{animationDelay: `${index * 0.1}s`}}>
                 <CardContent className="p-6">
                   <div className="gradient-animated p-3 rounded-full w-12 h-12 mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                     <Award className="h-6 w-6 text-primary-foreground" />
                   </div>
-                  <h3 className="font-bold group-hover:text-primary transition-colors">{cert}</h3>
+                  <h3 className="font-bold text-sm group-hover:text-primary transition-colors">{cert}</h3>
                 </CardContent>
               </Card>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 bg-muted/30 relative overflow-hidden" aria-labelledby="faq-heading">
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-10 right-10 w-48 h-48 bg-primary rounded-full blur-3xl animate-float" />
+        </div>
+        <div className="container mx-auto px-4 relative">
+          <div className="text-center mb-16 animate-fade-in-down">
+            <Badge variant="outline" className="mb-4 hover-glow">
+              <HelpCircle className="h-3 w-3 mr-1" />
+              Perguntas Frequentes
+            </Badge>
+            <h2 className="text-3xl lg:text-4xl font-bold mb-6" id="faq-heading">
+              Dúvidas <span className="text-gradient">frequentes</span>
+            </h2>
+          </div>
+
+          <div className="max-w-3xl mx-auto">
+            <Accordion type="single" collapsible className="space-y-4">
+              {faqs.map((faq, index) => (
+                <AccordionItem 
+                  key={index} 
+                  value={`faq-${index}`} 
+                  className="glass-strong rounded-lg px-6 border-none animate-scale-bounce"
+                  style={{animationDelay: `${index * 0.05}s`}}
+                >
+                  <AccordionTrigger className="text-left hover:no-underline hover:text-primary transition-colors py-5">
+                    <div className="flex items-center gap-3">
+                      <faq.icon className="h-5 w-5 text-primary flex-shrink-0" />
+                      <span className="font-semibold">{faq.question}</span>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground leading-relaxed pb-5 pl-8">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
         </div>
       </section>
