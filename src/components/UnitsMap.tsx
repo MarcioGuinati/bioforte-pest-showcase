@@ -14,6 +14,7 @@ const units: Unit[] = [
   { city: "Ribeirão Preto", state: "SP", type: "own", coordinates: { lat: -21.1775, lng: -47.8103 } },
   { city: "Franca", state: "SP", type: "own", coordinates: { lat: -20.5385, lng: -47.4008 } },
   { city: "Uberaba", state: "MG", type: "franchise", coordinates: { lat: -19.7472, lng: -47.9318 } },
+  { city: "Barretos", state: "SP", type: "franchise", coordinates: { lat: -20.5575, lng: -48.5678 } },
   { city: "Araraquara", state: "SP", type: "licensed", coordinates: { lat: -21.7845, lng: -48.1756 } },
   { city: "Guarapuava", state: "PR", type: "licensed", coordinates: { lat: -25.3935, lng: -51.4562 } },
 ];
