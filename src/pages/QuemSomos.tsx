@@ -256,34 +256,120 @@ const QuemSomos = () => {
       {/* Timeline */}
       <section className="py-20 bg-muted/30 relative overflow-hidden">
         <div className="absolute inset-0 opacity-5">
-          <div className="absolute bottom-0 left-1/3 w-72 h-72 bg-primary rounded-full blur-3xl animate-float" />
+          <div className="absolute top-20 right-1/4 w-72 h-72 bg-primary rounded-full blur-3xl animate-float" />
+          <div className="absolute bottom-20 left-1/4 w-64 h-64 bg-accent rounded-full blur-3xl animate-float" style={{animationDelay: "2s"}} />
         </div>
         <div className="container mx-auto px-4 relative">
           <div className="text-center mb-16 animate-fade-in-up">
-            <Badge variant="outline" className="mb-4 hover-glow">Nossa História</Badge>
-            <h2 className="text-3xl lg:text-4xl font-bold mb-6">
+            <Badge variant="outline" className="mb-4 hover-glow">
+              <Sparkles className="h-3 w-3 mr-1" />
+              Nossa História
+            </Badge>
+            <h2 className="text-3xl lg:text-5xl font-bold mb-6">
               Trajetória de <span className="text-gradient">crescimento</span>
             </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Mais de 15 anos de evolução constante, sempre buscando excelência e inovação
+              para proteger nossos clientes e o meio ambiente.
+            </p>
           </div>
 
-          <div className="max-w-4xl mx-auto">
-            <div className="space-y-8">
-              {timeline.map((item, index) => (
-                <div key={index} className="flex items-start gap-6 hover-lift group animate-slide-in-left" style={{animationDelay: `${index * 0.1}s`}}>
-                  <div className="flex-shrink-0">
-                    <div className="gradient-animated p-3 rounded-full group-hover:scale-110 transition-transform duration-300">
-                      <span className="text-primary-foreground font-bold text-sm">
-                        {item.year}
-                      </span>
+          {/* Stats Row */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16 max-w-4xl mx-auto">
+            {[
+              { value: "15+", label: "Anos de história", icon: Clock },
+              { value: "5K+", label: "Clientes atendidos", icon: Users },
+              { value: "5", label: "Cidades atendidas", icon: MapPin },
+              { value: "98%", label: "Satisfação", icon: Heart }
+            ].map((stat, idx) => (
+              <div 
+                key={idx} 
+                className="glass-strong rounded-xl p-4 text-center hover-lift group animate-scale-bounce"
+                style={{animationDelay: `${idx * 0.1}s`}}
+              >
+                <stat.icon className="h-6 w-6 text-primary mx-auto mb-2 group-hover:scale-110 transition-transform" />
+                <div className="text-2xl lg:text-3xl font-bold text-gradient">{stat.value}</div>
+                <div className="text-xs text-muted-foreground">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Modern Alternating Timeline */}
+          <div className="max-w-5xl mx-auto relative">
+            {/* Vertical Line - Desktop */}
+            <div 
+              className="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 -translate-x-1/2 bg-gradient-to-b from-primary via-accent to-primary opacity-30 rounded-full"
+              aria-hidden="true"
+            />
+            {/* Vertical Line - Mobile */}
+            <div 
+              className="md:hidden absolute left-6 top-0 bottom-0 w-1 bg-gradient-to-b from-primary via-accent to-primary opacity-30 rounded-full"
+              aria-hidden="true"
+            />
+
+            <div className="space-y-12 md:space-y-16">
+              {timeline.map((item, index) => {
+                const isLeft = index % 2 === 0;
+                return (
+                  <div 
+                    key={index} 
+                    className={`relative flex items-center gap-6 md:gap-8 ${
+                      isLeft ? 'md:flex-row' : 'md:flex-row-reverse'
+                    } animate-fade-in-up`}
+                    style={{animationDelay: `${index * 0.15}s`}}
+                  >
+                    {/* Content Card */}
+                    <div className={`flex-1 pl-16 md:pl-0 ${isLeft ? 'md:pr-12 md:text-right' : 'md:pl-12 md:text-left'}`}>
+                      <Card className="glass-strong hover-lift group border-2 border-transparent hover:border-primary/30 transition-all duration-500">
+                        <CardContent className="p-6">
+                          <div className={`flex items-center gap-3 mb-3 ${isLeft ? 'md:justify-end' : 'md:justify-start'}`}>
+                            <Badge className="gradient-animated text-primary-foreground border-0 px-3 py-1 text-base font-bold">
+                              {item.year}
+                            </Badge>
+                          </div>
+                          <h3 className="text-2xl font-bold mb-3 group-hover:text-primary transition-colors">
+                            {item.title}
+                          </h3>
+                          <p className="text-muted-foreground leading-relaxed mb-4 group-hover:text-foreground transition-colors">
+                            {item.description}
+                          </p>
+                          <div className={`inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 rounded-full text-sm font-semibold text-primary ${isLeft ? 'md:ml-auto' : ''}`}>
+                            <TrendingUp className="h-3.5 w-3.5" />
+                            {item.highlight}
+                          </div>
+                        </CardContent>
+                      </Card>
                     </div>
+
+                    {/* Center Icon */}
+                    <div className="absolute left-6 md:left-1/2 md:-translate-x-1/2 z-10">
+                      <div className="relative">
+                        <div className="absolute inset-0 gradient-animated rounded-full blur-md opacity-60 animate-pulse" aria-hidden="true" />
+                        <div className="relative gradient-animated p-3 md:p-4 rounded-full border-4 border-background shadow-xl group-hover:scale-110 transition-transform duration-300">
+                          <item.icon className="h-5 w-5 md:h-6 md:w-6 text-primary-foreground" />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Spacer for desktop alternating layout */}
+                    <div className="hidden md:block flex-1" aria-hidden="true" />
                   </div>
-                  <div className="flex-grow glass-minimal p-4 rounded-lg hover-glow">
-                    <h3 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors">{item.title}</h3>
-                    <p className="text-muted-foreground group-hover:text-foreground transition-colors">{item.description}</p>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
+
+            {/* End marker */}
+            <div className="flex justify-center mt-12 md:mt-16">
+              <div className="relative">
+                <div className="absolute inset-0 bg-primary rounded-full blur-md opacity-60 animate-pulse" aria-hidden="true" />
+                <div className="relative bg-primary p-4 rounded-full border-4 border-background shadow-xl">
+                  <Sparkles className="h-6 w-6 text-primary-foreground" />
+                </div>
+              </div>
+            </div>
+            <p className="text-center mt-4 text-muted-foreground italic">
+              E a jornada continua...
+            </p>
           </div>
         </div>
       </section>
