@@ -10,10 +10,13 @@ import {
   Youtube
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useTheme } from "next-themes";
 import logoBioforte from "@/assets/logo-bioforte.png";
+import logoBioforteWhite from "@/assets/logo-bioforte-white.png";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { resolvedTheme } = useTheme();
 
   const quickLinks = [
     { name: "Home", path: "/" },
@@ -50,7 +53,7 @@ const Footer = () => {
           <div className="space-y-6">
             <Link to="/" className="inline-block hover:opacity-90 transition-opacity">
               <img 
-                src={logoBioforte} 
+                src={resolvedTheme === 'dark' ? logoBioforteWhite : logoBioforte} 
                 alt="Bioforte Controle de Pragas" 
                 width={180}
                 height={56}
