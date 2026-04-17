@@ -15,7 +15,12 @@ import {
   Clock,
   PawPrint,
   DollarSign,
-  BadgeCheck
+  BadgeCheck,
+  Rocket,
+  TrendingUp,
+  Sparkles,
+  Trophy,
+  Building2
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
@@ -53,27 +58,37 @@ const timeline = [
   {
     year: "2008",
     title: "Fundação",
-    description: "Início das atividades focando em dedetização residencial"
+    description: "Início das atividades focando em dedetização residencial, atendendo as primeiras famílias da região.",
+    icon: Rocket,
+    highlight: "O começo de uma jornada"
   },
   {
     year: "2012",
-    title: "Expansão",
-    description: "Ampliação para o mercado comercial e industrial"
+    title: "Expansão Comercial",
+    description: "Ampliação para o mercado comercial e industrial, conquistando grandes clientes e expandindo a equipe técnica.",
+    icon: Building2,
+    highlight: "+200 novos clientes"
   },
   {
     year: "2016",
     title: "Certificações",
-    description: "Conquista de certificações e licenças ambientais"
+    description: "Conquista de certificações ANVISA, CETESB e licenças ambientais que consolidaram nossa credibilidade.",
+    icon: BadgeCheck,
+    highlight: "5 certificações conquistadas"
   },
   {
     year: "2020",
-    title: "Inovação",
-    description: "Implementação de tecnologias sustentáveis"
+    title: "Inovação Sustentável",
+    description: "Implementação de tecnologias sustentáveis e produtos ecológicos, alinhando eficácia com responsabilidade ambiental.",
+    icon: Leaf,
+    highlight: "100% produtos eco-friendly"
   },
   {
     year: "2024",
-    title: "Liderança",
-    description: "Reconhecimento como líder regional em controle de pragas"
+    title: "Liderança Regional",
+    description: "Reconhecimento como líder regional em controle de pragas, com presença em 5 cidades e mais de 5.000 clientes atendidos.",
+    icon: Trophy,
+    highlight: "Líder de mercado"
   }
 ];
 
