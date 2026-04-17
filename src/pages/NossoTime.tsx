@@ -14,7 +14,7 @@ import {
   Loader2
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import heroImage from "@/assets/company-building.jpg";
+import heroImage from "@/assets/tecnicos.jpeg";
 import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";

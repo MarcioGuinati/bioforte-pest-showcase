@@ -16,7 +16,7 @@ import {
   Sparkles
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import pestBiology from "@/assets/pest-biology.jpg";
+import pestBiology from "@/assets/biologia-pragas.png";
 
 const pests = [
   {
