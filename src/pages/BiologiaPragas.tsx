@@ -8,7 +8,12 @@ import {
   Eye,
   Zap,
   Home,
-  ArrowRight
+  ArrowRight,
+  Microscope,
+  MapPin,
+  Lightbulb,
+  Skull,
+  Sparkles
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import pestBiology from "@/assets/pest-biology.jpg";
@@ -17,64 +22,122 @@ const pests = [
   {
     name: "Baratas",
     scientificName: "Blattodea",
+    emoji: "🪳",
     description: "Insetos noturnos que se reproduzem rapidamente e transmitem diversas doenças.",
     habitat: "Locais úmidos, quentes e escuros",
-    risks: ["Salmonela", "E. coli", "Hepatite A", "Disenteraia"],
+    risks: ["Salmonela", "E. coli", "Hepatite A", "Disenteria"],
     prevention: ["Manter ambiente seco", "Vedar frestas", "Limpar restos de comida", "Usar desentupidores"],
     icon: Bug,
-    color: "text-red-500"
+    gradient: "from-red-500/20 via-orange-500/10 to-transparent",
+    accentColor: "text-red-500",
+    borderColor: "border-red-500/30",
+    dangerLevel: "Alto"
   },
   {
     name: "Formigas",
     scientificName: "Formicidae", 
+    emoji: "🐜",
     description: "Insetos sociais organizados que formam trilhas e atacam em grupos.",
     habitat: "Jardins, frestas de paredes, sob pisos",
     risks: ["Contaminação de alimentos", "Mordidas dolorosas", "Danos estruturais"],
     prevention: ["Vedar entrada", "Limpar migalhas", "Remover umidade", "Podar plantas"],
     icon: Bug,
-    color: "text-orange-500"
+    gradient: "from-orange-500/20 via-amber-500/10 to-transparent",
+    accentColor: "text-orange-500",
+    borderColor: "border-orange-500/30",
+    dangerLevel: "Médio"
   },
   {
     name: "Cupins",
     scientificName: "Isoptera",
+    emoji: "🪵",
     description: "Insetos que se alimentam de celulose, causando danos estruturais graves.",
     habitat: "Madeira, papelão, livros, estruturas",
     risks: ["Danos estruturais", "Prejuízos financeiros", "Colapso de estruturas"],
     prevention: ["Controlar umidade", "Tratar madeiras", "Inspeções regulares", "Ventilação adequada"],
     icon: Home,
-    color: "text-yellow-500"
+    gradient: "from-yellow-500/20 via-amber-500/10 to-transparent",
+    accentColor: "text-yellow-600",
+    borderColor: "border-yellow-500/30",
+    dangerLevel: "Alto"
   },
   {
     name: "Ratos",
     scientificName: "Rattus",
+    emoji: "🐀",
     description: "Roedores adaptáveis que se reproduzem rapidamente e transmitem doenças graves.",
     habitat: "Porões, sótãos, esgotos, depósitos",
     risks: ["Leptospirose", "Peste", "Hantavírus", "Salmonelose"],
     prevention: ["Vedar buracos", "Remover alimentos", "Controlar lixo", "Desentupir ralos"],
     icon: Zap,
-    color: "text-gray-600"
+    gradient: "from-gray-500/20 via-slate-500/10 to-transparent",
+    accentColor: "text-gray-600",
+    borderColor: "border-gray-500/30",
+    dangerLevel: "Crítico"
   },
   {
     name: "Mosquitos",
     scientificName: "Culicidae",
+    emoji: "🦟",
     description: "Insetos voadores que se reproduzem em água parada e transmitem doenças.",
     habitat: "Água parada, vasos, caixas d'água",
     risks: ["Dengue", "Zika", "Chikungunya", "Febre Amarela"],
     prevention: ["Eliminar água parada", "Usar repelentes", "Telas nas janelas", "Manter quintal limpo"],
     icon: Eye,
-    color: "text-blue-500"
+    gradient: "from-blue-500/20 via-cyan-500/10 to-transparent",
+    accentColor: "text-blue-500",
+    borderColor: "border-blue-500/30",
+    dangerLevel: "Crítico"
   },
   {
     name: "Aranhas",
     scientificName: "Araneae",
+    emoji: "🕷️",
     description: "Aracnídeos predadores, algumas espécies são venenosas e perigosas.",
     habitat: "Cantos escuros, atrás de móveis, jardins",
     risks: ["Picadas venenosas", "Reações alérgicas", "Necrose tissular"],
     prevention: ["Limpar teias", "Vedar frestas", "Reduzir esconderijos", "Manter organização"],
     icon: Shield,
-    color: "text-purple-500"
+    gradient: "from-purple-500/20 via-violet-500/10 to-transparent",
+    accentColor: "text-purple-500",
+    borderColor: "border-purple-500/30",
+    dangerLevel: "Alto"
+  },
+  {
+    name: "Escorpiões",
+    scientificName: "Scorpiones",
+    emoji: "🦂",
+    description: "Aracnídeos peçonhentos extremamente perigosos, especialmente para crianças e idosos.",
+    habitat: "Entulhos, terrenos baldios, frestas, encanamentos",
+    risks: ["Picadas peçonhentas", "Risco de morte", "Reações graves", "Emergência médica"],
+    prevention: ["Vedar ralos", "Eliminar entulhos", "Telas em ralos", "Manter quintal limpo"],
+    icon: Skull,
+    gradient: "from-amber-600/20 via-yellow-700/10 to-transparent",
+    accentColor: "text-amber-700",
+    borderColor: "border-amber-600/30",
+    dangerLevel: "Crítico"
+  },
+  {
+    name: "Pombos",
+    scientificName: "Columba livia",
+    emoji: "🕊️",
+    description: "Aves urbanas que causam sujeira, transmitem doenças e danificam estruturas.",
+    habitat: "Telhados, beirais, sótãos, marquises",
+    risks: ["Criptococose", "Histoplasmose", "Salmonela", "Ácaros e parasitas"],
+    prevention: ["Espantadores físicos", "Telas de proteção", "Limpeza periódica", "Vedar acessos"],
+    icon: Bug,
+    gradient: "from-slate-500/20 via-gray-400/10 to-transparent",
+    accentColor: "text-slate-600",
+    borderColor: "border-slate-500/30",
+    dangerLevel: "Médio"
   }
 ];
+
+const dangerColors: Record<string, string> = {
+  "Médio": "bg-yellow-500/20 text-yellow-700 dark:text-yellow-400 border-yellow-500/40",
+  "Alto": "bg-orange-500/20 text-orange-700 dark:text-orange-400 border-orange-500/40",
+  "Crítico": "bg-red-500/20 text-red-700 dark:text-red-400 border-red-500/40"
+};
 
 const BiologiaPragas = () => {
   return (
