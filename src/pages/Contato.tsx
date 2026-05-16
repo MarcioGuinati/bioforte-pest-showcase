@@ -30,23 +30,23 @@ const contactInfo = [
   {
     icon: Phone,
     title: "Telefone",
-    content: "(16) 97400-7842",
+    content: "(16) 3723-0808",
     description: "Atendimento de Segunda a Sexta: 8h às 18h",
-    action: "tel:+5516974007842"
+    action: "tel:+551637230808"
   },
   {
     icon: MessageCircle,
     title: "WhatsApp",
-    content: "(16) 97400-7842",
+    content: "(16) 3723-0808",
     description: "Atendimento rápido e direto",
-    action: "https://wa.me/5516974007842"
+    action: "https://wa.me/551637230808"
   },
   {
     icon: Mail,
     title: "E-mail",
-    content: "contato@bioforte.com.br",
-    description: "Resposta em até 24 horas",
-    action: "mailto:contato@bioforte.com.br"
+    content: "comercial@bioforte.com.br",
+    description: "Resposta rápida",
+    action: "mailto:comercial@bioforte.com.br"
   },
   {
     icon: MapPin,
@@ -154,7 +154,7 @@ Nome: ${formData.name || "Não informado"}
 Serviço: ${formData.service || "Não especificado"}
 Telefone: ${formData.phone || "Não informado"}`;
 
-    const url = `https://wa.me/5516974007842?text=${encodeURIComponent(message)}`;
+    const url = `https://wa.me/551637230808?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");
   };
 
@@ -162,7 +162,7 @@ Telefone: ${formData.phone || "Não informado"}`;
     <div className="min-h-screen overflow-hidden">
       <SEO
         title="Contato e Orçamento"
-        description="Solicite seu orçamento gratuito para controle de pragas. Atendemos em Ribeirão Preto, Franca, Uberaba e região. Resposta em até 24h."
+        description="Solicite seu orçamento gratuito para controle de pragas. Atendemos em Ribeirão Preto, Franca, Uberaba e região."
         canonical="/contato"
       />
 
@@ -282,7 +282,7 @@ Telefone: ${formData.phone || "Não informado"}`;
                               type="tel"
                               value={formData.phone}
                               onChange={(e) => handleInputChange("phone", e.target.value)}
-                              placeholder="(16) 97400-7842"
+                              placeholder="(16) 3723-0808"
                               required
                             />
                           </div>
@@ -300,8 +300,8 @@ Telefone: ${formData.phone || "Não informado"}`;
                                 <label
                                   key={index}
                                   className={`flex items-center gap-3 p-3 sm:p-4 rounded-lg border cursor-pointer transition-colors ${formData.service === service.value
-                                      ? "border-primary bg-primary/5"
-                                      : "border-border hover:border-primary/50"
+                                    ? "border-primary bg-primary/5"
+                                    : "border-border hover:border-primary/50"
                                     }`}
                                 >
                                   <input
@@ -462,8 +462,8 @@ Telefone: ${formData.phone || "Não informado"}`;
                         Para casos urgentes que precisam de atendimento imediato
                       </p>
                       <Button variant="destructive" className="w-full" size="lg" asChild>
-                        <a href="tel:+5516974007842">
-                          (16) 97400-7842
+                        <a href="tel:+551637230808">
+                          (16) 3723-0808
                         </a>
                       </Button>
                     </div>
@@ -477,7 +477,7 @@ Telefone: ${formData.phone || "Não informado"}`;
                     <div className="space-y-3">
                       {[
                         "Orçamento gratuito e sem compromisso",
-                        "Atendimento em até 24 horas",
+                        "Atendimento rápido",
                         "Profissionais certificados",
                         "Produtos aprovados pela ANVISA",
                         "Garantia de satisfação",
@@ -509,10 +509,7 @@ Telefone: ${formData.phone || "Não informado"}`;
                         <span>Domingo:</span>
                         <span className="text-muted-foreground">Fechado</span>
                       </div>
-                      <div className="flex justify-between pt-2 border-t border-border">
-                        <span>Emergências:</span>
-                        <span className="font-medium text-destructive">24/7</span>
-                      </div>
+
                     </div>
                   </CardContent>
                 </Card>
@@ -541,7 +538,7 @@ Telefone: ${formData.phone || "Não informado"}`;
                 },
                 {
                   question: "Quanto tempo demora o atendimento?",
-                  answer: "Atendemos chamadas de emergência em até 24h. Para casos não urgentes, agendamos conforme sua disponibilidade."
+                  answer: "Atendemos chamadas de emergência rapidamente. Para casos não urgentes, agendamos conforme sua disponibilidade."
                 },
                 {
                   question: "Os produtos são seguros para pets?",
@@ -591,8 +588,8 @@ Telefone: ${formData.phone || "Não informado"}`;
               className="font-semibold min-h-[48px]"
               asChild
             >
-              <a href="tel:+5516974007842" aria-label="Ligar para (16) 97400-7842">
-                (16) 97400-7842
+              <a href="tel:+551637230808" aria-label="Ligar para (16) 3723-0808">
+                (16) 3723-0808
               </a>
             </Button>
             <Button

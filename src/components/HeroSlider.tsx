@@ -14,7 +14,7 @@ const slides = [
     id: 1,
     title: "Líder em Controle de Pragas",
     subtitle: "Proteção Profissional para seu Ambiente",
-    description: "Mais de 15 anos de experiência oferecendo soluções eficazes e seguras para controle de pragas urbanas.",
+    description: "Mais de 30 anos de experiência oferecendo soluções eficazes e seguras para controle de pragas urbanas.",
     image: slide06,
     cta: "Solicitar Orçamento",
     ctaLink: "/contato"
@@ -56,18 +56,18 @@ const features = [
   },
   {
     icon: Users,
-    title: "Equipe Especializada", 
+    title: "Equipe Especializada",
     description: "Profissionais certificados"
   },
   {
     icon: Award,
     title: "Qualidade Certificada",
-    description: "ISO 9001 e licenças ambientais"
+    description: "Certificação Anvisa"
   },
   {
     icon: Clock,
-    title: "Atendimento 24h",
-    description: "Suporte completo sempre"
+    title: "Garantia comprovada",
+    description: "Garantia total dos serviços"
   }
 ];
 
@@ -106,13 +106,13 @@ const HeroSlider = memo(() => {
 
   useEffect(() => {
     if (isPaused) return;
-    
+
     const timer = setInterval(nextSlide, 7000);
     return () => clearInterval(timer);
   }, [isPaused, nextSlide]);
 
   return (
-    <section 
+    <section
       className="relative min-h-[90vh] overflow-hidden"
       aria-roledescription="carrossel"
       aria-label="Apresentação da Bioforte Controle de Pragas"
@@ -126,11 +126,10 @@ const HeroSlider = memo(() => {
         {slides.map((slide, index) => (
           <div
             key={slide.id}
-            className={`absolute inset-0 transition-opacity duration-700 ${
-              index === currentSlide 
-                ? "opacity-100 z-10" 
+            className={`absolute inset-0 transition-opacity duration-700 ${index === currentSlide
+                ? "opacity-100 z-10"
                 : "opacity-0 z-0"
-            }`}
+              }`}
             role="group"
             aria-roledescription="slide"
             aria-label={`Slide ${index + 1} de ${slides.length}: ${slide.title}`}
@@ -146,9 +145,8 @@ const HeroSlider = memo(() => {
               alt={slide.title}
               width={1920}
               height={1080}
-              className={`w-full h-full object-cover object-center transition-opacity duration-300 ${
-                index === 0 && !firstImageLoaded ? 'opacity-0' : 'opacity-100'
-              }`}
+              className={`w-full h-full object-cover object-center transition-opacity duration-300 ${index === 0 && !firstImageLoaded ? 'opacity-0' : 'opacity-100'
+                }`}
               loading={index === 0 ? "eager" : "lazy"}
               fetchPriority={index === 0 ? "high" : "auto"}
               decoding={index === 0 ? "sync" : "async"}
@@ -180,8 +178,8 @@ const HeroSlider = memo(() => {
               </Button>
             </Link>
             <Button variant="outline" size="lg" className="font-semibold hover-glow" asChild>
-              <a href="tel:+5516974007842" aria-label="Ligar para (16) 97400-7842">
-                (16) 97400-7842
+              <a href="tel:+551637230808" aria-label="Ligar para (16) 3723-0808">
+                (16) 3723-0808
               </a>
             </Button>
           </div>
@@ -189,8 +187,8 @@ const HeroSlider = memo(() => {
           {/* Features Grid */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4" role="list" aria-label="Diferenciais da Bioforte">
             {features.map((feature, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 role="listitem"
                 className="flex flex-col items-center text-center p-4 glass-strong rounded-lg hover-lift group"
               >
@@ -225,12 +223,11 @@ const HeroSlider = memo(() => {
               aria-label={`Ir para slide ${index + 1}: ${slide.title}`}
               className="min-h-[48px] min-w-[48px] flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded"
             >
-              <span 
-                className={`h-3 rounded-full transition-all ${
-                  index === currentSlide 
-                    ? "bg-primary w-8" 
+              <span
+                className={`h-3 rounded-full transition-all ${index === currentSlide
+                    ? "bg-primary w-8"
                     : "bg-muted-foreground/50 w-3 hover:bg-primary/60"
-                }`} 
+                  }`}
               />
             </button>
           ))}

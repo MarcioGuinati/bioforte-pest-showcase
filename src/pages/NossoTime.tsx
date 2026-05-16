@@ -44,7 +44,7 @@ const certifications = [
   },
   {
     title: "Certificações de Qualidade",
-    items: ["ISO 9001", "ISO 14001", "OHSAS 18001", "Selo Verde"]
+    items: ["Anvisa", "Selo Verde"]
   }
 ];
 

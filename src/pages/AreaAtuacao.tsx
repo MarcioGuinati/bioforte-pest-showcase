@@ -81,7 +81,7 @@ const services = [
     features: [
       "Normas regulamentares",
       "Equipe especializada",
-      "Certificações ISO",
+      "Certificação Anvisa",
       "Relatórios detalhados"
     ]
   },
@@ -142,7 +142,7 @@ const services = [
       "Manutenção preventiva"
     ],
     features: [
-      "Atendimento 24h",
+      "Atendimento rápido",
       "Discrição total",
       "Horários flexíveis",
       "Sem interrupções"
@@ -153,7 +153,7 @@ const services = [
 const stats = [
   { icon: Shield, number: "100%", label: "Segurança" },
   { icon: Users, number: "5000+", label: "Clientes" },
-  { icon: Clock, number: "24/7", label: "Suporte" },
+  { icon: CheckCircle, number: "100%", label: "Garantia comprovada" },
   { icon: Award, number: "15+", label: "Anos" }
 ];
 

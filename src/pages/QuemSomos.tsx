@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Users, 
-  Award, 
-  Shield, 
+import {
+  Users,
+  Award,
+  Shield,
   Leaf,
   CheckCircle,
   Target,
@@ -72,7 +72,7 @@ const timeline = [
   {
     year: "2016",
     title: "Certificações",
-    description: "Conquista de certificações ANVISA, CETESB e licenças ambientais que consolidaram nossa credibilidade.",
+    description: "Conquista de certificações ANVISA e CETESB que consolidaram nossa credibilidade.",
     icon: BadgeCheck,
     highlight: "5 certificações conquistadas"
   },
@@ -138,9 +138,9 @@ import SEO from "@/components/SEO";
 const QuemSomos = () => {
   return (
     <div className="min-h-screen overflow-hidden">
-      <SEO 
-        title="Quem Somos" 
-        description="Conheça a história da Bioforte, líder em controle de pragas com mais de 15 anos de experiência e compromisso com a saúde e o meio ambiente."
+      <SEO
+        title="Quem Somos"
+        description="Conheça a história da Bioforte, líder em controle de pragas com mais de 30 anos de experiência e compromisso com a saúde e o meio ambiente."
         canonical="/quem-somos"
       />
 
@@ -155,19 +155,19 @@ const QuemSomos = () => {
           />
           <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/70 to-background/50" />
           <div className="absolute top-20 right-20 w-40 h-40 bg-primary/20 rounded-full blur-3xl animate-float" />
-          <div className="absolute bottom-20 left-10 w-32 h-32 bg-accent/20 rounded-full blur-2xl animate-float" style={{animationDelay: "2s"}} />
+          <div className="absolute bottom-20 left-10 w-32 h-32 bg-accent/20 rounded-full blur-2xl animate-float" style={{ animationDelay: "2s" }} />
         </div>
-        
+
         <div className="relative container mx-auto px-4">
           <div className="max-w-3xl">
             <Badge variant="outline" className="mb-6 animate-fade-in hover-glow">Sobre a Bioforte</Badge>
             <h1 className="text-4xl lg:text-6xl font-bold mb-6 animate-fade-in-up">
-              15 Anos Protegendo
+              30 Anos Protegendo
               <span className="text-gradient"> Seu Ambiente</span>
             </h1>
             <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed animate-blur-in">
-              Somos uma empresa especializada em controle integrado de pragas urbanas, 
-              comprometida em oferecer soluções eficazes e sustentáveis para proteger 
+              Somos uma empresa especializada em controle integrado de pragas urbanas,
+              comprometida em oferecer soluções eficazes e sustentáveis para proteger
               a saúde e o bem-estar de nossos clientes.
             </p>
           </div>
@@ -178,49 +178,49 @@ const QuemSomos = () => {
       <section className="py-20 bg-muted/30 relative overflow-hidden">
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-10 left-10 w-48 h-48 bg-primary rounded-full blur-3xl animate-float" />
-          <div className="absolute bottom-10 right-10 w-64 h-64 bg-accent rounded-full blur-3xl animate-float" style={{animationDelay: "3s"}} />
+          <div className="absolute bottom-10 right-10 w-64 h-64 bg-accent rounded-full blur-3xl animate-float" style={{ animationDelay: "3s" }} />
         </div>
         <div className="container mx-auto px-4 relative">
           <div className="grid lg:grid-cols-3 gap-12">
             {/* Mission */}
-            <Card className="glass-strong hover-lift group animate-scale-bounce" style={{animationDelay: "0.1s"}}>
+            <Card className="glass-strong hover-lift group animate-scale-bounce" style={{ animationDelay: "0.1s" }}>
               <CardContent className="p-8 text-center">
                 <div className="gradient-animated p-4 rounded-full w-16 h-16 mx-auto mb-6 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   <Target className="h-8 w-8 text-primary-foreground" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">Nossa Missão</h3>
                 <p className="text-muted-foreground leading-relaxed group-hover:text-foreground transition-colors">
-                  Encantar e oferecer satisfação plena aos clientes, através dos melhores 
-                  serviços de controle de pragas e saneamento ambiental, devolvendo a eles 
+                  Encantar e oferecer satisfação plena aos clientes, através dos melhores
+                  serviços de controle de pragas e saneamento ambiental, devolvendo a eles
                   sua saúde, tranquilidade e bem-estar.
                 </p>
               </CardContent>
             </Card>
 
             {/* Vision */}
-            <Card className="glass-strong hover-lift group animate-scale-bounce" style={{animationDelay: "0.2s"}}>
+            <Card className="glass-strong hover-lift group animate-scale-bounce" style={{ animationDelay: "0.2s" }}>
               <CardContent className="p-8 text-center">
                 <div className="gradient-animated p-4 rounded-full w-16 h-16 mx-auto mb-6 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   <Eye className="h-8 w-8 text-primary-foreground" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">Nossa Visão</h3>
                 <p className="text-muted-foreground leading-relaxed group-hover:text-foreground transition-colors">
-                  Ser a empresa líder em soluções de controle de pragas e saneamento 
-                  ambiental no Brasil, reconhecida pela excelência, inovação e compromisso 
+                  Ser a empresa líder em soluções de controle de pragas e saneamento
+                  ambiental no Brasil, reconhecida pela excelência, inovação e compromisso
                   com a saúde e o meio ambiente.
                 </p>
               </CardContent>
             </Card>
 
             {/* Values */}
-            <Card className="glass-strong hover-lift group animate-scale-bounce" style={{animationDelay: "0.3s"}}>
+            <Card className="glass-strong hover-lift group animate-scale-bounce" style={{ animationDelay: "0.3s" }}>
               <CardContent className="p-8 text-center">
                 <div className="gradient-animated p-4 rounded-full w-16 h-16 mx-auto mb-6 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   <Heart className="h-8 w-8 text-primary-foreground" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">Nossos Valores</h3>
                 <p className="text-muted-foreground leading-relaxed group-hover:text-foreground transition-colors">
-                  Honestidade, encantamento e satisfação plena do cliente, qualidade, 
+                  Honestidade, encantamento e satisfação plena do cliente, qualidade,
                   perícia, integridade, servir, respeito e cuidado ao próximo.
                 </p>
               </CardContent>
@@ -245,7 +245,7 @@ const QuemSomos = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {values.map((value, index) => (
-              <Card key={index} className="glass-strong hover-lift group animate-scale-bounce" style={{animationDelay: `${index * 0.1}s`}}>
+              <Card key={index} className="glass-strong hover-lift group animate-scale-bounce" style={{ animationDelay: `${index * 0.1}s` }}>
                 <CardContent className="p-6 text-center">
                   <div className="gradient-animated p-3 rounded-full w-12 h-12 mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                     <value.icon className="h-6 w-6 text-primary-foreground" />
@@ -265,7 +265,7 @@ const QuemSomos = () => {
       <section className="py-20 bg-muted/30 relative overflow-hidden">
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-20 right-1/4 w-72 h-72 bg-primary rounded-full blur-3xl animate-float" />
-          <div className="absolute bottom-20 left-1/4 w-64 h-64 bg-accent rounded-full blur-3xl animate-float" style={{animationDelay: "2s"}} />
+          <div className="absolute bottom-20 left-1/4 w-64 h-64 bg-accent rounded-full blur-3xl animate-float" style={{ animationDelay: "2s" }} />
         </div>
         <div className="container mx-auto px-4 relative">
           <div className="text-center mb-16 animate-fade-in-up">
@@ -277,7 +277,7 @@ const QuemSomos = () => {
               Trajetória de <span className="text-gradient">crescimento</span>
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Mais de 15 anos de evolução constante, sempre buscando excelência e inovação
+              Mais de 30 anos de evolução constante, sempre buscando excelência e inovação
               para proteger nossos clientes e o meio ambiente.
             </p>
           </div>
@@ -290,10 +290,10 @@ const QuemSomos = () => {
               { value: "5", label: "Cidades atendidas", icon: MapPin },
               { value: "98%", label: "Satisfação", icon: Heart }
             ].map((stat, idx) => (
-              <div 
-                key={idx} 
+              <div
+                key={idx}
                 className="glass-strong rounded-xl p-4 text-center hover-lift group animate-scale-bounce"
-                style={{animationDelay: `${idx * 0.1}s`}}
+                style={{ animationDelay: `${idx * 0.1}s` }}
               >
                 <stat.icon className="h-6 w-6 text-primary mx-auto mb-2 group-hover:scale-110 transition-transform" />
                 <div className="text-2xl lg:text-3xl font-bold text-gradient">{stat.value}</div>
@@ -305,12 +305,12 @@ const QuemSomos = () => {
           {/* Modern Alternating Timeline */}
           <div className="max-w-5xl mx-auto relative">
             {/* Vertical Line - Desktop */}
-            <div 
+            <div
               className="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 -translate-x-1/2 bg-gradient-to-b from-primary via-accent to-primary opacity-30 rounded-full"
               aria-hidden="true"
             />
             {/* Vertical Line - Mobile */}
-            <div 
+            <div
               className="md:hidden absolute left-6 top-0 bottom-0 w-1 bg-gradient-to-b from-primary via-accent to-primary opacity-30 rounded-full"
               aria-hidden="true"
             />
@@ -319,12 +319,11 @@ const QuemSomos = () => {
               {timeline.map((item, index) => {
                 const isLeft = index % 2 === 0;
                 return (
-                  <div 
-                    key={index} 
-                    className={`relative flex items-center gap-6 md:gap-8 ${
-                      isLeft ? 'md:flex-row' : 'md:flex-row-reverse'
-                    } animate-fade-in-up`}
-                    style={{animationDelay: `${index * 0.15}s`}}
+                  <div
+                    key={index}
+                    className={`relative flex items-center gap-6 md:gap-8 ${isLeft ? 'md:flex-row' : 'md:flex-row-reverse'
+                      } animate-fade-in-up`}
+                    style={{ animationDelay: `${index * 0.15}s` }}
                   >
                     {/* Content Card */}
                     <div className={`flex-1 pl-16 md:pl-0 ${isLeft ? 'md:pr-12 md:text-right' : 'md:pl-12 md:text-left'}`}>
@@ -394,7 +393,7 @@ const QuemSomos = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
             {certifications.map((cert, index) => (
-              <Card key={index} className="glass-strong text-center hover-lift group animate-scale-bounce" style={{animationDelay: `${index * 0.1}s`}}>
+              <Card key={index} className="glass-strong text-center hover-lift group animate-scale-bounce" style={{ animationDelay: `${index * 0.1}s` }}>
                 <CardContent className="p-6">
                   <div className="gradient-animated p-3 rounded-full w-12 h-12 mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                     <Award className="h-6 w-6 text-primary-foreground" />
@@ -426,11 +425,11 @@ const QuemSomos = () => {
           <div className="max-w-3xl mx-auto">
             <Accordion type="single" collapsible className="space-y-4">
               {faqs.map((faq, index) => (
-                <AccordionItem 
-                  key={index} 
-                  value={`faq-${index}`} 
+                <AccordionItem
+                  key={index}
+                  value={`faq-${index}`}
                   className="glass-strong rounded-lg px-6 border-none animate-scale-bounce"
-                  style={{animationDelay: `${index * 0.05}s`}}
+                  style={{ animationDelay: `${index * 0.05}s` }}
                 >
                   <AccordionTrigger className="text-left hover:no-underline hover:text-primary transition-colors py-5">
                     <div className="flex items-center gap-3">
@@ -458,7 +457,7 @@ const QuemSomos = () => {
             Conheça nosso time de especialistas
           </h2>
           <p className="text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto animate-blur-in">
-            Profissionais altamente qualificados e certificados para atender 
+            Profissionais altamente qualificados e certificados para atender
             suas necessidades com excelência.
           </p>
           <Link to="/nosso-time">

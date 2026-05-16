@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { 
-  Phone, 
-  Mail, 
-  MapPin, 
+import {
+  Phone,
+  Mail,
+  MapPin,
   Clock,
   Facebook,
   Instagram,
@@ -47,20 +47,20 @@ const Footer = () => {
       {/* Decorative blobs */}
       <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/4 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[100px] pointer-events-none" />
-      
+
       <div className="container mx-auto px-4 relative">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-12">
           {/* Company Info - 4 columns */}
           <div className="lg:col-span-4 space-y-8">
             <Link to="/" className="inline-block transition-transform hover:scale-105">
-              <img 
-                src={resolvedTheme === 'dark' ? logoBioforteWhite : logoBioforte} 
-                alt="Bioforte Controle de Pragas" 
+              <img
+                src={resolvedTheme === 'dark' ? logoBioforteWhite : logoBioforte}
+                alt="Bioforte Controle de Pragas"
                 className="h-14 w-auto object-contain"
               />
             </Link>
             <p className="text-muted-foreground text-lg leading-relaxed max-w-sm">
-              Saneamento ambiental com excelência e compromisso. Protegendo seu patrimônio e a saúde da sua família há mais de 15 anos.
+              Saneamento ambiental com excelência e compromisso. Protegendo seu patrimônio e a saúde da sua família há mais de 30 anos.
             </p>
             <div className="flex space-x-4">
               {socialLinks.map((social, index) => (
@@ -81,14 +81,14 @@ const Footer = () => {
             </div>
             {/* Certifications badges */}
             <div className="flex items-center gap-4 pt-4">
-               <div className="flex items-center gap-2 text-xs font-semibold text-muted-foreground bg-muted/50 px-3 py-2 rounded-full border border-border/50">
-                  <ShieldCheck className="h-4 w-4 text-primary" />
-                  ANVISA Certificada
-               </div>
-               <div className="flex items-center gap-2 text-xs font-semibold text-muted-foreground bg-muted/50 px-3 py-2 rounded-full border border-border/50">
-                  <Award className="h-4 w-4 text-primary" />
-                  15+ Anos
-               </div>
+              <div className="flex items-center gap-2 text-xs font-semibold text-muted-foreground bg-muted/50 px-3 py-2 rounded-full border border-border/50">
+                <ShieldCheck className="h-4 w-4 text-primary" />
+                ANVISA Certificada
+              </div>
+              <div className="flex items-center gap-2 text-xs font-semibold text-muted-foreground bg-muted/50 px-3 py-2 rounded-full border border-border/50">
+                <Award className="h-4 w-4 text-primary" />
+                30+ Anos
+              </div>
             </div>
           </div>
 
@@ -126,23 +126,23 @@ const Footer = () => {
           <div className="lg:col-span-4 space-y-8">
             <h4 className="font-bold text-lg mb-8 text-foreground uppercase tracking-widest text-sm">Fale Conosco</h4>
             <div className="grid gap-6">
-              <a href="tel:+5516974007842" className="group flex items-start gap-4">
+              <a href="tel:+551637230808" className="group flex items-start gap-4">
                 <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all">
                   <Phone className="h-4 w-4" />
                 </div>
                 <div>
-                  <p className="font-bold text-foreground">(16) 97400-7842</p>
+                  <p className="font-bold text-foreground">(16) 3723-0808</p>
                   <p className="text-sm text-muted-foreground">Segunda a Sexta, 08h às 18h</p>
                 </div>
               </a>
 
-              <a href="mailto:contato@bioforte.com.br" className="group flex items-start gap-4">
+              <a href="mailto:comercial@bioforte.com.br" className="group flex items-start gap-4">
                 <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all">
                   <Mail className="h-4 w-4" />
                 </div>
                 <div>
-                  <p className="font-bold text-foreground">contato@bioforte.com.br</p>
-                  <p className="text-sm text-muted-foreground">Respondemos em até 24h</p>
+                  <p className="font-bold text-foreground">comercial@bioforte.com.br</p>
+                  <p className="text-sm text-muted-foreground">Resposta rápida e eficiente</p>
                 </div>
               </a>
 
@@ -156,7 +156,7 @@ const Footer = () => {
                 </div>
               </div>
             </div>
-            
+
             <Link to="/contato" className="block pt-4">
               <Button variant="hero" className="w-full h-14 text-base font-bold shadow-xl shadow-primary/20 hover:shadow-primary/40 transition-all hover-shine">
                 Orçamento Imediato
@@ -171,7 +171,7 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-muted-foreground">
           <div className="text-center md:text-left space-y-1">
             <p>© {currentYear} Bioforte Controle de Pragas. Todos os direitos reservados.</p>
-            <p className="text-xs opacity-70 tracking-wide">CNPJ: 18.265.906/0001-01 | Responsável Técnico CRBio: 115.421/01-D</p>
+            <p className="text-xs opacity-70 tracking-wide">CNPJ: 18.265.906/0001-01 | Responsável Técnico CRBio: 130.421/01-D</p>
           </div>
           <div className="flex gap-8">
             <Link to="/politica-privacidade" className="hover:text-primary transition-colors">Privacidade</Link>

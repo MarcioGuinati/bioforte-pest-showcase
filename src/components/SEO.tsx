@@ -8,16 +8,16 @@ interface SEOProps {
   ogImage?: string;
 }
 
-const SEO = ({ 
-  title, 
-  description, 
-  canonical, 
+const SEO = ({
+  title,
+  description,
+  canonical,
   ogType = "website",
-  ogImage = "https://bioforte.com.br/og-image.png" 
+  ogImage = "https://bioforte.com.br/og-image.png"
 }: SEOProps) => {
   const siteTitle = "Bioforte Controle de Pragas";
   const fullTitle = title ? `${title} | ${siteTitle}` : siteTitle;
-  const defaultDescription = "Bioforte: especialista em controle de pragas há 15 anos. Dedetização residencial e comercial com profissionais certificados.";
+  const defaultDescription = "Bioforte: especialista em controle de pragas há 30 anos. Dedetização residencial e comercial com profissionais certificados.";
   const metaDescription = description || defaultDescription;
   const url = "https://bioforte.com.br";
   const fullCanonical = canonical ? `${url}${canonical}` : url;

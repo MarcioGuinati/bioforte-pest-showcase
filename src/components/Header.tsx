@@ -43,7 +43,7 @@ const Header = () => {
   ];
 
   return (
-    <header 
+    <header
       className={cn(
         "sticky top-0 z-50 transition-all duration-300 w-full",
         scrolled ? "glass-strong border-b border-border/50 py-1" : "bg-background border-b border-transparent py-2"
@@ -54,13 +54,13 @@ const Header = () => {
         {!scrolled && (
           <div className="flex items-center justify-between py-2 text-xs text-muted-foreground border-b border-border/10 mb-2 animate-fade-in">
             <div className="flex items-center gap-6">
-              <a href="mailto:contato@bioforte.com.br" className="flex items-center gap-2 hover:text-primary transition-colors group">
+              <a href="mailto:comercial@bioforte.com.br" className="flex items-center gap-2 hover:text-primary transition-colors group">
                 <Mail className="h-3.5 w-3.5 group-hover:scale-110 transition-transform" />
-                contato@bioforte.com.br
+                comercial@bioforte.com.br
               </a>
-              <a href="tel:+5516974007842" className="flex items-center gap-2 hover:text-primary transition-colors group">
+              <a href="tel:+551637230808" className="flex items-center gap-2 hover:text-primary transition-colors group">
                 <Phone className="h-3.5 w-3.5 group-hover:scale-110 transition-transform" />
-                (16) 97400-7842
+                (16) 3723-0808
               </a>
             </div>
             <div className="hidden md:flex items-center gap-4">
@@ -96,7 +96,7 @@ const Header = () => {
                 <NavigationMenuItem>
                   <Link to="/">
                     <NavigationMenuLink className={cn(
-                      navigationMenuTriggerStyle(), 
+                      navigationMenuTriggerStyle(),
                       "hover:bg-primary/10 hover:text-primary focus:bg-primary/10 focus:text-primary data-[active]:bg-primary/10 data-[state=open]:bg-primary/10",
                       location.pathname === "/" && "text-primary font-bold"
                     )}>
@@ -144,7 +144,7 @@ const Header = () => {
                 <NavigationMenuItem>
                   <Link to="/blog">
                     <NavigationMenuLink className={cn(
-                      navigationMenuTriggerStyle(), 
+                      navigationMenuTriggerStyle(),
                       "hover:bg-primary/10 hover:text-primary focus:bg-primary/10 focus:text-primary data-[active]:bg-primary/10 data-[state=open]:bg-primary/10",
                       location.pathname === "/blog" && "text-primary font-bold"
                     )}>
@@ -156,7 +156,7 @@ const Header = () => {
                 <NavigationMenuItem>
                   <Link to="/area-cliente">
                     <NavigationMenuLink className={cn(
-                      navigationMenuTriggerStyle(), 
+                      navigationMenuTriggerStyle(),
                       "hover:bg-primary/10 hover:text-primary focus:bg-primary/10 focus:text-primary data-[active]:bg-primary/10 data-[state=open]:bg-primary/10",
                       location.pathname === "/area-cliente" && "text-primary font-bold"
                     )}>
@@ -168,7 +168,7 @@ const Header = () => {
                 <NavigationMenuItem>
                   <Link to="/contato">
                     <NavigationMenuLink className={cn(
-                      navigationMenuTriggerStyle(), 
+                      navigationMenuTriggerStyle(),
                       "hover:bg-primary/10 hover:text-primary focus:bg-primary/10 focus:text-primary data-[active]:bg-primary/10 data-[state=open]:bg-primary/10",
                       location.pathname === "/contato" && "text-primary font-bold"
                     )}>
@@ -189,7 +189,7 @@ const Header = () => {
                 </Button>
               </Link>
             </div>
-            
+
             <div className="lg:hidden">
               <ThemeToggle />
             </div>
@@ -210,7 +210,7 @@ const Header = () => {
           <div className="lg:hidden py-6 border-t border-border/10 animate-in fade-in slide-in-from-top-4 duration-300">
             <nav className="flex flex-col space-y-1">
               <MobileNavLink to="/" onClick={() => setIsMenuOpen(false)}>Início</MobileNavLink>
-              
+
               <div className="py-2">
                 <p className="px-4 text-xs font-bold text-muted-foreground uppercase tracking-wider mb-2">Empresa</p>
                 {companyItems.map(item => (
@@ -228,7 +228,7 @@ const Header = () => {
               <MobileNavLink to="/blog" onClick={() => setIsMenuOpen(false)}>Blog</MobileNavLink>
               <MobileNavLink to="/area-cliente" onClick={() => setIsMenuOpen(false)}>Área do Cliente</MobileNavLink>
               <MobileNavLink to="/contato" onClick={() => setIsMenuOpen(false)}>Contato</MobileNavLink>
-              
+
               <div className="pt-4 px-4">
                 <Link to="/contato" onClick={() => setIsMenuOpen(false)}>
                   <Button variant="hero" className="w-full">Solicitar Orçamento</Button>

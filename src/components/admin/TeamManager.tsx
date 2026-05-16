@@ -234,7 +234,7 @@ export const TeamManager = () => {
                 <Input 
                   value={certifications} 
                   onChange={(e) => setCertifications(e.target.value)} 
-                  placeholder="Ex: ANVISA, ISO 9001, Técnico em Pragas"
+                  placeholder="Ex: ANVISA, Técnico em Pragas"
                 />
               </div>
 

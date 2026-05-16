@@ -1,78 +1,101 @@
 <!doctype html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bioforte Controle de Pragas | Dedetização Profissional em São Paulo</title>
-    <meta name="description" content="Bioforte: especialista em controle de pragas há 15 anos. Dedetização residencial e comercial com profissionais certificados. Orçamento gratuito!" />
-    <meta name="author" content="Bioforte Controle de Pragas" />
-    <meta name="keywords" content="dedetização, controle de pragas, desratização, São Paulo, bioforte, pest control" />
-    <meta name="theme-color" content="#2d7a4a" />
 
-    <!-- Preconnect for critical resources -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="dns-prefetch" href="https://firestore.googleapis.com" />
-    
-    <!-- Preload critical hero image -->
-    <link rel="preload" as="image" href="/src/assets/038f9b42-2503-4e8d-afa4-9bd64e7ef10b.jpg" fetchpriority="high" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bioforte Controle de Pragas | Dedetização Profissional em São Paulo</title>
+  <meta name="description"
+    content="Bioforte: especialista em controle de pragas há 30 anos. Dedetização residencial e comercial com profissionais certificados. Orçamento gratuito!" />
+  <meta name="author" content="Bioforte Controle de Pragas" />
+  <meta name="keywords" content="dedetização, controle de pragas, desratização, São Paulo, bioforte, pest control" />
+  <meta name="theme-color" content="#2d7a4a" />
 
-    <!-- Open Graph -->
-    <meta property="og:title" content="Bioforte Controle de Pragas | Dedetização Profissional" />
-    <meta property="og:description" content="Especialistas em controle de pragas há 15 anos. Dedetização segura e eficaz para residências e empresas." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://bioforte.com.br/" />
-    <meta property="og:image" content="https://bioforte.com.br/og-image.png" />
-    <meta property="og:locale" content="pt_BR" />
+  <!-- Preconnect for critical resources -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="dns-prefetch" href="https://firestore.googleapis.com" />
 
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@bioforte" />
-    <meta name="twitter:image" content="https://bioforte.com.br/og-image.png" />
+  <!-- Preload critical hero image -->
+  <link rel="preload" as="image" href="/src/assets/038f9b42-2503-4e8d-afa4-9bd64e7ef10b.jpg" fetchpriority="high" />
 
-    <!-- Critical CSS inline for faster FCP -->
-    <style>
-      /* Critical above-the-fold styles */
-      body { margin: 0; font-family: system-ui, -apple-system, sans-serif; }
-      .critical-loader { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
-      .critical-spinner { width: 40px; height: 40px; border: 4px solid #e5e7eb; border-top-color: #2d7a4a; border-radius: 50%; animation: spin 1s linear infinite; }
-      @keyframes spin { to { transform: rotate(360deg); } }
-    </style>
-    
-    <!-- Font with display swap and reduced weights -->
-    <link 
-      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap" 
-      rel="stylesheet" 
-      media="print" 
-      onload="this.media='all'" 
-    />
-    <noscript>
-      <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap" rel="stylesheet" />
-    </noscript>
+  <!-- Open Graph -->
+  <meta property="og:title" content="Bioforte Controle de Pragas | Dedetização Profissional" />
+  <meta property="og:description"
+    content="Especialistas em controle de pragas há 30 anos. Dedetização segura e eficaz para residências e empresas." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://bioforte.com.br/" />
+  <meta property="og:image" content="https://bioforte.com.br/og-image.png" />
+  <meta property="og:locale" content="pt_BR" />
 
-    <!-- Open Graph -->
-    <meta property="og:title" content="Bioforte Controle de Pragas | Dedetização Profissional" />
-    <meta property="og:description" content="Especialistas em controle de pragas há 15 anos. Dedetização segura e eficaz para residências e empresas." />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-    <meta property="og:locale" content="pt_BR" />
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@bioforte" />
+  <meta name="twitter:image" content="https://bioforte.com.br/og-image.png" />
 
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@bioforte" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+  <!-- Critical CSS inline for faster FCP -->
+  <style>
+    /* Critical above-the-fold styles */
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
 
-    <!-- Favicon -->
-    <link rel="icon" href="/favicon.ico" />
-  </head>
+    .critical-loader {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
 
-  <body>
-    <div id="root">
-      <!-- Critical loading state for faster perceived performance -->
-      <div class="critical-loader" aria-label="Carregando aplicação">
-        <div class="critical-spinner"></div>
-      </div>
+    .critical-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #e5e7eb;
+      border-top-color: #2d7a4a;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+
+  <!-- Font with display swap and reduced weights -->
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap" rel="stylesheet"
+    media="print" onload="this.media='all'" />
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap" rel="stylesheet" />
+  </noscript>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Bioforte Controle de Pragas | Dedetização Profissional" />
+  <meta property="og:description"
+    content="Especialistas em controle de pragas há 30 anos. Dedetização segura e eficaz para residências e empresas." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+  <meta property="og:locale" content="pt_BR" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@bioforte" />
+  <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.ico" />
+</head>
+
+<body>
+  <div id="root">
+    <!-- Critical loading state for faster perceived performance -->
+    <div class="critical-loader" aria-label="Carregando aplicação">
+      <div class="critical-spinner"></div>
     </div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+  </div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>
