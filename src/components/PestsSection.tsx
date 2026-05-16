@@ -67,6 +67,30 @@ const WaterTankIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
+const TermiteIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 64 64" className={className} fill="currentColor">
+    <ellipse cx="32" cy="16" rx="8" ry="6"/>
+    <rect x="24" y="24" width="16" height="28" rx="8"/>
+    <path d="M24 32l-12-6M40 32l12-6M24 40l-12 0M40 40l12 0M24 48l-10 6M40 48l10 6" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
+  </svg>
+);
+
+const TickIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 64 64" className={className} fill="currentColor">
+    <ellipse cx="32" cy="36" rx="16" ry="18"/>
+    <circle cx="32" cy="16" r="6"/>
+    <path d="M24 28l-8-6M40 28l8-6M20 36l-8 0M44 36l8 0M22 44l-8 6M42 44l8 6M28 52l-6 8M36 52l6 8" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
+  </svg>
+);
+
+const MiteIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 64 64" className={className} fill="currentColor">
+    <ellipse cx="32" cy="32" rx="12" ry="16"/>
+    <circle cx="32" cy="12" r="4"/>
+    <path d="M24 24l-6-6M40 24l6-6M20 32l-6 0M44 32l6 0M22 40l-6 6M42 40l6 6M26 46l-4 8M38 46l4 8" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round"/>
+  </svg>
+);
+
 const pests = [
   { name: "Escorpião", icon: ScorpionIcon },
   { name: "Formiga", icon: AntIcon },
@@ -74,7 +98,9 @@ const pests = [
   { name: "Pombo", icon: PigeonIcon },
   { name: "Mosquito", icon: MosquitoIcon },
   { name: "Aranha", icon: SpiderIcon },
-  { name: "Caixa D'Água", icon: WaterTankIcon },
+  { name: "Cupim", icon: TermiteIcon },
+  { name: "Carrapato", icon: TickIcon },
+  { name: "Piolho (de pássaros)", icon: MiteIcon },
 ];
 
 const PestsSection = () => {

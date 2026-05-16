@@ -162,7 +162,7 @@ Telefone: ${formData.phone || "Não informado"}`;
     <div className="min-h-screen overflow-hidden">
       <SEO
         title="Contato e Orçamento"
-        description="Solicite seu orçamento gratuito para controle de pragas. Atendemos em Ribeirão Preto, Franca, Uberaba e região."
+        description="Solicite seu orçamento gratuito para controle de pragas."
         canonical="/contato"
       />
 

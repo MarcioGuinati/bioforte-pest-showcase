@@ -409,25 +409,14 @@ const Home = () => {
             </h2>
             <p className="text-xl text-primary-foreground/90 mb-8">
               Entre em contato conosco e receba um orçamento personalizado.
-              Atendemos em Ribeirão Preto, Franca, Uberaba, Araraquara e Guarapuava.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/contato">
+            <div className="flex justify-center">
+              <a href="https://wa.me/551637230808" target="_blank" rel="noopener noreferrer">
                 <Button variant="secondary" size="lg" className="font-semibold pulse-ring group">
                   Solicitar Orçamento Grátis
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                 </Button>
-              </Link>
-              <Button
-                variant="outline"
-                size="lg"
-                asChild
-                className="font-semibold bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
-              >
-                <a href="tel:+551637230808" aria-label="Ligar para (16) 3723-0808">
-                  (16) 3723-0808
-                </a>
-              </Button>
+              </a>
             </div>
           </div>
         </div>
