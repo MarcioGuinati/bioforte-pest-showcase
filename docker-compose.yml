@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  bioforte_app:
+    build: .
+    container_name: bioforte_frontend
+    # Usando a porta 8085 externa que não está na sua lista
+    ports:
+      - "8085:80"
+    restart: unless-stopped
