@@ -143,7 +143,7 @@ const HeroSlider = memo(() => {
             )}
             <img
               src={slide.image}
-              alt=""
+              alt={slide.title}
               width={1920}
               height={1080}
               className={`w-full h-full object-cover object-center transition-opacity duration-300 ${

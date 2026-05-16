@@ -91,9 +91,64 @@ const googleReviews = [
   }
 ];
 
+import SEO from "@/components/SEO";
+
 const Home = () => {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Bioforte Controle de Pragas",
+    "image": "https://bioforte.com.br/logo.png",
+    "@id": "https://bioforte.com.br",
+    "url": "https://bioforte.com.br",
+    "telephone": "+5516974007842",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Av. Major Nicácio, 2045",
+      "addressLocality": "Franca",
+      "addressRegion": "SP",
+      "postalCode": "14401-135",
+      "addressCountry": "BR"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": -20.5372,
+      "longitude": -47.4008
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ],
+      "opens": "08:00",
+      "closes": "18:00"
+    },
+    "sameAs": [
+      "https://www.facebook.com/bioforte",
+      "https://www.instagram.com/bioforte"
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "127"
+    }
+  };
+
   return (
     <main className="overflow-hidden">
+      <SEO 
+        title="Home" 
+        description="Bioforte: especialista em controle de pragas há 15 anos. Dedetização residencial e comercial com profissionais certificados. Orçamento gratuito!"
+      />
+      <script type="application/ld+json">
+        {JSON.stringify(jsonLd)}
+      </script>
+
       {/* Hero Slider */}
       <HeroSlider />
 

@@ -7,194 +7,177 @@ import {
   Clock,
   Facebook,
   Instagram,
-  Youtube
+  Youtube,
+  ArrowRight,
+  ShieldCheck,
+  Award
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTheme } from "next-themes";
 import logoBioforte from "@/assets/logo-bioforte.png";
 import logoBioforteWhite from "@/assets/logo-bioforte-white.png";
+import { cn } from "@/lib/utils";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const { resolvedTheme } = useTheme();
 
-  const quickLinks = [
-    { name: "Home", path: "/" },
+  const companyLinks = [
     { name: "Quem Somos", path: "/quem-somos" },
-    { name: "Nossos Serviços", path: "/area-atuacao" },
+    { name: "Nosso Time", path: "/nosso-time" },
+    { name: "Área de Atuação", path: "/area-atuacao" },
     { name: "Trabalhe Conosco", path: "/trabalhe-conosco" },
   ];
 
-  const services = [
-    "Dedetização Residencial",
-    "Controle Comercial", 
-    "Desratização",
-    "Controle Ecológico"
+  const supportLinks = [
+    { name: "Área do Cliente", path: "/area-cliente" },
+    { name: "Blog & Notícias", path: "/blog" },
+    { name: "Contato", path: "/contato" },
+    { name: "Biologia das Pragas", path: "/biologia-pragas" },
   ];
 
   const socialLinks = [
-    { icon: Facebook, href: "https://www.facebook.com/BioforteDedetizadora?locale=pt_BR", label: "Facebook" },
-    { icon: Instagram, href: "https://www.instagram.com/biofortededetizadora/", label: "Instagram" },
-    { icon: Youtube, href: "https://www.youtube.com/@biofortesaneamentoambienta3867", label: "YouTube" }
+    { icon: Facebook, href: "https://www.facebook.com/BioforteDedetizadora?locale=pt_BR", label: "Facebook", color: "hover:bg-[#1877F2]" },
+    { icon: Instagram, href: "https://www.instagram.com/biofortededetizadora/", label: "Instagram", color: "hover:bg-gradient-to-tr hover:from-[#f9ce34] hover:via-[#ee2a7b] hover:to-[#6228d7]" },
+    { icon: Youtube, href: "https://www.youtube.com/@biofortesaneamentoambienta3867", label: "YouTube", color: "hover:bg-[#FF0000]" }
   ];
 
   return (
-    <footer className="bg-card border-t border-border relative overflow-hidden">
-      {/* Decorative elements */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-10 right-10 w-64 h-64 bg-primary rounded-full blur-3xl" />
-        <div className="absolute bottom-10 left-10 w-48 h-48 bg-accent rounded-full blur-3xl" />
-      </div>
+    <footer className="relative bg-card border-t border-border/50 pt-16 pb-8 overflow-hidden">
+      {/* Decorative blobs */}
+      <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/4 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[100px] pointer-events-none" />
       
-      {/* Main Footer */}
-      <div className="container mx-auto px-4 py-16 relative">
-        <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-8">
-          {/* Company Info */}
-          <div className="space-y-6">
-            <Link to="/" className="inline-block hover:opacity-90 transition-opacity">
+      <div className="container mx-auto px-4 relative">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-12">
+          {/* Company Info - 4 columns */}
+          <div className="lg:col-span-4 space-y-8">
+            <Link to="/" className="inline-block transition-transform hover:scale-105">
               <img 
                 src={resolvedTheme === 'dark' ? logoBioforteWhite : logoBioforte} 
                 alt="Bioforte Controle de Pragas" 
-                width={180}
-                height={56}
-                loading="lazy"
-                className="h-14 w-auto max-w-[180px] object-contain"
+                className="h-14 w-auto object-contain"
               />
             </Link>
-            <p className="text-muted-foreground leading-relaxed">
-              Especialistas em controle integrado de pragas urbanas, 
-              oferecendo soluções seguras e eficazes há mais de 15 anos.
+            <p className="text-muted-foreground text-lg leading-relaxed max-w-sm">
+              Saneamento ambiental com excelência e compromisso. Protegendo seu patrimônio e a saúde da sua família há mais de 15 anos.
             </p>
-            <nav aria-label="Redes sociais" className="flex space-x-3">
+            <div className="flex space-x-4">
               {socialLinks.map((social, index) => (
                 <a
                   key={index}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`Visitar ${social.label} da Bioforte (abre em nova aba)`}
-                  className="min-w-[44px] min-h-[44px] w-11 h-11 bg-muted rounded-lg flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                  aria-label={social.label}
+                  className={cn(
+                    "w-12 h-12 bg-muted rounded-xl flex items-center justify-center text-muted-foreground hover:text-white transition-all duration-300 hover:shadow-lg",
+                    social.color
+                  )}
                 >
-                  <social.icon className="h-5 w-5" aria-hidden="true" />
+                  <social.icon className="h-5 w-5" />
                 </a>
               ))}
-            </nav>
+            </div>
+            {/* Certifications badges */}
+            <div className="flex items-center gap-4 pt-4">
+               <div className="flex items-center gap-2 text-xs font-semibold text-muted-foreground bg-muted/50 px-3 py-2 rounded-full border border-border/50">
+                  <ShieldCheck className="h-4 w-4 text-primary" />
+                  ANVISA Certificada
+               </div>
+               <div className="flex items-center gap-2 text-xs font-semibold text-muted-foreground bg-muted/50 px-3 py-2 rounded-full border border-border/50">
+                  <Award className="h-4 w-4 text-primary" />
+                  15+ Anos
+               </div>
+            </div>
           </div>
 
-          {/* Quick Links */}
-          <nav aria-label="Links rápidos">
-            <h4 className="font-semibold text-lg mb-6 text-foreground">Links Rápidos</h4>
-            <ul className="space-y-3" role="list">
-              {quickLinks.map((link, index) => (
-                <li key={index}>
-                  <Link
-                    to={link.path}
-                    className="text-muted-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded px-1 py-0.5 -mx-1 inline-flex items-center group"
-                  >
-                    <span className="w-0 h-0.5 bg-primary group-hover:w-3 transition-all duration-300 mr-0 group-hover:mr-2" />
+          {/* Quick Links - 2 columns */}
+          <div className="lg:col-span-2">
+            <h4 className="font-bold text-lg mb-8 text-foreground uppercase tracking-widest text-sm">Empresa</h4>
+            <ul className="space-y-4">
+              {companyLinks.map((link) => (
+                <li key={link.name}>
+                  <Link to={link.path} className="text-muted-foreground hover:text-primary flex items-center group transition-colors">
+                    <ArrowRight className="h-3 w-3 mr-2 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                     {link.name}
                   </Link>
                 </li>
               ))}
             </ul>
-          </nav>
+          </div>
 
-          {/* Services */}
-          <div>
-            <h4 className="font-semibold text-lg mb-6 text-foreground">Nossos Serviços</h4>
-            <ul className="space-y-3">
-              {services.map((service, index) => (
-                <li key={index} className="text-muted-foreground flex items-center group hover:text-foreground transition-colors">
-                  <span className="w-1.5 h-1.5 bg-primary rounded-full mr-2 group-hover:scale-150 transition-transform" />
-                  {service}
+          {/* Support Links - 2 columns */}
+          <div className="lg:col-span-2">
+            <h4 className="font-bold text-lg mb-8 text-foreground uppercase tracking-widest text-sm">Suporte</h4>
+            <ul className="space-y-4">
+              {supportLinks.map((link) => (
+                <li key={link.name}>
+                  <Link to={link.path} className="text-muted-foreground hover:text-primary flex items-center group transition-colors">
+                    <ArrowRight className="h-3 w-3 mr-2 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                    {link.name}
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Contact Info */}
-          <div>
-            <h4 className="font-semibold text-lg mb-6 text-foreground">Contato</h4>
-            <div className="space-y-4">
-              <a href="tel:+5516974007842" className="flex items-start space-x-3 group hover:text-primary transition-colors">
-                <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
-                  <Phone className="h-4 w-4 text-primary" />
+          {/* Contact Details - 4 columns */}
+          <div className="lg:col-span-4 space-y-8">
+            <h4 className="font-bold text-lg mb-8 text-foreground uppercase tracking-widest text-sm">Fale Conosco</h4>
+            <div className="grid gap-6">
+              <a href="tel:+5516974007842" className="group flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all">
+                  <Phone className="h-4 w-4" />
                 </div>
                 <div>
-                  <p className="font-medium">(16) 97400-7842</p>
-                  <p className="text-sm text-muted-foreground">Segunda a Sexta: 8h às 18h</p>
-                </div>
-              </a>
-              
-              <a href="mailto:contato@bioforte.com.br" className="flex items-start space-x-3 group hover:text-primary transition-colors">
-                <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
-                  <Mail className="h-4 w-4 text-primary" />
-                </div>
-                <div>
-                  <p className="font-medium">contato@bioforte.com.br</p>
-                  <p className="text-sm text-muted-foreground">Resposta em até 24h</p>
+                  <p className="font-bold text-foreground">(16) 97400-7842</p>
+                  <p className="text-sm text-muted-foreground">Segunda a Sexta, 08h às 18h</p>
                 </div>
               </a>
 
-              <div className="flex items-start space-x-3">
-                <div className="p-2 bg-primary/10 rounded-lg">
-                  <MapPin className="h-4 w-4 text-primary" />
+              <a href="mailto:contato@bioforte.com.br" className="group flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all">
+                  <Mail className="h-4 w-4" />
                 </div>
                 <div>
-                  <p className="font-medium">Nossas Unidades</p>
-                  <p className="text-sm text-muted-foreground">Ribeirão Preto, Franca, Uberaba, Araraquara e Guarapuava</p>
+                  <p className="font-bold text-foreground">contato@bioforte.com.br</p>
+                  <p className="text-sm text-muted-foreground">Respondemos em até 24h</p>
                 </div>
-              </div>
+              </a>
 
-              <div className="flex items-start space-x-3">
-                <div className="p-2 bg-primary/10 rounded-lg">
-                  <Clock className="h-4 w-4 text-primary" />
+              <div className="group flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                  <MapPin className="h-4 w-4" />
                 </div>
                 <div>
-                  <p className="font-medium">Emergência 24h</p>
-                  <p className="text-sm text-muted-foreground">Para casos urgentes</p>
+                  <p className="font-bold text-foreground">Sede em Franca - SP</p>
+                  <p className="text-sm text-muted-foreground">Atendimento em toda a região</p>
                 </div>
               </div>
             </div>
-
-            <div className="mt-6">
-              <Link to="/contato">
-                <Button variant="hero" className="w-full hover-shine pulse-ring">
-                  Solicitar Orçamento
-                </Button>
-              </Link>
-            </div>
+            
+            <Link to="/contato" className="block pt-4">
+              <Button variant="hero" className="w-full h-14 text-base font-bold shadow-xl shadow-primary/20 hover:shadow-primary/40 transition-all hover-shine">
+                Orçamento Imediato
+              </Button>
+            </Link>
           </div>
         </div>
-      </div>
 
-      <Separator />
+        <Separator className="bg-border/30 mb-8" />
 
-      {/* Bottom Footer */}
-      <div className="container mx-auto px-4 py-6">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="text-center md:text-left">
-            <p className="text-sm text-muted-foreground">
-              © {currentYear} Bioforte Controle de Pragas. Todos os direitos reservados.
-            </p>
-            <p className="text-xs text-muted-foreground mt-1">
-              CNPJ: 18.265.906/0001-01 | Licenças Sanitárias Atualizadas
-            </p>
+        {/* Copyright */}
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-muted-foreground">
+          <div className="text-center md:text-left space-y-1">
+            <p>© {currentYear} Bioforte Controle de Pragas. Todos os direitos reservados.</p>
+            <p className="text-xs opacity-70 tracking-wide">CNPJ: 18.265.906/0001-01 | Responsável Técnico CRBio: 115.421/01-D</p>
           </div>
-          <nav className="flex items-center gap-6 text-sm" aria-label="Links legais">
-            <a 
-              href="/politica-privacidade" 
-              className="text-muted-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded px-1 py-0.5 min-h-[44px] inline-flex items-center"
-            >
-              Política de Privacidade
-            </a>
-            <a 
-              href="/termos-uso" 
-              className="text-muted-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded px-1 py-0.5 min-h-[44px] inline-flex items-center"
-            >
-              Termos de Uso
-            </a>
-          </nav>
+          <div className="flex gap-8">
+            <Link to="/politica-privacidade" className="hover:text-primary transition-colors">Privacidade</Link>
+            <Link to="/termos-uso" className="hover:text-primary transition-colors">Termos</Link>
+            <Link to="/admin" className="hover:text-primary transition-colors">Admin</Link>
+          </div>
         </div>
       </div>
     </footer>

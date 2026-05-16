@@ -139,9 +139,17 @@ const dangerColors: Record<string, string> = {
   "Crítico": "bg-red-500/20 text-red-700 dark:text-red-400 border-red-500/40"
 };
 
+import SEO from "@/components/SEO";
+
 const BiologiaPragas = () => {
   return (
     <div className="min-h-screen overflow-hidden">
+      <SEO 
+        title="Biologia das Pragas" 
+        description="Aprenda sobre a biologia, comportamento e riscos das principais pragas urbanas como baratas, ratos, cupins e mosquitos. Controle baseado em ciência."
+        canonical="/biologia-pragas"
+      />
+
       {/* Hero Section */}
       <section className="relative py-20 lg:py-32 overflow-hidden">
         <div className="absolute inset-0">

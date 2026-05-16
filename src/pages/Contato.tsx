@@ -11,9 +11,9 @@ import { useToast } from "@/hooks/use-toast";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import {
-  Phone, 
-  Mail, 
-  MapPin, 
+  Phone,
+  Mail,
+  MapPin,
   Clock,
   MessageCircle,
   Send,
@@ -24,6 +24,7 @@ import {
   Utensils,
   Loader2
 } from "lucide-react";
+import SEO from "@/components/SEO";
 
 const contactInfo = [
   {
@@ -91,9 +92,9 @@ const Contato = () => {
       });
       return;
     }
-    
+
     setIsSubmitting(true);
-    
+
     try {
       // Build contact data, only including non-empty optional fields
       const contactData: Record<string, unknown> = {
@@ -117,7 +118,7 @@ const Contato = () => {
         title: "Mensagem enviada!",
         description: "Recebemos seu contato. Nossa equipe retornará em breve.",
       });
-      
+
       setFormData({
         name: "",
         email: "",
@@ -152,21 +153,27 @@ const Contato = () => {
 Nome: ${formData.name || "Não informado"}
 Serviço: ${formData.service || "Não especificado"}
 Telefone: ${formData.phone || "Não informado"}`;
-    
+
     const url = `https://wa.me/5516974007842?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");
   };
 
   return (
     <div className="min-h-screen overflow-hidden">
+      <SEO
+        title="Contato e Orçamento"
+        description="Solicite seu orçamento gratuito para controle de pragas. Atendemos em Ribeirão Preto, Franca, Uberaba e região. Resposta em até 24h."
+        canonical="/contato"
+      />
+
       {/* Hero Section */}
-      <section 
-        className="py-20 lg:py-32 gradient-hero relative overflow-hidden" 
+      <section
+        className="py-20 lg:py-32 gradient-hero relative overflow-hidden"
         aria-labelledby="contact-heading"
       >
         <div className="absolute inset-0 opacity-10" aria-hidden="true">
           <div className="absolute top-20 right-20 w-64 h-64 bg-white rounded-full blur-3xl animate-float" />
-          <div className="absolute bottom-10 left-10 w-48 h-48 bg-accent rounded-full blur-3xl animate-float" style={{animationDelay: "2s"}} />
+          <div className="absolute bottom-10 left-10 w-48 h-48 bg-accent rounded-full blur-3xl animate-float" style={{ animationDelay: "2s" }} />
         </div>
         <div className="container mx-auto px-4 text-center relative">
           <Badge variant="outline" className="mb-6 border-primary-foreground text-primary-foreground animate-fade-in">
@@ -178,7 +185,7 @@ Telefone: ${formData.phone || "Não informado"}`;
             <span className="text-accent"> Orçamento Gratuito</span>
           </h1>
           <p className="text-lg lg:text-xl text-primary-foreground/90 leading-relaxed max-w-3xl mx-auto animate-blur-in">
-            Entre em contato conosco e receba um orçamento personalizado. 
+            Entre em contato conosco e receba um orçamento personalizado.
             Nossa equipe está pronta para resolver seu problema com pragas.
           </p>
         </div>
@@ -191,14 +198,14 @@ Telefone: ${formData.phone || "Não informado"}`;
           <ul className="grid md:grid-cols-2 lg:grid-cols-4 gap-8" role="list">
             {contactInfo.map((info, index) => (
               <li key={index}>
-                <Card className="glass-strong text-center hover-lift group animate-scale-bounce h-full" style={{animationDelay: `${index * 0.1}s`}}>
+                <Card className="glass-strong text-center hover-lift group animate-scale-bounce h-full" style={{ animationDelay: `${index * 0.1}s` }}>
                   <CardContent className="p-6">
                     <div className="gradient-animated p-3 rounded-full w-12 h-12 mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300" aria-hidden="true">
                       <info.icon className="h-6 w-6 text-primary-foreground" />
                     </div>
                     <h3 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors">{info.title}</h3>
                     {info.action ? (
-                      <a 
+                      <a
                         href={info.action}
                         className="text-primary font-semibold hover:underline block mb-2 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded"
                         aria-label={`${info.title}: ${info.content}`}
@@ -221,7 +228,7 @@ Telefone: ${formData.phone || "Não informado"}`;
       <section className="py-20 relative overflow-hidden">
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-20 left-20 w-64 h-64 bg-primary rounded-full blur-3xl animate-float" />
-          <div className="absolute bottom-20 right-20 w-48 h-48 bg-accent rounded-full blur-3xl animate-float" style={{animationDelay: "2s"}} />
+          <div className="absolute bottom-20 right-20 w-48 h-48 bg-accent rounded-full blur-3xl animate-float" style={{ animationDelay: "2s" }} />
         </div>
         <div className="container mx-auto px-4 relative">
           <div className="max-w-6xl mx-auto">
@@ -231,7 +238,7 @@ Telefone: ${formData.phone || "Não informado"}`;
                 Fale conosco <span className="text-gradient">agora mesmo</span>
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Preencha o formulário abaixo com detalhes sobre seu problema. 
+                Preencha o formulário abaixo com detalhes sobre seu problema.
                 Quanto mais informações, melhor será nossa proposta.
               </p>
             </div>
@@ -292,11 +299,10 @@ Telefone: ${formData.phone || "Não informado"}`;
                               {services.map((service, index) => (
                                 <label
                                   key={index}
-                                  className={`flex items-center gap-3 p-3 sm:p-4 rounded-lg border cursor-pointer transition-colors ${
-                                    formData.service === service.value 
-                                      ? "border-primary bg-primary/5" 
+                                  className={`flex items-center gap-3 p-3 sm:p-4 rounded-lg border cursor-pointer transition-colors ${formData.service === service.value
+                                      ? "border-primary bg-primary/5"
                                       : "border-border hover:border-primary/50"
-                                  }`}
+                                    }`}
                                 >
                                   <input
                                     type="radio"
@@ -409,11 +415,11 @@ Telefone: ${formData.phone || "Não informado"}`;
                       </div>
 
                       <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                        <Button 
-                          type="submit" 
-                          variant="hero" 
-                          size="lg" 
-                          className="flex-1 w-full sm:w-auto min-h-[48px]" 
+                        <Button
+                          type="submit"
+                          variant="hero"
+                          size="lg"
+                          className="flex-1 w-full sm:w-auto min-h-[48px]"
                           disabled={isSubmitting}
                           aria-describedby={isSubmitting ? "submit-status" : undefined}
                         >
@@ -425,10 +431,10 @@ Telefone: ${formData.phone || "Não informado"}`;
                           {isSubmitting ? "Enviando..." : "Enviar Mensagem"}
                         </Button>
                         {isSubmitting && <span id="submit-status" className="sr-only">Enviando formulário, aguarde...</span>}
-                        <Button 
-                          type="button" 
-                          variant="outline" 
-                          size="lg" 
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="lg"
                           className="flex-1 w-full sm:w-auto min-h-[48px]"
                           onClick={handleWhatsAppClick}
                           aria-label="Entrar em contato via WhatsApp (abre em nova aba)"
@@ -575,23 +581,23 @@ Telefone: ${formData.phone || "Não informado"}`;
             Precisa de ajuda urgente?
           </h2>
           <p className="text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
-            Nossa equipe está pronta para resolver seu problema com pragas. 
+            Nossa equipe está pronta para resolver seu problema com pragas.
             Entre em contato agora mesmo!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              variant="secondary" 
-              size="lg" 
-              className="font-semibold min-h-[48px]" 
+            <Button
+              variant="secondary"
+              size="lg"
+              className="font-semibold min-h-[48px]"
               asChild
             >
               <a href="tel:+5516974007842" aria-label="Ligar para (16) 97400-7842">
                 (16) 97400-7842
               </a>
             </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
+            <Button
+              variant="outline"
+              size="lg"
               className="font-semibold bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary min-h-[48px]"
               onClick={handleWhatsAppClick}
               aria-label="Entrar em contato via WhatsApp (abre em nova aba)"

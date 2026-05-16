@@ -133,9 +133,17 @@ const faqs = [
   }
 ];
 
+import SEO from "@/components/SEO";
+
 const QuemSomos = () => {
   return (
     <div className="min-h-screen overflow-hidden">
+      <SEO 
+        title="Quem Somos" 
+        description="Conheça a história da Bioforte, líder em controle de pragas com mais de 15 anos de experiência e compromisso com a saúde e o meio ambiente."
+        canonical="/quem-somos"
+      />
+
       {/* Hero Section */}
       <section className="relative py-20 lg:py-32 overflow-hidden">
         <div className="absolute inset-0">

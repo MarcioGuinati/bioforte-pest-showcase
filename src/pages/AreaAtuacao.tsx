@@ -157,9 +157,17 @@ const stats = [
   { icon: Award, number: "15+", label: "Anos" }
 ];
 
+import SEO from "@/components/SEO";
+
 const AreaAtuacao = () => {
   return (
     <div className="min-h-screen overflow-hidden">
+      <SEO 
+        title="Áreas de Atuação" 
+        description="Soluções completas de controle de pragas para residências, comércios, indústrias, hospitais e setor alimentício. Atendimento especializado."
+        canonical="/area-atuacao"
+      />
+
       {/* Hero Section */}
       <section className="relative py-20 lg:py-32 overflow-hidden">
         <div className="absolute inset-0">
