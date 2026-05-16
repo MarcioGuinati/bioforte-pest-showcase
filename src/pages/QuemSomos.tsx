@@ -285,7 +285,7 @@ const QuemSomos = () => {
           {/* Stats Row */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16 max-w-4xl mx-auto">
             {[
-              { value: "15+", label: "Anos de história", icon: Clock },
+              { value: "30+", label: "Anos de história", icon: Clock },
               { value: "5K+", label: "Clientes atendidos", icon: Users },
               { value: "5", label: "Cidades atendidas", icon: MapPin },
               { value: "98%", label: "Satisfação", icon: Heart }

@@ -46,7 +46,7 @@ const services = [
 ];
 
 const stats = [
-  { number: "15+", label: "Anos de Experiência", icon: Award },
+  { number: "30+", label: "Anos de Experiência", icon: Award },
   { number: "5000+", label: "Clientes Atendidos", icon: Users },
   { number: "98%", label: "Satisfação", icon: Star },
   { number: "100%", label: "Garantia comprovada", icon: CheckCircle }

@@ -1,10 +1,10 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { 
-  Home, 
-  Building, 
-  ShoppingCart, 
+import {
+  Home,
+  Building,
+  ShoppingCart,
   Utensils,
   Hotel,
   School,
@@ -38,7 +38,7 @@ const services = [
     ],
     features: [
       "Produtos seguros para pets",
-      "Atendimento personalizado", 
+      "Atendimento personalizado",
       "Garantia estendida",
       "Visitas de manutenção"
     ]
@@ -46,7 +46,7 @@ const services = [
   {
     category: "Comercial",
     icon: ShoppingCart,
-    color: "text-green-500", 
+    color: "text-green-500",
     bgColor: "bg-green-50",
     description: "Soluções para comércios e escritórios",
     services: [
@@ -60,7 +60,7 @@ const services = [
     features: [
       "Horários flexíveis",
       "Certificados sanitários",
-      "Planos corporativos", 
+      "Planos corporativos",
       "Suporte técnico"
     ]
   },
@@ -68,7 +68,7 @@ const services = [
     category: "Industrial",
     icon: Factory,
     color: "text-purple-500",
-    bgColor: "bg-purple-50", 
+    bgColor: "bg-purple-50",
     description: "Controle especializado para indústrias",
     services: [
       "Programa MIP",
@@ -154,7 +154,7 @@ const stats = [
   { icon: Shield, number: "100%", label: "Segurança" },
   { icon: Users, number: "5000+", label: "Clientes" },
   { icon: CheckCircle, number: "100%", label: "Garantia comprovada" },
-  { icon: Award, number: "15+", label: "Anos" }
+  { icon: Award, number: "30+", label: "Anos" }
 ];
 
 import SEO from "@/components/SEO";
@@ -162,8 +162,8 @@ import SEO from "@/components/SEO";
 const AreaAtuacao = () => {
   return (
     <div className="min-h-screen overflow-hidden">
-      <SEO 
-        title="Áreas de Atuação" 
+      <SEO
+        title="Áreas de Atuação"
         description="Soluções completas de controle de pragas para residências, comércios, indústrias, hospitais e setor alimentício. Atendimento especializado."
         canonical="/area-atuacao"
       />
@@ -179,9 +179,9 @@ const AreaAtuacao = () => {
           />
           <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/60" />
           <div className="absolute top-20 right-20 w-40 h-40 bg-primary/20 rounded-full blur-3xl animate-float" />
-          <div className="absolute bottom-10 left-20 w-32 h-32 bg-accent/20 rounded-full blur-2xl animate-float" style={{animationDelay: "2s"}} />
+          <div className="absolute bottom-10 left-20 w-32 h-32 bg-accent/20 rounded-full blur-2xl animate-float" style={{ animationDelay: "2s" }} />
         </div>
-        
+
         <div className="relative container mx-auto px-4">
           <div className="max-w-3xl">
             <Badge variant="outline" className="mb-6 animate-fade-in hover-glow">
@@ -193,7 +193,7 @@ const AreaAtuacao = () => {
               <span className="text-gradient"> Controle de Pragas</span>
             </h1>
             <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed animate-blur-in">
-              Atendemos todos os segmentos com soluções personalizadas, 
+              Atendemos todos os segmentos com soluções personalizadas,
               garantindo máxima eficiência e segurança para seu ambiente.
             </p>
           </div>
@@ -208,7 +208,7 @@ const AreaAtuacao = () => {
         <div className="container mx-auto px-4 relative">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
-              <div key={index} className="text-center hover-lift group animate-scale-bounce" style={{animationDelay: `${index * 0.1}s`}}>
+              <div key={index} className="text-center hover-lift group animate-scale-bounce" style={{ animationDelay: `${index * 0.1}s` }}>
                 <div className="flex items-center justify-center mb-4">
                   <div className="gradient-animated p-3 rounded-full group-hover:scale-110 transition-transform duration-300">
                     <stat.icon className="h-6 w-6 text-primary-foreground" />
@@ -230,7 +230,7 @@ const AreaAtuacao = () => {
       <section className="py-20 relative overflow-hidden">
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-20 left-20 w-64 h-64 bg-accent rounded-full blur-3xl animate-float" />
-          <div className="absolute bottom-20 right-20 w-48 h-48 bg-primary rounded-full blur-3xl animate-float" style={{animationDelay: "3s"}} />
+          <div className="absolute bottom-20 right-20 w-48 h-48 bg-primary rounded-full blur-3xl animate-float" style={{ animationDelay: "3s" }} />
         </div>
         <div className="container mx-auto px-4 relative">
           <div className="text-center mb-16 animate-fade-in-down">
@@ -239,14 +239,14 @@ const AreaAtuacao = () => {
               Especialistas em <span className="text-gradient">todos os segmentos</span>
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Cada segmento tem suas particularidades. Nossa experiência garante 
+              Cada segmento tem suas particularidades. Nossa experiência garante
               soluções específicas e eficazes para cada necessidade.
             </p>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-8">
             {services.map((service, index) => (
-              <Card key={index} className="glass-strong overflow-hidden hover-lift group animate-scale-bounce" style={{animationDelay: `${index * 0.1}s`}}>
+              <Card key={index} className="glass-strong overflow-hidden hover-lift group animate-scale-bounce" style={{ animationDelay: `${index * 0.1}s` }}>
                 <CardContent className="p-0">
                   <div className="flex">
                     {/* Icon Section */}
@@ -324,7 +324,7 @@ const AreaAtuacao = () => {
                   description: "Avaliação completa do local e identificação das pragas"
                 },
                 {
-                  step: "02", 
+                  step: "02",
                   title: "Plano Personalizado",
                   description: "Desenvolvimento de estratégia específica para seu caso"
                 },
@@ -335,7 +335,7 @@ const AreaAtuacao = () => {
                 },
                 {
                   step: "04",
-                  title: "Monitoramento", 
+                  title: "Monitoramento",
                   description: "Acompanhamento e manutenção preventiva"
                 }
               ].map((process, index) => (
@@ -366,7 +366,7 @@ const AreaAtuacao = () => {
             Precisa de uma solução personalizada?
           </h2>
           <p className="text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
-            Nossa equipe está pronta para desenvolver a melhor estratégia 
+            Nossa equipe está pronta para desenvolver a melhor estratégia
             para seu ambiente específico.
           </p>
           <Link to="/contato">
