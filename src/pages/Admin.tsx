@@ -72,8 +72,8 @@ import {
 } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import logoImage from "@/assets/logo-bioforte.png";
-import logoImageWhite from "@/assets/logo-bioforte-white.png";
+import logoImage from "@/assets/logo-bioforte.webp";
+import logoImageWhite from "@/assets/logo-bioforte-white.webp";
 import { useAdminTheme } from "@/hooks/useAdminTheme";
 import { AnalyticsDashboard } from "@/components/admin/AnalyticsDashboard";
 import { TeamManager } from "@/components/admin/TeamManager";

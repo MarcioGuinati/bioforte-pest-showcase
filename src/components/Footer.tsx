@@ -14,8 +14,8 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTheme } from "next-themes";
-import logoBioforte from "@/assets/logo-bioforte.png";
-import logoBioforteWhite from "@/assets/logo-bioforte-white.png";
+import logoBioforte from "@/assets/logo-bioforte.webp";
+import logoBioforteWhite from "@/assets/logo-bioforte-white.webp";
 import { cn } from "@/lib/utils";
 
 const Footer = () => {

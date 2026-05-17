@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useState, useEffect, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Building, Store, Award } from "lucide-react";
@@ -57,6 +57,29 @@ const MapSkeleton = () => (
 );
 
 const UnitsMap = () => {
+  const [isMapVisible, setIsMapVisible] = useState(false);
+  const mapContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setIsMapVisible(true);
+          observer.disconnect();
+        }
+      },
+      {
+        rootMargin: "200px",
+      }
+    );
+
+    if (mapContainerRef.current) {
+      observer.observe(mapContainerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section className="py-20 bg-muted/30" aria-labelledby="units-heading">
       <div className="container mx-auto px-4">
@@ -74,12 +97,16 @@ const UnitsMap = () => {
 
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Map */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2" ref={mapContainerRef}>
             <Card className="glass overflow-hidden h-[500px]">
               <CardContent className="p-0 h-full">
-                <Suspense fallback={<MapSkeleton />}>
-                  <LazyMap units={units} typeConfig={typeConfig} />
-                </Suspense>
+                {isMapVisible ? (
+                  <Suspense fallback={<MapSkeleton />}>
+                    <LazyMap units={units} typeConfig={typeConfig} />
+                  </Suspense>
+                ) : (
+                  <MapSkeleton />
+                )}
               </CardContent>
             </Card>
           </div>

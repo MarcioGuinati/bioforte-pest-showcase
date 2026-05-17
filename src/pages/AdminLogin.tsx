@@ -9,8 +9,8 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 import { LogIn, Loader2, Shield, Sun, Moon } from "lucide-react";
-import logoImage from "@/assets/logo-bioforte.png";
-import logoImageWhite from "@/assets/logo-bioforte-white.png";
+import logoImage from "@/assets/logo-bioforte.webp";
+import logoImageWhite from "@/assets/logo-bioforte-white.webp";
 import { useAdminTheme } from "@/hooks/useAdminTheme";
 
 const AdminLogin = () => {

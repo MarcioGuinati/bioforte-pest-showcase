@@ -4,10 +4,10 @@ import { ChevronLeft, ChevronRight, Shield, Users, Award, Clock, ArrowRight } fr
 import { Link } from "react-router-dom";
 
 // Import images as ES6 modules for better bundling
-import slide06 from "@/assets/01.png";
-import slide04 from "@/assets/04.png";
-import slide07 from "@/assets/02.png";
-import companyBuilding from "@/assets/03.png";
+import slide06 from "@/assets/01.webp";
+import slide04 from "@/assets/04.webp";
+import slide07 from "@/assets/02.webp";
+import companyBuilding from "@/assets/03.webp";
 
 const slides = [
   {
@@ -149,7 +149,7 @@ const HeroSlider = memo(() => {
                 }`}
               loading={index === 0 ? "eager" : "lazy"}
               fetchPriority={index === 0 ? "high" : "auto"}
-              decoding={index === 0 ? "sync" : "async"}
+              decoding="async"
             />
           </div>
         ))}
