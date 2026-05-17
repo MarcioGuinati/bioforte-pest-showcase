@@ -97,7 +97,7 @@ const Footer = () => {
 
           {/* Quick Links - 2 columns */}
           <div className="lg:col-span-2">
-            <h4 className="font-bold text-lg mb-8 text-foreground uppercase tracking-widest text-sm">Empresa</h4>
+            <p className="font-bold text-lg mb-8 text-foreground uppercase tracking-widest text-sm">Empresa</p>
             <ul className="space-y-4">
               {companyLinks.map((link) => (
                 <li key={link.name}>
@@ -112,7 +112,7 @@ const Footer = () => {
 
           {/* Support Links - 2 columns */}
           <div className="lg:col-span-2">
-            <h4 className="font-bold text-lg mb-8 text-foreground uppercase tracking-widest text-sm">Suporte</h4>
+            <p className="font-bold text-lg mb-8 text-foreground uppercase tracking-widest text-sm">Suporte</p>
             <ul className="space-y-4">
               {supportLinks.map((link) => (
                 <li key={link.name}>
@@ -127,7 +127,7 @@ const Footer = () => {
 
           {/* Contact Details - 4 columns */}
           <div className="lg:col-span-4 space-y-8">
-            <h4 className="font-bold text-lg mb-8 text-foreground uppercase tracking-widest text-sm">Fale Conosco</h4>
+            <p className="font-bold text-lg mb-8 text-foreground uppercase tracking-widest text-sm">Fale Conosco</p>
             <div className="grid gap-6">
               <a href="tel:+551637230808" className="group flex items-start gap-4">
                 <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all">
@@ -160,11 +160,13 @@ const Footer = () => {
               </div>
             </div>
 
-            <a href="https://wa.me/551637230808?text=Olá! Gostaria de solicitar um orçamento para controle de pragas." target="_blank" rel="noopener noreferrer" className="block pt-4">
-              <Button variant="hero" className="w-full h-14 text-base font-bold shadow-xl shadow-primary/20 hover:shadow-primary/40 transition-all hover-shine">
-                Orçamento Imediato
-              </Button>
-            </a>
+            <div className="pt-6">
+              <a href="https://wa.me/551637230808?text=Olá! Gostaria de solicitar um orçamento para controle de pragas." target="_blank" rel="noopener noreferrer" className="block min-h-[48px]">
+                <Button variant="hero" className="w-full h-14 text-base font-bold shadow-xl shadow-primary/20 hover:shadow-primary/40 transition-all hover-shine">
+                  Orçamento Imediato
+                </Button>
+              </a>
+            </div>
           </div>
         </div>
 

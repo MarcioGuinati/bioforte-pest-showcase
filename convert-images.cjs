@@ -5,29 +5,40 @@ const fs = require('fs');
 const assetsDir = path.join(__dirname, 'src', 'assets');
 
 const imagesToConvert = [
-  { name: '01.png', output: '01.webp', quality: 80 },
-  { name: '02.png', output: '02.webp', quality: 80 },
-  { name: '03.png', output: '03.webp', quality: 80 },
-  { name: '04.png', output: '04.webp', quality: 75 }, // Quality 75 for the huge 15.7MB image to optimize heavily
+  { name: '01.png', output: '01.webp', quality: 70 },
+  { name: '02.png', output: '02.webp', quality: 70 },
+  { name: '03.png', output: '03.webp', quality: 70 },
+  { name: '04.png', output: '04.webp', quality: 65 }, // High compression for the largest background slide
 ];
 
 const logosToConvert = [
-  { name: 'logo-bioforte.png', output: 'logo-bioforte.webp', width: 280, height: 70 },
-  { name: 'logo-bioforte-white.png', output: 'logo-bioforte-white.webp', width: 280, height: 70 }
+  { name: 'logo-bioforte.png', output: 'logo-bioforte.webp', width: 200, height: 50 },
+  { name: 'logo-bioforte-white.png', output: 'logo-bioforte-white.webp', width: 200, height: 50 }
 ];
 
 async function convertImages() {
   console.log('--- Iniciando conversão de imagens para WebP ---');
   
-  // Convert slides/banners
+  // Convert slides/banners (highly optimized landscape resolution)
   for (const img of imagesToConvert) {
     const inputPath = path.join(assetsDir, img.name);
     const outputPath = path.join(assetsDir, img.output);
     
     if (fs.existsSync(inputPath)) {
-      console.log(`Convertendo ${img.name}...`);
+      console.log(`Convertendo e redimensionando ${img.name}...`);
       try {
+        // Delete old output file if exists to prevent lock errors
+        if (fs.existsSync(outputPath)) {
+          fs.unlinkSync(outputPath);
+        }
+
         await sharp(inputPath)
+          .resize({
+            width: 1200,
+            height: 675,
+            fit: 'cover',
+            position: 'center'
+          })
           .webp({ quality: img.quality })
           .toFile(outputPath);
         
@@ -52,6 +63,10 @@ async function convertImages() {
     if (fs.existsSync(inputPath)) {
       console.log(`Redimensionando e convertendo ${logo.name}...`);
       try {
+        if (fs.existsSync(outputPath)) {
+          fs.unlinkSync(outputPath);
+        }
+
         await sharp(inputPath)
           .resize({
             width: logo.width,
@@ -59,7 +74,7 @@ async function convertImages() {
             fit: 'contain',
             background: { r: 0, g: 0, b: 0, alpha: 0 } // transparent background
           })
-          .webp({ quality: 85 })
+          .webp({ quality: 75 })
           .toFile(outputPath);
         
         const oldSize = fs.statSync(inputPath).size / 1024;

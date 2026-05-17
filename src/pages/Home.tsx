@@ -330,7 +330,7 @@ const Home = () => {
               O que nossos
               <span className="text-gradient"> clientes dizem</span>
             </h2>
-            <div className="flex items-center justify-center gap-2 mb-2" aria-label="Avaliação média: 4.9 de 5 estrelas com 127 avaliações">
+            <div className="flex items-center justify-center gap-2 mb-2" role="img" aria-label="Avaliação média: 4.9 de 5 estrelas com 127 avaliações">
               <div className="flex" aria-hidden="true">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="h-5 w-5 text-warning fill-current" />
@@ -357,7 +357,7 @@ const Home = () => {
                       <p className="text-xs text-muted-foreground">{review.date}</p>
                     </div>
                   </div>
-                  <div className="flex mb-3" aria-label={`Avaliação: ${review.rating} de 5 estrelas`}>
+                  <div className="flex mb-3" role="img" aria-label={`Avaliação: ${review.rating} de 5 estrelas`}>
                     {[...Array(review.rating)].map((_, i) => (
                       <Star key={i} className="h-4 w-4 text-warning fill-current" aria-hidden="true" />
                     ))}

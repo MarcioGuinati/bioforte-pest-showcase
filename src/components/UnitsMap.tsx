@@ -24,19 +24,19 @@ const typeConfig = {
     label: "Unidade Própria",
     icon: Building,
     bgColor: "bg-primary text-primary-foreground",
-    badgeColor: "bg-primary/20 text-primary border-primary/30",
+    badgeColor: "bg-primary text-primary-foreground border-transparent",
   },
   franchise: {
     label: "Franquia",
     icon: Store,
-    bgColor: "bg-accent text-accent-foreground",
-    badgeColor: "bg-accent/20 text-accent-foreground border-accent/30",
+    bgColor: "bg-emerald-700 text-white",
+    badgeColor: "bg-emerald-700 text-white border-transparent",
   },
   licensed: {
     label: "Licenciado",
     icon: Award,
-    bgColor: "bg-secondary text-secondary-foreground",
-    badgeColor: "bg-secondary text-secondary-foreground border-secondary",
+    bgColor: "bg-slate-700 text-white",
+    badgeColor: "bg-slate-700 text-white border-transparent",
   },
 };
 
