@@ -182,7 +182,7 @@ const BlogPostPage = () => {
             A Bioforte está pronta para ajudar você a manter seu ambiente livre de pragas.
           </p>
           <Button asChild variant="hero">
-            <Link to="/contato">Solicitar Orçamento</Link>
+            <a href="https://wa.me/551637230808?text=Olá! Gostaria de solicitar um orçamento para controle de pragas." target="_blank" rel="noopener noreferrer">Solicitar Orçamento</a>
           </Button>
         </div>
       </section>

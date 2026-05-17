@@ -43,9 +43,9 @@ const benefits = [
     description: "Assistência médica e odontológica para você e família"
   },
   {
-    icon: Clock,
-    title: "Horário Flexível",
-    description: "Flexibilidade para equilibrar vida pessoal e profissional"
+    icon: Award,
+    title: "Lazer",
+    description: "Wellhub, SESC e clube"
   },
   {
     icon: TrendingUp,
@@ -237,7 +237,7 @@ const TrabalheConosco = () => {
               <Card className="glass">
                 <CardContent className="p-12 text-center">
                   <p className="text-muted-foreground">
-                    No momento não há vagas disponíveis. Envie sua candidatura mesmo assim!
+                    No momento não há vagas disponíveis. Venha trabalhar conosco mesmo assim!
                   </p>
                 </CardContent>
               </Card>
@@ -314,7 +314,7 @@ const TrabalheConosco = () => {
             <div className="text-center mb-16">
               <Badge variant="outline" className="mb-4">Candidatura</Badge>
               <h2 className="text-3xl lg:text-4xl font-bold mb-6">
-                Envie sua <span className="text-primary">candidatura</span>
+                Venha trabalhar <span className="text-primary">conosco</span>
               </h2>
               <p className="text-lg text-muted-foreground">
                 Não encontrou uma vaga específica? Envie seu currículo mesmo assim. 

@@ -289,10 +289,12 @@ const AreaAtuacao = () => {
                         </div>
                       </div>
 
-                      <Button variant="hero" size="sm" className="w-full hover-shine pulse-ring">
-                        Solicitar Orçamento
-                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                      </Button>
+                      <a href="https://wa.me/551637230808?text=Olá! Gostaria de solicitar um orçamento para controle de pragas." target="_blank" rel="noopener noreferrer" className="block w-full">
+                        <Button variant="hero" size="sm" className="w-full hover-shine pulse-ring">
+                          Solicitar Orçamento
+                          <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                        </Button>
+                      </a>
                     </div>
                   </div>
                 </CardContent>
@@ -369,11 +371,11 @@ const AreaAtuacao = () => {
             Nossa equipe está pronta para desenvolver a melhor estratégia
             para seu ambiente específico.
           </p>
-          <Link to="/contato">
+          <a href="https://wa.me/551637230808?text=Olá! Gostaria de solicitar um orçamento para controle de pragas." target="_blank" rel="noopener noreferrer">
             <Button variant="secondary" size="lg" className="font-semibold">
               Solicitar Orçamento Personalizado
             </Button>
-          </Link>
+          </a>
         </div>
       </section>
     </div>

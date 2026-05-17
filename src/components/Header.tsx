@@ -183,11 +183,11 @@ const Header = () => {
           {/* CTA & Theme Toggle (Small devices) */}
           <div className="flex items-center gap-4">
             <div className="hidden lg:block">
-              <Link to="/contato">
+              <a href="https://wa.me/551637230808?text=Olá! Gostaria de solicitar um orçamento para controle de pragas." target="_blank" rel="noopener noreferrer">
                 <Button variant="hero" className="font-semibold px-6 hover-shine">
                   Orçamento Gratuito
                 </Button>
-              </Link>
+              </a>
             </div>
 
             <div className="lg:hidden">
@@ -230,9 +230,9 @@ const Header = () => {
               <MobileNavLink to="/contato" onClick={() => setIsMenuOpen(false)}>Contato</MobileNavLink>
 
               <div className="pt-4 px-4">
-                <Link to="/contato" onClick={() => setIsMenuOpen(false)}>
+                <a href="https://wa.me/551637230808?text=Olá! Gostaria de solicitar um orçamento para controle de pragas." target="_blank" rel="noopener noreferrer" onClick={() => setIsMenuOpen(false)}>
                   <Button variant="hero" className="w-full">Solicitar Orçamento</Button>
-                </Link>
+                </a>
               </div>
             </nav>
           </div>

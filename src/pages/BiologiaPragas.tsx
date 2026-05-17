@@ -357,7 +357,7 @@ const BiologiaPragas = () => {
 
                   {/* CTA */}
                   <div className="p-6 pt-4 border-t border-border/50 mt-auto">
-                    <Link to="/contato" className="block">
+                    <a href="https://wa.me/551637230808?text=Olá! Gostaria de solicitar um tratamento para controle de pragas." target="_blank" rel="noopener noreferrer" className="block">
                       <Button 
                         variant="hero" 
                         size="sm" 
@@ -366,7 +366,7 @@ const BiologiaPragas = () => {
                         Solicitar Tratamento
                         <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
                       </Button>
-                    </Link>
+                    </a>
                   </div>
                 </CardContent>
               </Card>
@@ -434,11 +434,11 @@ const BiologiaPragas = () => {
             com eficiência e segurança.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/contato">
+            <a href="https://wa.me/551637230808?text=Olá! Gostaria de solicitar um orçamento para controle de pragas." target="_blank" rel="noopener noreferrer">
               <Button variant="secondary" size="lg" className="font-semibold">
                 Solicitar Orçamento Gratuito
               </Button>
-            </Link>
+            </a>
             <Link to="/area-atuacao">
               <Button 
                 variant="outline" 

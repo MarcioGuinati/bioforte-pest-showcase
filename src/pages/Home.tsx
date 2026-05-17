@@ -38,10 +38,10 @@ const services = [
     features: ["Ratos", "Camundongos", "Controle preventivo", "Monitoramento"]
   },
   {
-    title: "Controle Ecológico",
+    title: "Afastamento de Pombos",
     description: "Métodos sustentáveis e seguros",
     icon: Leaf,
-    features: ["Produtos ecológicos", "Baixo impacto", "Pet friendly", "Sustentável"]
+    features: ["Sustentável", "Não letal e não invasivo", "Resultado Garantido", "Baixa manutenção"]
   }
 ];
 
@@ -411,7 +411,7 @@ const Home = () => {
               Entre em contato conosco e receba um orçamento personalizado.
             </p>
             <div className="flex justify-center">
-              <a href="https://wa.me/551637230808" target="_blank" rel="noopener noreferrer">
+              <a href="https://wa.me/551637230808?text=Olá! Gostaria de solicitar um orçamento para controle de pragas." target="_blank" rel="noopener noreferrer">
                 <Button variant="secondary" size="lg" className="font-semibold pulse-ring group">
                   Solicitar Orçamento Grátis
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />

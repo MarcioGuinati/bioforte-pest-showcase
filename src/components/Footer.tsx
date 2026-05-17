@@ -157,7 +157,7 @@ const Footer = () => {
               </div>
             </div>
 
-            <a href="https://wa.me/551637230808" target="_blank" rel="noopener noreferrer" className="block pt-4">
+            <a href="https://wa.me/551637230808?text=Olá! Gostaria de solicitar um orçamento para controle de pragas." target="_blank" rel="noopener noreferrer" className="block pt-4">
               <Button variant="hero" className="w-full h-14 text-base font-bold shadow-xl shadow-primary/20 hover:shadow-primary/40 transition-all hover-shine">
                 Orçamento Imediato
               </Button>

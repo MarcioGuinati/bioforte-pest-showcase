@@ -17,7 +17,7 @@ const slides = [
     description: "Mais de 30 anos de experiência oferecendo soluções eficazes e seguras para controle de pragas urbanas.",
     image: slide06,
     cta: "Solicitar Orçamento",
-    ctaLink: "/contato"
+    ctaLink: "https://wa.me/551637230808?text=Olá! Gostaria de solicitar um orçamento para controle de pragas."
   },
   {
     id: 2,
@@ -171,12 +171,21 @@ const HeroSlider = memo(() => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
-            <Link to={slides[currentSlide].ctaLink}>
-              <Button variant="hero" size="lg" className="font-semibold pulse-ring group">
-                {slides[currentSlide].cta}
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
-              </Button>
-            </Link>
+            {slides[currentSlide].ctaLink.startsWith('http') ? (
+              <a href={slides[currentSlide].ctaLink} target="_blank" rel="noopener noreferrer">
+                <Button variant="hero" size="lg" className="font-semibold pulse-ring group">
+                  {slides[currentSlide].cta}
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                </Button>
+              </a>
+            ) : (
+              <Link to={slides[currentSlide].ctaLink}>
+                <Button variant="hero" size="lg" className="font-semibold pulse-ring group">
+                  {slides[currentSlide].cta}
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                </Button>
+              </Link>
+            )}
             <Button variant="outline" size="lg" className="font-semibold hover-glow" asChild>
               <a href="tel:+551637230808" aria-label="Ligar para (16) 3723-0808">
                 (16) 3723-0808
