@@ -82,6 +82,8 @@ const Header = () => {
             <img
               src={resolvedTheme === 'dark' ? logoBioforteWhite : logoBioforte}
               alt="Bioforte Controle de Pragas"
+              width="176"
+              height="44"
               className={cn(
                 "h-auto transition-all duration-300",
                 scrolled ? "w-32 lg:w-36" : "w-40 lg:w-44"
@@ -199,6 +201,7 @@ const Header = () => {
               className="lg:hidden p-2 text-foreground hover:bg-muted rounded-md transition-colors"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-expanded={isMenuOpen}
+              aria-label={isMenuOpen ? "Fechar menu principal" : "Abrir menu principal"}
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>

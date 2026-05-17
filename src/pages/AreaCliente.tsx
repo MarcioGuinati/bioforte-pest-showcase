@@ -12,8 +12,11 @@ const AreaCliente = () => {
           <img
             src={heroImage}
             alt="Área do Cliente"
+            width="1920"
+            height="1080"
+            fetchPriority="high"
             className="w-full h-full object-cover"
-            loading="lazy"
+            loading="eager"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/60" />
         </div>

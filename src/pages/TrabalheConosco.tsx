@@ -162,8 +162,10 @@ const TrabalheConosco = () => {
           <img
             src={heroImage}
             alt="Trabalhe Conosco"
+            width="1920"
+            height="1080"
+            fetchPriority="high"
             className="w-full h-full object-cover"
-            loading="lazy"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/60" />
         </div>

@@ -78,12 +78,13 @@ const NossoTime = () => {
         <div className="absolute inset-0">
           <img
             src={heroImage}
-            alt=""
-            width={1920}
-            height={1080}
+            alt="Nosso Time"
+            width="1920"
+            height="1080"
             className="w-full h-full object-cover"
-            loading="lazy"
-            decoding="async"
+            loading="eager"
+            fetchPriority="high"
+            decoding="sync"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/60" />
         </div>

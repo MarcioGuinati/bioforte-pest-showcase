@@ -161,6 +161,10 @@ const BlogPostPage = () => {
             <img
               src={post.cover_image_url}
               alt={post.title}
+              width="896"
+              height="384"
+              loading="eager"
+              fetchPriority="high"
               className="w-full h-64 lg:h-96 object-cover"
             />
           </div>

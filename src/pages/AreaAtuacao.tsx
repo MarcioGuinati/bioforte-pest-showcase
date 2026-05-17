@@ -174,8 +174,10 @@ const AreaAtuacao = () => {
           <img
             src={heroImage}
             alt="Área de Atuação"
+            width="1920"
+            height="1080"
+            fetchPriority="high"
             className="w-full h-full object-cover"
-            loading="eager"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/60" />
           <div className="absolute top-20 right-20 w-40 h-40 bg-primary/20 rounded-full blur-3xl animate-float" />

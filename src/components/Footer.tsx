@@ -56,6 +56,9 @@ const Footer = () => {
               <img
                 src={resolvedTheme === 'dark' ? logoBioforteWhite : logoBioforte}
                 alt="Bioforte Controle de Pragas"
+                width="224"
+                height="56"
+                loading="lazy"
                 className="h-14 w-auto object-contain"
               />
             </Link>
