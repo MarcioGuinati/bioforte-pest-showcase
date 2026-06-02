@@ -6,7 +6,7 @@ import {
   AlertTriangle, Shield, Microscope, Bug, Home, Zap,
   CheckCircle, ArrowRight, Phone, Clock, MapPin, ThumbsUp
 } from "lucide-react";
-import heroImage from "@/assets/baratas-hero.png";
+import heroImage from "@/assets/biology-hero.jpeg";
 import SEO from "@/components/SEO";
 
 const risks = [
