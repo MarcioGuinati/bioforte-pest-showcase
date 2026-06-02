@@ -24,7 +24,6 @@ const Footer = () => {
 
   const companyLinks = [
     { name: "Quem Somos", path: "/quem-somos" },
-    { name: "Nosso Time", path: "/nosso-time" },
     { name: "Área de Atuação", path: "/area-atuacao" },
     { name: "Trabalhe Conosco", path: "/trabalhe-conosco" },
   ];
@@ -176,7 +175,10 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-muted-foreground">
           <div className="text-center md:text-left space-y-1">
             <p>© {currentYear} Bioforte Controle de Pragas. Todos os direitos reservados.</p>
-            <p className="text-xs opacity-70 tracking-wide">CNPJ: 18.265.906/0001-01 | Responsável Técnico CRBio: 130.421/01-D</p>
+            <p className="text-xs opacity-70 tracking-wide">
+              Licença na Vigilância Sanitária &bull; N° CEVS: 35430218-812-000018-1-3 &bull; N° CEVS: 352620004-812-000015-1-1
+            </p>
+            <p className="text-xs opacity-70 tracking-wide">Responsável Técnico CRBio: 130.421/01-D</p>
           </div>
           <div className="flex gap-8">
             <Link to="/politica-privacidade" className="hover:text-primary transition-colors">Privacidade</Link>

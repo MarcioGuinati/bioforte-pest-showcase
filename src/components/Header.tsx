@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Phone, Mail, ChevronDown } from "lucide-react";
+import { Menu, X, Phone, ChevronDown } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import logoBioforte from "@/assets/logo-bioforte.webp";
 import logoBioforteWhite from "@/assets/logo-bioforte-white.webp";
@@ -33,7 +33,6 @@ const Header = () => {
 
   const companyItems = [
     { name: "Quem Somos", path: "/quem-somos", desc: "Nossa história e valores" },
-    { name: "Nosso Time", path: "/nosso-time", desc: "Especialistas qualificados" },
     { name: "Trabalhe Conosco", path: "/trabalhe-conosco", desc: "Faça parte da Bioforte" },
   ];
 
@@ -54,17 +53,15 @@ const Header = () => {
         {!scrolled && (
           <div className="flex items-center justify-between py-2 text-xs text-muted-foreground border-b border-border/10 mb-2 animate-fade-in">
             <div className="flex items-center gap-6">
-              <a href="mailto:comercial@bioforte.com.br" className="flex items-center gap-2 hover:text-primary transition-colors group">
-                <Mail className="h-3.5 w-3.5 group-hover:scale-110 transition-transform" />
-                comercial@bioforte.com.br
-              </a>
               <a href="tel:+551637230808" className="flex items-center gap-2 hover:text-primary transition-colors group">
                 <Phone className="h-3.5 w-3.5 group-hover:scale-110 transition-transform" />
                 (16) 3723-0808
               </a>
             </div>
             <div className="hidden md:flex items-center gap-4">
-              <span>CNPJ: 18.265.906/0001-01</span>
+              <span title="Licença na Vigilância Sanitária">CEVS: 35430218-812-000018-1-3</span>
+              <div className="h-4 w-px bg-border/50" />
+              <span title="Licença na Vigilância Sanitária">CEVS: 352620004-812-000015-1-1</span>
               <div className="h-4 w-px bg-border/50" />
               <ThemeToggle />
             </div>

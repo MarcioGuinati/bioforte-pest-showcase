@@ -1,4 +1,6 @@
 import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom";
+import { useEffect, useRef } from "react";
 
 // Custom SVG icons for pests
 const ScorpionIcon = ({ className }: { className?: string }) => (
@@ -91,52 +93,121 @@ const MiteIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
+const RatIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 64 64" className={className} fill="currentColor">
+    <ellipse cx="36" cy="38" rx="18" ry="14"/>
+    <circle cx="20" cy="28" r="10"/>
+    <ellipse cx="46" cy="20" rx="6" ry="10" transform="rotate(20 46 20)"/>
+    <ellipse cx="30" cy="20" rx="5" ry="9" transform="rotate(-15 30 20)"/>
+    <circle cx="16" cy="26" r="2" fill="white"/>
+    <path d="M10 34c-8 2-8 8 0 8" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
+    <path d="M54 38c6 4 8 10 4 14" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round"/>
+    <path d="M18 50c-2 6-4 10-2 12M26 52c0 6-2 10 0 12" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
+  </svg>
+);
+
 const pests = [
-  { name: "Escorpião", icon: ScorpionIcon },
-  { name: "Formiga", icon: AntIcon },
-  { name: "Barata", icon: CockroachIcon },
-  { name: "Pombo", icon: PigeonIcon },
-  { name: "Mosquito", icon: MosquitoIcon },
-  { name: "Aranha", icon: SpiderIcon },
-  { name: "Cupim", icon: TermiteIcon },
-  { name: "Carrapato", icon: TickIcon },
-  { name: "Piolho (de pássaros)", icon: MiteIcon },
+  { name: "Escorpião", icon: ScorpionIcon, path: "/biologia-pragas" },
+  { name: "Formiga", icon: AntIcon, path: "/biologia-pragas" },
+  { name: "Barata", icon: CockroachIcon, path: "/pragas/baratas" },
+  { name: "Rato", icon: RatIcon, path: "/biologia-pragas" },
+  { name: "Pombo", icon: PigeonIcon, path: "/biologia-pragas" },
+  { name: "Mosquito", icon: MosquitoIcon, path: "/biologia-pragas" },
+  { name: "Aranha", icon: SpiderIcon, path: "/biologia-pragas" },
+  { name: "Cupim", icon: TermiteIcon, path: "/biologia-pragas" },
+  { name: "Carrapato", icon: TickIcon, path: "/biologia-pragas" },
+  { name: "Piolho de pássaros", icon: MiteIcon, path: "/biologia-pragas" },
 ];
 
 const PestsSection = () => {
+  const trackRef = useRef<HTMLUListElement>(null);
+
+  // Auto-scroll carousel
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    let animationId: number;
+    let startTime: number | null = null;
+    const speed = 0.15; // px per ms
+
+    const step = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const totalWidth = track.scrollWidth / 2; // duplicated list
+      const offset = (elapsed * speed) % totalWidth;
+      track.style.transform = `translateX(-${offset}px)`;
+      animationId = requestAnimationFrame(step);
+    };
+
+    animationId = requestAnimationFrame(step);
+
+    // Pause on hover
+    const pause = () => cancelAnimationFrame(animationId);
+    const resume = () => { startTime = null; animationId = requestAnimationFrame(step); };
+    track.addEventListener("mouseenter", pause);
+    track.addEventListener("mouseleave", resume);
+
+    return () => {
+      cancelAnimationFrame(animationId);
+      track.removeEventListener("mouseenter", pause);
+      track.removeEventListener("mouseleave", resume);
+    };
+  }, []);
+
+  // Duplicate list for seamless loop
+  const allPests = [...pests, ...pests];
+
   return (
     <section className="py-16 bg-muted/50 dark:bg-background relative overflow-hidden" aria-labelledby="pests-heading">
       {/* Background decoration */}
-      <div className="absolute inset-0 opacity-5">
+      <div className="absolute inset-0 opacity-5" aria-hidden="true">
         <div className="absolute top-0 left-1/4 w-32 h-32 bg-primary rounded-full blur-3xl" />
         <div className="absolute bottom-0 right-1/4 w-24 h-24 bg-accent rounded-full blur-3xl" />
       </div>
-      
+
       <div className="container mx-auto px-4 relative">
         <div className="text-center mb-10">
           <Badge variant="outline" className="mb-3">Principais Pragas</Badge>
           <h2 className="text-2xl lg:text-3xl font-bold" id="pests-heading">
-            Combatemos as pragas 
+            Combatemos as pragas
             <span className="text-gradient"> mais comuns</span>
           </h2>
         </div>
+      </div>
 
-        <ul 
-          className="flex flex-wrap justify-center gap-6 lg:gap-10 list-none p-0 m-0"
+      {/* Carousel wrapper — full bleed with fade edges */}
+      <div className="relative overflow-hidden">
+        {/* Left fade */}
+        <div className="absolute left-0 top-0 h-full w-20 bg-gradient-to-r from-muted/50 dark:from-background to-transparent z-10 pointer-events-none" aria-hidden="true" />
+        {/* Right fade */}
+        <div className="absolute right-0 top-0 h-full w-20 bg-gradient-to-l from-muted/50 dark:from-background to-transparent z-10 pointer-events-none" aria-hidden="true" />
+
+        <ul
+          ref={trackRef}
+          className="flex gap-6 lg:gap-10 list-none p-0 m-0 py-4 will-change-transform"
           aria-label="Pragas que combatemos"
+          style={{ width: "max-content" }}
         >
-          {pests.map((pest, index) => (
+          {allPests.map((pest, index) => (
             <li
-              key={pest.name}
-              className="flex flex-col items-center group cursor-pointer animate-scale-bounce"
-              style={{ animationDelay: `${index * 0.05}s` }}
+              key={`${pest.name}-${index}`}
+              className="flex-shrink-0"
+              aria-hidden={index >= pests.length}
             >
-              <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center mb-3 group-hover:bg-primary/20 group-hover:border-primary/40 group-hover:scale-110 transition-all duration-300 shadow-md">
-                <pest.icon className="w-10 h-10 lg:w-12 lg:h-12 text-primary group-hover:scale-110 transition-transform duration-300" />
-              </div>
-              <span className="text-sm lg:text-base font-semibold text-foreground group-hover:text-primary transition-colors">
-                {pest.name}
-              </span>
+              <Link
+                to={pest.path}
+                className="flex flex-col items-center group cursor-pointer"
+                tabIndex={index >= pests.length ? -1 : 0}
+                aria-label={`Ver informações sobre ${pest.name}`}
+              >
+                <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center mb-3 group-hover:bg-primary/20 group-hover:border-primary/40 group-hover:scale-110 transition-all duration-300 shadow-md">
+                  <pest.icon className="w-10 h-10 lg:w-12 lg:h-12 text-primary group-hover:scale-110 transition-transform duration-300" />
+                </div>
+                <span className="text-sm lg:text-base font-semibold text-foreground group-hover:text-primary transition-colors">
+                  {pest.name}
+                </span>
+              </Link>
             </li>
           ))}
         </ul>

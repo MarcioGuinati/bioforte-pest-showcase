@@ -157,9 +157,32 @@ const stats = [
   { icon: Award, number: "30+", label: "Anos" }
 ];
 
+import { useState, useEffect } from "react";
+import { getClientesCount } from "@/services/clientesService";
 import SEO from "@/components/SEO";
 
 const AreaAtuacao = () => {
+  const [clientesCount, setClientesCount] = useState("5000+");
+
+  useEffect(() => {
+    let active = true;
+    getClientesCount().then((count) => {
+      if (active && count !== null) {
+        setClientesCount(`${count}+`);
+      }
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const dynamicStats = stats.map(stat => {
+    if (stat.label === "Clientes") {
+      return { ...stat, number: clientesCount };
+    }
+    return stat;
+  });
+
   return (
     <div className="min-h-screen overflow-hidden">
       <SEO
@@ -209,7 +232,7 @@ const AreaAtuacao = () => {
         </div>
         <div className="container mx-auto px-4 relative">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
+            {dynamicStats.map((stat, index) => (
               <div key={index} className="text-center hover-lift group animate-scale-bounce" style={{ animationDelay: `${index * 0.1}s` }}>
                 <div className="flex items-center justify-center mb-4">
                   <div className="gradient-animated p-3 rounded-full group-hover:scale-110 transition-transform duration-300">

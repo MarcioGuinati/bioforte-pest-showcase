@@ -1,9 +1,9 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { 
-  Bug, 
-  Shield, 
+import {
+  Bug,
+  Shield,
   AlertTriangle,
   Eye,
   Zap,
@@ -16,7 +16,7 @@ import {
   Sparkles
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import pestBiology from "@/assets/biologia-pragas.png";
+import pestBiology from "@/assets/biology-hero.jpeg";
 
 const pests = [
   {
@@ -35,7 +35,7 @@ const pests = [
   },
   {
     name: "Formigas",
-    scientificName: "Formicidae", 
+    scientificName: "Formicidae",
     emoji: "🐜",
     description: "Insetos sociais organizados que formam trilhas e atacam em grupos.",
     habitat: "Jardins, frestas de paredes, sob pisos",
@@ -144,8 +144,8 @@ import SEO from "@/components/SEO";
 const BiologiaPragas = () => {
   return (
     <div className="min-h-screen overflow-hidden">
-      <SEO 
-        title="Biologia das Pragas" 
+      <SEO
+        title="Biologia das Pragas"
         description="Aprenda sobre a biologia, comportamento e riscos das principais pragas urbanas como baratas, ratos, cupins e mosquitos. Controle baseado em ciência."
         canonical="/biologia-pragas"
       />
@@ -159,23 +159,48 @@ const BiologiaPragas = () => {
             width="1920"
             height="1080"
             fetchPriority="high"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/60" />
-          <div className="absolute top-20 right-20 w-40 h-40 bg-primary/20 rounded-full blur-3xl animate-float" />
-          <div className="absolute bottom-20 left-10 w-32 h-32 bg-accent/20 rounded-full blur-2xl animate-float" style={{animationDelay: "2s"}} />
+          {/* Deep dark overlay with green tint */}
+          <div className="absolute inset-0 bg-gradient-to-r from-background/97 via-background/85 to-background/50" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-background/30" />
+          {/* Extra dark overlay on the left to ensure white text is always legible */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent dark:from-black/75 dark:via-black/40 dark:to-transparent" />
+          {/* Green neon tint on far right */}
+          <div className="absolute inset-0 bg-gradient-to-l from-primary/10 via-transparent to-transparent" />
         </div>
-        
+
+        {/* Tech grid overlay */}
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+          <svg className="absolute inset-0 w-full h-full opacity-[0.07]" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="bio-grid" width="50" height="50" patternUnits="userSpaceOnUse">
+                <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#4ade80" strokeWidth="0.6" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#bio-grid)" />
+          </svg>
+          <div className="absolute top-20 right-20 w-40 h-40 bg-primary/20 rounded-full blur-3xl animate-float" />
+          <div className="absolute bottom-20 left-10 w-32 h-32 bg-accent/20 rounded-full blur-2xl animate-float" style={{ animationDelay: "2s" }} />
+          {/* Neon green accent glow on right side */}
+          <div className="absolute top-1/2 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl -translate-y-1/2" />
+        </div>
+
         <div className="relative container mx-auto px-4">
           <div className="max-w-3xl">
-            <Badge variant="outline" className="mb-6 animate-fade-in hover-glow">Conhecimento Científico</Badge>
-            <h1 className="text-4xl lg:text-6xl font-bold mb-6 animate-fade-in-up">
-              Biologia das 
+            <Badge variant="outline" className="mb-6 animate-fade-in hover-glow border-primary/50 text-primary bg-primary/10">
+              <Microscope className="h-3.5 w-3.5 mr-1.5" />
+              Conheça o Inimigo
+            </Badge>
+            <h1 className="text-4xl lg:text-6xl font-bold mb-6 animate-fade-in-up text-white">
+              Biologia das
               <span className="text-gradient"> Pragas Urbanas</span>
             </h1>
-            <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed animate-blur-in">
-              Entenda o comportamento, ciclo de vida e riscos das principais pragas 
-              urbanas. Conhecimento científico aplicado ao controle eficaz.
+            <p className="text-lg lg:text-xl text-white/80 leading-relaxed animate-blur-in">
+              Entender a praga é o primeiro passo para eliminá-la.
+            </p>
+            <p className="text-base text-white/65 leading-relaxed animate-blur-in mt-3 max-w-xl" style={{ animationDelay: "0.2s" }}>
+              Conhecimento científico aplicado ao controle eficaz — biologia, comportamento e ciclo de vida das principais pragas urbanas.
             </p>
           </div>
         </div>
@@ -192,13 +217,13 @@ const BiologiaPragas = () => {
               Por que <span className="text-gradient">conhecer</span> as pragas?
             </h2>
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed animate-blur-in">
-              O controle eficaz de pragas começa com o entendimento profundo de sua biologia, 
-              comportamento e ciclo reprodutivo. Esse conhecimento permite desenvolver 
+              O controle eficaz de pragas começa com o entendimento profundo de sua biologia,
+              comportamento e ciclo reprodutivo. Esse conhecimento permite desenvolver
               estratégias direcionadas e sustentáveis.
             </p>
-            
+
             <div className="grid md:grid-cols-3 gap-8 mt-12">
-               <Card className="glass-strong hover-lift group animate-scale-bounce" style={{animationDelay: "0.1s"}}>
+              <Card className="glass-strong hover-lift group animate-scale-bounce" style={{ animationDelay: "0.1s" }}>
                 <CardContent className="p-6 text-center">
                   <div className="gradient-animated p-3 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform">
                     <Eye className="h-8 w-8 text-primary-foreground" />
@@ -210,7 +235,7 @@ const BiologiaPragas = () => {
                 </CardContent>
               </Card>
 
-               <Card className="glass-strong hover-lift group animate-scale-bounce" style={{animationDelay: "0.2s"}}>
+              <Card className="glass-strong hover-lift group animate-scale-bounce" style={{ animationDelay: "0.2s" }}>
                 <CardContent className="p-6 text-center">
                   <div className="gradient-animated p-3 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform">
                     <Shield className="h-8 w-8 text-primary-foreground" />
@@ -222,7 +247,7 @@ const BiologiaPragas = () => {
                 </CardContent>
               </Card>
 
-              <Card className="glass-strong hover-lift group animate-scale-bounce" style={{animationDelay: "0.3s"}}>
+              <Card className="glass-strong hover-lift group animate-scale-bounce" style={{ animationDelay: "0.3s" }}>
                 <CardContent className="p-6 text-center">
                   <div className="gradient-animated p-3 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform">
                     <Zap className="h-8 w-8 text-primary-foreground" />
@@ -242,7 +267,7 @@ const BiologiaPragas = () => {
       <section className="py-20 relative overflow-hidden">
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-40 right-20 w-64 h-64 bg-accent rounded-full blur-3xl animate-float" />
-          <div className="absolute bottom-40 left-20 w-72 h-72 bg-primary rounded-full blur-3xl animate-float" style={{animationDelay: "2s"}} />
+          <div className="absolute bottom-40 left-20 w-72 h-72 bg-primary rounded-full blur-3xl animate-float" style={{ animationDelay: "2s" }} />
         </div>
         <div className="container mx-auto px-4 relative">
           <div className="text-center mb-16 animate-fade-in-down">
@@ -254,7 +279,7 @@ const BiologiaPragas = () => {
               Guia completo das <span className="text-gradient">pragas urbanas</span>
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Conheça em detalhes cada praga que combatemos. Clique em "Solicitar Tratamento" 
+              Conheça em detalhes cada praga que combatemos. Clique em "Solicitar Tratamento"
               para um atendimento especializado.
             </p>
           </div>
@@ -262,14 +287,14 @@ const BiologiaPragas = () => {
           {/* Modern Grid of Pest Cards */}
           <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
             {pests.map((pest, index) => (
-              <Card 
-                key={index} 
+              <Card
+                key={index}
                 className={`group relative overflow-hidden border-2 ${pest.borderColor} bg-card hover-lift animate-scale-bounce transition-all duration-500 hover:shadow-2xl`}
-                style={{animationDelay: `${index * 0.08}s`}}
+                style={{ animationDelay: `${index * 0.08}s` }}
               >
                 {/* Decorative gradient overlay */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${pest.gradient} opacity-50 group-hover:opacity-80 transition-opacity duration-500`} aria-hidden="true" />
-                
+
                 {/* Floating decorative blob */}
                 <div className={`absolute -top-12 -right-12 w-40 h-40 rounded-full bg-gradient-to-br ${pest.gradient} blur-2xl opacity-60 group-hover:scale-125 transition-transform duration-700`} aria-hidden="true" />
 
@@ -292,8 +317,8 @@ const BiologiaPragas = () => {
                         </p>
                       </div>
                     </div>
-                    <Badge 
-                      variant="outline" 
+                    <Badge
+                      variant="outline"
                       className={`${dangerColors[pest.dangerLevel]} font-bold text-xs whitespace-nowrap`}
                     >
                       <AlertTriangle className="h-3 w-3 mr-1" />
@@ -329,8 +354,8 @@ const BiologiaPragas = () => {
                     </div>
                     <div className="flex flex-wrap gap-1.5">
                       {pest.risks.map((risk, idx) => (
-                        <span 
-                          key={idx} 
+                        <span
+                          key={idx}
                           className="text-xs px-2.5 py-1 rounded-full bg-destructive/10 text-destructive border border-destructive/20 font-medium"
                         >
                           {risk}
@@ -360,9 +385,9 @@ const BiologiaPragas = () => {
                   {/* CTA */}
                   <div className="p-6 pt-4 border-t border-border/50 mt-auto">
                     <a href="https://wa.me/551637230808?text=Olá! Gostaria de solicitar um tratamento para controle de pragas." target="_blank" rel="noopener noreferrer" className="block">
-                      <Button 
-                        variant="hero" 
-                        size="sm" 
+                      <Button
+                        variant="hero"
+                        size="sm"
                         className="w-full font-semibold group/btn hover-shine"
                       >
                         Solicitar Tratamento
@@ -401,7 +426,7 @@ const BiologiaPragas = () => {
               Controle <span className="text-primary">integrado</span> de pragas
             </h2>
             <p className="text-lg text-muted-foreground mb-12">
-              Nossa abordagem combina conhecimento científico, métodos sustentáveis 
+              Nossa abordagem combina conhecimento científico, métodos sustentáveis
               e tecnologia avançada para resultados duradouros.
             </p>
 
@@ -432,7 +457,7 @@ const BiologiaPragas = () => {
             Precisa de controle profissional de pragas?
           </h2>
           <p className="text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
-            Nossa equipe especializada está pronta para resolver seu problema 
+            Nossa equipe especializada está pronta para resolver seu problema
             com eficiência e segurança.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -442,9 +467,9 @@ const BiologiaPragas = () => {
               </Button>
             </a>
             <Link to="/area-atuacao">
-              <Button 
-                variant="outline" 
-                size="lg" 
+              <Button
+                variant="outline"
+                size="lg"
                 className="font-semibold bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
               >
                 Ver Nossos Serviços

@@ -4,11 +4,12 @@ import { db } from "@/lib/firebase";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Calendar, User, ArrowRight } from "lucide-react";
+import { Calendar, User, ArrowRight, Brain, Cpu, BarChart3 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { useBlogAnalytics } from "@/hooks/useBlogAnalytics";
+import blogHero from "@/assets/blog-hero.png";
 
 interface BlogPost {
   id: string;
@@ -56,18 +57,69 @@ const Blog = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary/10 via-background to-accent/10 py-16 lg:py-24">
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-3xl mx-auto">
-            <Badge variant="outline" className="mb-4">Blog</Badge>
-            <h1 className="text-3xl lg:text-5xl font-bold mb-4">
-              Conhecimento sobre{" "}
-              <span className="text-gradient">Controle de Pragas</span>
+      {/* Hero Section — Centro de Inteligência Bioforte */}
+      <section className="relative min-h-[480px] lg:min-h-[560px] flex items-center overflow-hidden">
+        {/* Background image */}
+        <div className="absolute inset-0">
+          <img
+            src={blogHero}
+            alt="Centro de Inteligência Bioforte"
+            width="1920"
+            height="600"
+            fetchPriority="high"
+            className="w-full h-full object-cover object-center"
+            loading="eager"
+          />
+          {/* Dark gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/75 to-background/30" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+        </div>
+
+        {/* Animated tech grid overlay */}
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+          <svg className="absolute inset-0 w-full h-full opacity-10" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="blog-grid" width="60" height="60" patternUnits="userSpaceOnUse">
+                <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#22c55e" strokeWidth="0.5" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#blog-grid)" />
+          </svg>
+          {/* Animated green orbs */}
+          <div className="absolute top-12 right-1/4 w-64 h-64 bg-primary/20 rounded-full blur-3xl animate-float" />
+          <div className="absolute bottom-8 right-10 w-40 h-40 bg-accent/15 rounded-full blur-2xl animate-float" style={{animationDelay: "1.5s"}} />
+        </div>
+
+        {/* Content */}
+        <div className="relative container mx-auto px-4 py-20 lg:py-28">
+          <div className="max-w-3xl">
+            <Badge variant="outline" className="mb-6 border-primary/50 text-primary bg-primary/10 hover-glow animate-fade-in">
+              <Brain className="h-3 w-3 mr-1.5" />
+              Centro de Inteligência Bioforte
+            </Badge>
+            <h1 className="text-4xl lg:text-6xl font-bold mb-6 animate-fade-in-up leading-tight">
+              Blog{" "}
+              <span className="text-gradient">Bioforte</span>
             </h1>
-            <p className="text-lg text-muted-foreground">
-              Artigos informativos sobre prevenção, controle e dicas para manter seu ambiente livre de pragas.
+            <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed animate-blur-in max-w-2xl">
+              Conteúdo técnico, prevenção inteligente e informação que protege.
             </p>
+
+            {/* Stats row */}
+            <div className="flex flex-wrap gap-6 mt-10 animate-fade-in" style={{animationDelay: "0.4s"}}>
+              {[
+                { icon: Brain, label: "Conteúdo técnico" },
+                { icon: Cpu, label: "Inovação científica" },
+                { icon: BarChart3, label: "Dados e análises" }
+              ].map(({ icon: Icon, label }) => (
+                <div key={label} className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <div className="p-1.5 rounded-md bg-primary/10 border border-primary/20">
+                    <Icon className="h-3.5 w-3.5 text-primary" />
+                  </div>
+                  <span>{label}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>

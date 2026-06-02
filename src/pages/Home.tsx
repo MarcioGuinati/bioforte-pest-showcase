@@ -52,48 +52,58 @@ const stats = [
   { number: "100%", label: "Garantia comprovada", icon: CheckCircle }
 ];
 
-const googleReviews = [
-  {
-    name: "Marcos Lima",
-    content: "Excelente atendimento! Profissionais muito capacitados e atenciosos. Resolveram meu problema de cupins rapidamente.",
-    rating: 5,
-    date: "há 2 semanas"
-  },
-  {
-    name: "Fernanda Oliveira",
-    content: "Serviço de qualidade! Equipe pontual e muito profissional. Super recomendo a Bioforte.",
-    rating: 5,
-    date: "há 1 mês"
-  },
-  {
-    name: "Carlos Eduardo",
-    content: "Já é a terceira vez que contrato e sempre fico satisfeito. Atendimento excelente e resultados garantidos!",
-    rating: 5,
-    date: "há 1 mês"
-  },
-  {
-    name: "Patricia Santos",
-    content: "Muito satisfeita com o serviço! Eliminaram as baratas do meu apartamento. Recomendo!",
-    rating: 5,
-    date: "há 2 meses"
-  },
-  {
-    name: "Roberto Silva",
-    content: "Empresa séria e comprometida. Fizeram um ótimo trabalho de desratização na minha empresa.",
-    rating: 5,
-    date: "há 3 meses"
-  },
-  {
-    name: "Ana Paula Costa",
-    content: "Atendimento nota 10! Resolveram o problema de formigas que eu tinha há anos. Muito obrigada!",
-    rating: 5,
-    date: "há 3 meses"
-  }
-];
 
+import { useState, useEffect } from "react";
+import { getClientesCount } from "@/services/clientesService";
+import { getGoogleReviews, GoogleReview } from "@/services/googleReviewsService";
 import SEO from "@/components/SEO";
 
 const Home = () => {
+  const [clientesCount, setClientesCount] = useState("5000+");
+  const [reviews, setReviews] = useState<GoogleReview[]>([]);
+  const [rating, setRating] = useState(4.9);
+  const [reviewCount, setReviewCount] = useState(631);
+
+  useEffect(() => {
+    let active = true;
+    
+    // Busca clientes atendidos no Supabase
+    getClientesCount().then((count) => {
+      if (active && count !== null) {
+        setClientesCount(`${count}+`);
+      }
+    });
+
+    // Busca avaliações públicas do Google Places
+    getGoogleReviews().then((result) => {
+      if (active && result) {
+        if (result.reviews && result.reviews.length > 0) {
+          const validReviews = result.reviews.filter(r => r.content && r.content.trim() !== "");
+          if (validReviews.length > 0) {
+            // Removemos o preenchimento artificial. Vamos usar os 3 primeiros para que o layout de 3 colunas (grid)
+            // fique perfeito e não tenha cards soltos na segunda linha, já que o Google só retorna até 5 avaliações.
+            // (Ou podemos usar as 5, e a segunda linha ficará com 2 cards no canto).
+            // Usaremos até 6 avaliações se houver, mas sem fallback.
+            setReviews(validReviews.slice(0, 6));
+          }
+        }
+        setRating(result.rating);
+        setReviewCount(result.userRatingCount);
+      }
+    });
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const dynamicStats = stats.map(stat => {
+    if (stat.label === "Clientes Atendidos") {
+      return { ...stat, number: clientesCount };
+    }
+    return stat;
+  });
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
@@ -135,7 +145,7 @@ const Home = () => {
     "aggregateRating": {
       "@type": "AggregateRating",
       "ratingValue": "4.9",
-      "reviewCount": "127"
+      "reviewCount": "631"
     }
   };
 
@@ -164,7 +174,7 @@ const Home = () => {
         <h2 id="stats-heading" className="sr-only">Nossos Números</h2>
         <div className="container mx-auto px-4 relative">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
+            {dynamicStats.map((stat, index) => (
               <div key={index} className="text-center group hover-lift animate-scale-bounce" style={{ animationDelay: `${index * 0.1}s` }}>
                 <div className="mb-4 inline-block" aria-hidden="true">
                   <div className="w-20 h-20 lg:w-24 lg:h-24 mx-auto bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white/20 group-hover:border-white/50 group-hover:bg-white/20 transition-all duration-300">
@@ -294,7 +304,7 @@ const Home = () => {
                   <div className="text-center p-4 bg-background rounded-lg shadow-sm">
                     <dt className="sr-only">Clientes atendidos</dt>
                     <Users className="h-8 w-8 text-primary mx-auto mb-2" aria-hidden="true" />
-                    <dd className="font-bold text-2xl text-gradient">5000+</dd>
+                    <dd className="font-bold text-2xl text-gradient">{clientesCount}</dd>
                     <dd className="text-xs text-muted-foreground">Clientes</dd>
                   </div>
                   <div className="text-center p-4 bg-background rounded-lg shadow-sm">
@@ -330,19 +340,19 @@ const Home = () => {
               O que nossos
               <span className="text-gradient"> clientes dizem</span>
             </h2>
-            <div className="flex items-center justify-center gap-2 mb-2" role="img" aria-label="Avaliação média: 4.9 de 5 estrelas com 127 avaliações">
+            <div className="flex items-center justify-center gap-2 mb-2" role="img" aria-label={`Avaliação média: ${rating} de 5 estrelas com ${reviewCount} avaliações`}>
               <div className="flex" aria-hidden="true">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="h-5 w-5 text-warning fill-current" />
+                  <Star key={i} className={`h-5 w-5 ${i < Math.round(rating) ? 'text-warning fill-current' : 'text-muted'}`} />
                 ))}
               </div>
-              <span className="font-bold text-lg">4.9</span>
-              <span className="text-muted-foreground">• 127 avaliações</span>
+              <span className="font-bold text-lg">{rating.toFixed(1)}</span>
+              <span className="text-muted-foreground">• {reviewCount} avaliações</span>
             </div>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {googleReviews.map((review, index) => (
+            {reviews.map((review, index) => (
               <Card key={index} className="glass-strong hover-lift group animate-scale-bounce" style={{ animationDelay: `${index * 0.1}s` }}>
                 <CardContent className="p-6">
                   <div className="flex items-center gap-3 mb-4">

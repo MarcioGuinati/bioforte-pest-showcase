@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
@@ -12,7 +12,7 @@ import Home from "./pages/Home";
 const QuemSomos = lazy(() => import("./pages/QuemSomos"));
 const BiologiaPragas = lazy(() => import("./pages/BiologiaPragas"));
 const AreaAtuacao = lazy(() => import("./pages/AreaAtuacao"));
-const NossoTime = lazy(() => import("./pages/NossoTime"));
+const BaratasPage = lazy(() => import("./pages/pragas/Baratas"));
 const TrabalheConosco = lazy(() => import("./pages/TrabalheConosco"));
 const AreaCliente = lazy(() => import("./pages/AreaCliente"));
 const Contato = lazy(() => import("./pages/Contato"));
@@ -65,7 +65,8 @@ const App = () => (
               <Route path="quem-somos" element={<Suspense fallback={<PageLoader />}><QuemSomos /></Suspense>} />
               <Route path="biologia-pragas" element={<Suspense fallback={<PageLoader />}><BiologiaPragas /></Suspense>} />
               <Route path="area-atuacao" element={<Suspense fallback={<PageLoader />}><AreaAtuacao /></Suspense>} />
-              <Route path="nosso-time" element={<Suspense fallback={<PageLoader />}><NossoTime /></Suspense>} />
+              <Route path="pragas/baratas" element={<Suspense fallback={<PageLoader />}><BaratasPage /></Suspense>} />
+              <Route path="nosso-time" element={<Navigate to="/trabalhe-conosco" replace />} />
               <Route path="trabalhe-conosco" element={<Suspense fallback={<PageLoader />}><TrabalheConosco /></Suspense>} />
               <Route path="area-cliente" element={<Suspense fallback={<PageLoader />}><AreaCliente /></Suspense>} />
               <Route path="contato" element={<Suspense fallback={<PageLoader />}><Contato /></Suspense>} />

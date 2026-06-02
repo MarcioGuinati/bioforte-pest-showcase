@@ -107,8 +107,8 @@ const faqs = [
     icon: DollarSign
   },
   {
-    question: "Quanto tempo demora o atendimento?",
-    answer: "Em média, o serviço leva cerca de 1h30 para imóveis residenciais ou comerciais de até 300m². O tempo pode variar de acordo com o tamanho do espaço e a complexidade do serviço.",
+    question: "Quanto tempo dura o serviço?",
+    answer: "Em média, o serviço leva cerca de 1 hora para imóveis residenciais ou comerciais padrão. O tempo pode variar de acordo com o tamanho do espaço e a complexidade do tratamento.",
     icon: Clock
   },
   {
@@ -127,8 +127,8 @@ const faqs = [
     icon: Shield
   },
   {
-    question: "Atendem em quais regiões?",
-    answer: "Atendemos: Região Metropolitana de Ribeirão Preto, Franca e região e Sul de Minas Gerais.",
+    question: "Onde atendemos?",
+    answer: "Atendemos em todo o território nacional.",
     icon: MapPin
   }
 ];
@@ -456,15 +456,15 @@ const QuemSomos = () => {
         </div>
         <div className="container mx-auto px-4 text-center relative">
           <h2 className="text-3xl lg:text-4xl font-bold text-primary-foreground mb-6 animate-fade-in-up">
-            Conheça nosso time de especialistas
+            Faça parte do nosso time de especialistas
           </h2>
           <p className="text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto animate-blur-in">
             Profissionais altamente qualificados e certificados para atender
             suas necessidades com excelência.
           </p>
-          <Link to="/nosso-time">
+          <Link to="/trabalhe-conosco">
             <Button variant="secondary" size="lg" className="font-semibold pulse-ring hover-shine">
-              Ver Nosso Time
+              Trabalhe Conosco
             </Button>
           </Link>
         </div>

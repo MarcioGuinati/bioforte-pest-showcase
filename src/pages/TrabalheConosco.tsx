@@ -22,9 +22,10 @@ import {
   MapPin,
   Clock,
   DollarSign,
-  Loader2
+  Loader2,
+  Star
 } from "lucide-react";
-import heroImage from "@/assets/equipment.jpg";
+import heroImage from "@/assets/nosso-time.png";
 
 const benefits = [
   {
@@ -69,6 +70,16 @@ interface Job {
   modality?: string;
 }
 
+interface TeamMember {
+  name: string;
+  position: string;
+  area: string;
+  experience: string;
+  certifications: string[];
+  description: string;
+  photo_url?: string;
+}
+
 const TrabalheConosco = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -81,6 +92,8 @@ const TrabalheConosco = () => {
   });
   const [openPositions, setOpenPositions] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
+  const [teamLoading, setTeamLoading] = useState(true);
 
   const { toast } = useToast();
 
@@ -104,6 +117,18 @@ const TrabalheConosco = () => {
     };
 
     fetchJobs();
+
+    const fetchTeam = async () => {
+      try {
+        const snapshot = await getDocs(collection(db, "team"));
+        setTeamMembers(snapshot.docs.map(d => d.data() as TeamMember));
+      } catch (e) {
+        console.error("Erro ao buscar equipe:", e);
+      } finally {
+        setTeamLoading(false);
+      }
+    };
+    fetchTeam();
   }, [toast]);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -445,6 +470,96 @@ const TrabalheConosco = () => {
               </CardContent>
             </Card>
           </div>
+        </div>
+      </section>
+
+      {/* Our Team Section — migrated from Nosso Time */}
+      <section className="py-20 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <Badge variant="outline" className="mb-4">Nossa Equipe</Badge>
+            <h2 className="text-3xl lg:text-4xl font-bold mb-6">
+              Conheça nossos <span className="text-primary">especialistas</span>
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Profissionais com formação sólida e vasta experiência prática no controle integrado de pragas.
+            </p>
+          </div>
+
+          {teamLoading ? (
+            <div className="flex items-center justify-center py-20">
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+          ) : teamMembers.length === 0 ? (
+            <div className="text-center py-12 text-muted-foreground">Em breve apresentaremos nosso time!</div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {teamMembers.map((member, index) => (
+                <Card key={index} className="glass overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                  <CardContent className="p-0">
+                    <div className="gradient-primary p-6 text-center">
+                      {member.photo_url ? (
+                        <img
+                          src={member.photo_url}
+                          alt={`Foto de ${member.name}`}
+                          width={96}
+                          height={96}
+                          loading="lazy"
+                          decoding="async"
+                          className="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-primary-foreground/30 shadow-lg"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).style.display = 'none';
+                            (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
+                          }}
+                        />
+                      ) : null}
+                      <div className={`w-24 h-24 rounded-full mx-auto mb-4 bg-primary-foreground/20 flex items-center justify-center ${member.photo_url ? 'hidden' : ''}`}>
+                        <Users className="h-10 w-10 text-primary-foreground" />
+                      </div>
+                      <h3 className="text-xl font-bold text-primary-foreground">{member.name}</h3>
+                      <p className="text-primary-foreground/80 font-medium">{member.position}</p>
+                    </div>
+                    <div className="p-6 space-y-4">
+                      {member.area && (
+                        <div className="flex items-center gap-3">
+                          <Briefcase className="h-5 w-5 text-primary flex-shrink-0" />
+                          <div>
+                            <p className="text-xs text-muted-foreground">Departamento</p>
+                            <p className="font-medium text-foreground">{member.area}</p>
+                          </div>
+                        </div>
+                      )}
+                      {member.experience && (
+                        <div className="flex items-center gap-3">
+                          <Clock className="h-5 w-5 text-primary flex-shrink-0" />
+                          <div>
+                            <p className="text-xs text-muted-foreground">Experiência</p>
+                            <p className="font-medium text-foreground">{member.experience}</p>
+                          </div>
+                        </div>
+                      )}
+                      {member.description && (
+                        <p className="text-sm text-muted-foreground leading-relaxed">{member.description}</p>
+                      )}
+                      {member.certifications && member.certifications.length > 0 && (
+                        <div>
+                          <p className="text-xs text-muted-foreground mb-2">Certificações</p>
+                          <div className="flex flex-wrap gap-1.5">
+                            {member.certifications.map((cert, idx) => (
+                              <Badge key={idx} variant="secondary" className="text-xs">
+                                <Star className="h-3 w-3 mr-1 text-accent" />
+                                {cert}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
