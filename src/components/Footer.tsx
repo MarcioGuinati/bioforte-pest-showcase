@@ -8,10 +8,10 @@ import {
   Facebook,
   Instagram,
   Youtube,
-  ArrowRight,
-  ShieldCheck,
-  Award
+  ArrowRight
 } from "lucide-react";
+import anosIcon from "@/assets/Icones-site_11-30-anos.svg";
+import apragIcon from "@/assets/Icones-site_21-APRAG.svg";
 import { Link } from "react-router-dom";
 import { useTheme } from "next-themes";
 import logoBioforte from "@/assets/logo-bioforte.webp";
@@ -84,12 +84,12 @@ const Footer = () => {
             {/* Certifications badges */}
             <div className="flex items-center gap-4 pt-4">
               <div className="flex items-center gap-2 text-xs font-semibold text-muted-foreground bg-muted/50 px-3 py-2 rounded-full border border-border/50">
-                <ShieldCheck className="h-4 w-4 text-primary" />
-                ANVISA Certificada
+                <img src={anosIcon} alt="30+ Anos" className="h-5 w-5 object-contain" />
+                30+ Anos
               </div>
               <div className="flex items-center gap-2 text-xs font-semibold text-muted-foreground bg-muted/50 px-3 py-2 rounded-full border border-border/50">
-                <Award className="h-4 w-4 text-primary" />
-                30+ Anos
+                <img src={apragIcon} alt="APRAG" className="h-5 w-5 object-contain" />
+                APRAG
               </div>
             </div>
           </div>

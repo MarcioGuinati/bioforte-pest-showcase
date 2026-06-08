@@ -1,122 +1,26 @@
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
-
-// Custom SVG icons for pests
-const ScorpionIcon = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 64 64" className={className} fill="currentColor">
-    <path d="M52 28c-2 0-4 1-5 3l-3-1c0-3-2-5-5-5h-4v-4c0-2-1-4-3-5l2-4c1-2 0-4-2-5s-4 0-5 2l-3 6c-1 0-2 0-3 1l-3-6c-1-2-3-3-5-2s-3 3-2 5l2 4c-2 1-3 3-3 5v4h-4c-3 0-5 2-5 5l-3 1c-1-2-3-3-5-3-3 0-5 2-5 5s2 5 5 5c2 0 4-1 5-3l3 1v2c0 3 2 5 5 5h4v8c0 2 2 4 4 4h2c2 0 4-2 4-4v-8h4v8c0 2 2 4 4 4h2c2 0 4-2 4-4v-8h4c3 0 5-2 5-5v-2l3-1c1 2 3 3 5 3 3 0 5-2 5-5s-2-5-5-5z"/>
-  </svg>
-);
-
-const AntIcon = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 64 64" className={className} fill="currentColor">
-    <circle cx="20" cy="16" r="6"/>
-    <ellipse cx="32" cy="28" rx="8" ry="6"/>
-    <ellipse cx="32" cy="48" rx="10" ry="8"/>
-    <path d="M12 20l-8 8M52 20l8 8M14 32l-10 4M50 32l10 4M16 48l-8 8M48 48l8 8" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round"/>
-  </svg>
-);
-
-const CockroachIcon = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 64 64" className={className} fill="currentColor">
-    <ellipse cx="32" cy="20" rx="10" ry="8"/>
-    <ellipse cx="32" cy="42" rx="14" ry="16"/>
-    <path d="M18 24l-12-8M46 24l12-8M16 36l-14 2M48 36l14 2M18 52l-10 8M46 52l10 8" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
-    <circle cx="28" cy="18" r="2" fill="white"/>
-    <circle cx="36" cy="18" r="2" fill="white"/>
-  </svg>
-);
-
-const PigeonIcon = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 64 64" className={className} fill="currentColor">
-    <ellipse cx="36" cy="32" rx="16" ry="12"/>
-    <circle cx="18" cy="24" r="10"/>
-    <path d="M12 28l-6 4 8-2" />
-    <path d="M52 32c8 4 8 12 0 16l-8-8z"/>
-    <circle cx="14" cy="22" r="2" fill="white"/>
-    <path d="M24 48l-4 12M32 48l0 12" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round"/>
-  </svg>
-);
-
-const MosquitoIcon = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 64 64" className={className} fill="currentColor">
-    <circle cx="32" cy="14" r="6"/>
-    <ellipse cx="32" cy="32" rx="6" ry="10"/>
-    <ellipse cx="32" cy="50" rx="4" ry="8"/>
-    <path d="M32 8l0-6M26 32l-16-8M38 32l16-8M24 44l-12 12M40 44l12 12M28 20l-8-4M36 20l8-4" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round"/>
-    <path d="M20 28c-6 2-10 8-8 12M44 28c6 2 10 8 8 12" stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.5"/>
-  </svg>
-);
-
-const SpiderIcon = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 64 64" className={className} fill="currentColor">
-    <circle cx="32" cy="24" r="10"/>
-    <ellipse cx="32" cy="44" rx="12" ry="10"/>
-    <path d="M22 20c-8-4-16-2-18 4M42 20c8-4 16-2 18 4M20 28c-10 0-18 4-18 10M44 28c10 0 18 4 18 10M22 44c-8 6-14 12-12 16M42 44c8 6 14 12 12 16M24 52c-4 8-6 12-2 14M40 52c4 8 6 12 2 14" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
-    <circle cx="28" cy="22" r="2" fill="white"/>
-    <circle cx="36" cy="22" r="2" fill="white"/>
-  </svg>
-);
-
-const WaterTankIcon = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 64 64" className={className} fill="currentColor">
-    <rect x="12" y="16" width="40" height="40" rx="4"/>
-    <rect x="8" y="12" width="48" height="8" rx="2"/>
-    <path d="M24 56l-4 6M40 56l4 6" stroke="currentColor" strokeWidth="4" fill="none" strokeLinecap="round"/>
-    <path d="M22 32c2-4 6-6 10-6s8 2 10 6c-2 4-6 6-10 6s-8-2-10-6z" fill="white" opacity="0.3"/>
-    <circle cx="32" cy="38" r="3" fill="white" opacity="0.5"/>
-  </svg>
-);
-
-const TermiteIcon = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 64 64" className={className} fill="currentColor">
-    <ellipse cx="32" cy="16" rx="8" ry="6"/>
-    <rect x="24" y="24" width="16" height="28" rx="8"/>
-    <path d="M24 32l-12-6M40 32l12-6M24 40l-12 0M40 40l12 0M24 48l-10 6M40 48l10 6" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
-  </svg>
-);
-
-const TickIcon = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 64 64" className={className} fill="currentColor">
-    <ellipse cx="32" cy="36" rx="16" ry="18"/>
-    <circle cx="32" cy="16" r="6"/>
-    <path d="M24 28l-8-6M40 28l8-6M20 36l-8 0M44 36l8 0M22 44l-8 6M42 44l8 6M28 52l-6 8M36 52l6 8" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
-  </svg>
-);
-
-const MiteIcon = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 64 64" className={className} fill="currentColor">
-    <ellipse cx="32" cy="32" rx="12" ry="16"/>
-    <circle cx="32" cy="12" r="4"/>
-    <path d="M24 24l-6-6M40 24l6-6M20 32l-6 0M44 32l6 0M22 40l-6 6M42 40l6 6M26 46l-4 8M38 46l4 8" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round"/>
-  </svg>
-);
-
-const RatIcon = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 64 64" className={className} fill="currentColor">
-    <ellipse cx="36" cy="38" rx="18" ry="14"/>
-    <circle cx="20" cy="28" r="10"/>
-    <ellipse cx="46" cy="20" rx="6" ry="10" transform="rotate(20 46 20)"/>
-    <ellipse cx="30" cy="20" rx="5" ry="9" transform="rotate(-15 30 20)"/>
-    <circle cx="16" cy="26" r="2" fill="white"/>
-    <path d="M10 34c-8 2-8 8 0 8" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
-    <path d="M54 38c6 4 8 10 4 14" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round"/>
-    <path d="M18 50c-2 6-4 10-2 12M26 52c0 6-2 10 0 12" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
-  </svg>
-);
+import formigaIcon from "@/assets/Icones-site_02-Formiga.svg";
+import barataIcon from "@/assets/Icones-site_03-Barata.svg";
+import pomboIcon from "@/assets/Icones-site_04-Pombo.svg";
+import moscaIcon from "@/assets/Icones-site_05-Mosca.svg";
+import ratoIcon from "@/assets/Icones-site_06-Rato.svg";
+import aranhaIcon from "@/assets/Icones-site_07-Aranha.svg";
+import cupimIcon from "@/assets/Icones-site_08-Cupim.svg";
+import carrapatoIcon from "@/assets/Icones-site_09-Carrapato.svg";
+import piolhoIcon from "@/assets/Icones-site_10-Piolho.svg";
 
 const pests = [
-  { name: "Escorpião", icon: ScorpionIcon, path: "/biologia-pragas" },
-  { name: "Formiga", icon: AntIcon, path: "/biologia-pragas" },
-  { name: "Barata", icon: CockroachIcon, path: "/pragas/baratas" },
-  { name: "Rato", icon: RatIcon, path: "/biologia-pragas" },
-  { name: "Pombo", icon: PigeonIcon, path: "/biologia-pragas" },
-  { name: "Mosquito", icon: MosquitoIcon, path: "/biologia-pragas" },
-  { name: "Aranha", icon: SpiderIcon, path: "/biologia-pragas" },
-  { name: "Cupim", icon: TermiteIcon, path: "/biologia-pragas" },
-  { name: "Carrapato", icon: TickIcon, path: "/biologia-pragas" },
-  { name: "Piolho de pássaros", icon: MiteIcon, path: "/biologia-pragas" },
+  { name: "Formiga",          img: formigaIcon,   path: "/biologia-pragas" },
+  { name: "Barata",           img: barataIcon,    path: "/pragas/baratas" },
+  { name: "Pombo",            img: pomboIcon,     path: "/biologia-pragas" },
+  { name: "Mosca",            img: moscaIcon,     path: "/biologia-pragas" },
+  { name: "Rato",             img: ratoIcon,      path: "/biologia-pragas" },
+  { name: "Aranha",           img: aranhaIcon,    path: "/biologia-pragas" },
+  { name: "Cupim",            img: cupimIcon,     path: "/biologia-pragas" },
+  { name: "Carrapato",        img: carrapatoIcon, path: "/biologia-pragas" },
+  { name: "Piolho de pássaros", img: piolhoIcon,  path: "/biologia-pragas" },
 ];
 
 const PestsSection = () => {
@@ -202,7 +106,11 @@ const PestsSection = () => {
                 aria-label={`Ver informações sobre ${pest.name}`}
               >
                 <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center mb-3 group-hover:bg-primary/20 group-hover:border-primary/40 group-hover:scale-110 transition-all duration-300 shadow-md">
-                  <pest.icon className="w-10 h-10 lg:w-12 lg:h-12 text-primary group-hover:scale-110 transition-transform duration-300" />
+                  <img
+                    src={pest.img}
+                    alt={pest.name}
+                    className="w-10 h-10 lg:w-12 lg:h-12 group-hover:scale-110 transition-transform duration-300 dark:invert"
+                  />
                 </div>
                 <span className="text-sm lg:text-base font-semibold text-foreground group-hover:text-primary transition-colors">
                   {pest.name}

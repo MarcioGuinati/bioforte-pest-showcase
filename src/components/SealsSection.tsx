@@ -1,78 +1,41 @@
 import { Badge } from "@/components/ui/badge";
-import { Shield, Flame, Leaf, Award } from "lucide-react";
+import bombeirosIcon from "@/assets/Icones-site_20-Corpo de Bombeiros.svg";
+import qualidadeIcon from "@/assets/Icones-site_20-Qualidade.svg";
+import apragIcon from "@/assets/Icones-site_21-APRAG.svg";
 
 const seals = [
   {
-    title: "Vigilância Sanitária",
-    subtitle: "Empresa Licenciada",
-    icon: Shield
-  },
-  {
     title: "Corpo de Bombeiros",
     subtitle: "Empresa Licenciada",
-    icon: Flame
+    img: bombeirosIcon,
+  },
+  {
+    title: "Qualidade",
+    subtitle: "Certificada",
+    img: qualidadeIcon,
   },
   {
     title: "APRAG",
     subtitle: "Associada",
-    icon: Award
+    img: apragIcon,
   }
 ];
 
 const SealMedal = ({ seal, index }: { seal: typeof seals[0]; index: number }) => {
   return (
-    <div 
+    <div
       className="flex flex-col items-center group animate-scale-bounce"
       style={{ animationDelay: `${index * 0.1}s` }}
     >
-      {/* Medal Container */}
-      <div className="relative">
-        {/* Outer Ring */}
-        <div className="w-28 h-28 lg:w-36 lg:h-36 rounded-full bg-gradient-to-br from-gold-light via-gold to-gold-dark p-1 shadow-xl group-hover:scale-105 transition-transform duration-300">
-          {/* Inner Ring with dots pattern */}
-          <div className="w-full h-full rounded-full bg-gradient-to-br from-gold via-gold-light to-gold p-1 relative">
-            {/* Dotted border effect */}
-            <div 
-              className="absolute inset-1 rounded-full border-2 border-gold-dark/30"
-              style={{
-                borderStyle: 'dotted'
-              }}
-            />
-            {/* Center Circle */}
-            <div className="w-full h-full rounded-full bg-gradient-to-br from-gold-light via-gold to-gold-dark flex flex-col items-center justify-center relative overflow-hidden">
-              {/* Shine effect */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent" />
-              
-              {/* Icon */}
-              <seal.icon className="w-8 h-8 lg:w-10 lg:h-10 text-gold-foreground mb-1 relative z-10" />
-              
-              {/* Text */}
-              <span className="text-[8px] lg:text-[10px] font-bold text-gold-foreground uppercase tracking-wider text-center px-2 relative z-10">
-                {seal.subtitle}
-              </span>
-            </div>
-          </div>
-        </div>
-        
-        {/* Ribbon */}
-        <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 flex">
-          {/* Left ribbon */}
-          <div className="w-6 h-12 lg:w-8 lg:h-14 bg-gradient-to-b from-gold to-gold-dark transform -skew-x-12 -mr-1 shadow-md relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-            <div className="absolute bottom-0 left-0 right-0 h-3 bg-primary/20" />
-          </div>
-          {/* Right ribbon */}
-          <div className="w-6 h-12 lg:w-8 lg:h-14 bg-gradient-to-b from-gold to-gold-dark transform skew-x-12 -ml-1 shadow-md relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-            <div className="absolute bottom-0 left-0 right-0 h-3 bg-primary/20" />
-          </div>
-        </div>
-      </div>
-      
-      {/* Title below medal */}
-      <h3 className="mt-8 font-bold text-sm lg:text-base text-center group-hover:text-primary transition-colors">
+      <img
+        src={seal.img}
+        alt={seal.title}
+        className="w-28 h-28 lg:w-36 lg:h-36 object-contain group-hover:scale-110 transition-transform duration-300"
+      />
+      <h3 className="mt-4 font-bold text-sm lg:text-base text-center group-hover:text-primary transition-colors">
         {seal.title}
       </h3>
+      <span className="text-xs text-muted-foreground text-center">{seal.subtitle}</span>
     </div>
   );
 };

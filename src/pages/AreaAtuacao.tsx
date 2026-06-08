@@ -2,14 +2,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
-  Home,
-  Building,
-  ShoppingCart,
-  Utensils,
-  Hotel,
-  School,
-  Hospital,
-  Factory,
   CheckCircle,
   ArrowRight,
   Shield,
@@ -19,14 +11,18 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import UnitsMap from "@/components/UnitsMap";
-import heroImage from "@/assets/hero-specialist.jpg";
+import heroImage from "@/assets/area_atuacao.png";
+import residencialIcon from "@/assets/Icones-site_29-Residencial.svg";
+import comercialIcon from "@/assets/Icones-site_30-Comercial.svg";
+import industrialIcon from "@/assets/Icones-site_31-Industrial.svg";
+import hospitalarIcon from "@/assets/Icones-site_32-Hospitalar.svg";
+import alimenticioIcon from "@/assets/Icones-site_33-Alimenticio.svg";
 
 const services = [
   {
     category: "Residencial",
-    icon: Home,
-    color: "text-blue-500",
-    bgColor: "bg-blue-50",
+    img: residencialIcon,
+    bgColor: "bg-blue-50 dark:bg-blue-950/30",
     description: "Proteção completa para sua casa e família",
     services: [
       "Dedetização completa",
@@ -45,9 +41,8 @@ const services = [
   },
   {
     category: "Comercial",
-    icon: ShoppingCart,
-    color: "text-green-500",
-    bgColor: "bg-green-50",
+    img: comercialIcon,
+    bgColor: "bg-green-50 dark:bg-green-950/30",
     description: "Soluções para comércios e escritórios",
     services: [
       "Controle preventivo",
@@ -66,9 +61,8 @@ const services = [
   },
   {
     category: "Industrial",
-    icon: Factory,
-    color: "text-purple-500",
-    bgColor: "bg-purple-50",
+    img: industrialIcon,
+    bgColor: "bg-purple-50 dark:bg-purple-950/30",
     description: "Controle especializado para indústrias",
     services: [
       "Programa MIP",
@@ -87,9 +81,8 @@ const services = [
   },
   {
     category: "Hospitalar",
-    icon: Hospital,
-    color: "text-red-500",
-    bgColor: "bg-red-50",
+    img: hospitalarIcon,
+    bgColor: "bg-red-50 dark:bg-red-950/30",
     description: "Controle especializado para área da saúde",
     services: [
       "Controle hospitalar",
@@ -108,9 +101,8 @@ const services = [
   },
   {
     category: "Alimentício",
-    icon: Utensils,
-    color: "text-orange-500",
-    bgColor: "bg-orange-50",
+    img: alimenticioIcon,
+    bgColor: "bg-orange-50 dark:bg-orange-950/30",
     description: "Segurança alimentar garantida",
     services: [
       "BPF - Boas Práticas",
@@ -125,27 +117,6 @@ const services = [
       "Rastreabilidade",
       "Documentação completa",
       "Suporte contínuo"
-    ]
-  },
-  {
-    category: "Hotelaria",
-    icon: Hotel,
-    color: "text-cyan-500",
-    bgColor: "bg-cyan-50",
-    description: "Experiência do hóspede protegida",
-    services: [
-      "Controle discreto",
-      "Dedetização quartos",
-      "Áreas comuns",
-      "Cozinhas e restaurantes",
-      "Piscinas e jardins",
-      "Manutenção preventiva"
-    ],
-    features: [
-      "Atendimento rápido",
-      "Discrição total",
-      "Horários flexíveis",
-      "Sem interrupções"
     ]
   }
 ];
@@ -276,7 +247,7 @@ const AreaAtuacao = () => {
                   <div className="flex">
                     {/* Icon Section */}
                     <div className={`${service.bgColor} p-8 flex items-center justify-center min-w-[120px] group-hover:scale-105 transition-transform duration-300`}>
-                      <service.icon className={`h-12 w-12 ${service.color} hover-scale`} />
+                      <img src={service.img} alt={service.category} className="h-12 w-12 object-contain hover-scale" />
                     </div>
 
                     {/* Content */}

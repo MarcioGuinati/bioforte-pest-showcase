@@ -36,9 +36,9 @@ const AreaCliente = () => {
             <rect width="100%" height="100%" fill="url(#ac-grid)" />
           </svg>
           <div className="absolute top-16 right-1/3 w-56 h-56 bg-primary/15 rounded-full blur-3xl animate-float" />
-          <div className="absolute bottom-12 right-12 w-40 h-40 bg-accent/10 rounded-full blur-2xl animate-float" style={{animationDelay: "2s"}} />
+          <div className="absolute bottom-12 right-12 w-40 h-40 bg-accent/10 rounded-full blur-2xl animate-float" style={{ animationDelay: "2s" }} />
         </div>
-        
+
         <div className="relative container mx-auto px-4 py-20 lg:py-28">
           <div className="max-w-3xl">
             <Badge variant="outline" className="mb-6 border-primary/50 text-primary bg-primary/10 hover-glow animate-fade-in">
@@ -53,7 +53,7 @@ const AreaCliente = () => {
             </p>
 
             {/* Trust badges */}
-            <div className="flex flex-wrap gap-4 mt-8 animate-fade-in" style={{animationDelay: "0.4s"}}>
+            <div className="flex flex-wrap gap-4 mt-8 animate-fade-in" style={{ animationDelay: "0.4s" }}>
               {[
                 { icon: CheckCircle2, label: "Acesso Seguro" },
                 { icon: FileCheck, label: "Certificados Digitais" },
@@ -112,19 +112,29 @@ const AreaCliente = () => {
         </div>
       </section>
 
-      {/* Login iframe */}
-      <section className="py-8">
+      {/* Acesso ao sistema */}
+      <section className="py-16">
         <div className="container mx-auto px-4">
           <Card className="glass overflow-hidden">
-            <CardContent className="p-0">
-              <iframe 
-                src="https://www.benuerp.com.br/new/loginCliente.benu?empresa=bioforte" 
-                width="100%" 
-                height="700px" 
-                frameBorder="0"
-                title="Sistema de Login do Cliente Bioforte"
-                className="w-full"
-              />
+            <CardContent className="p-10 flex flex-col items-center text-center gap-6">
+              <div className="gradient-primary p-4 rounded-full w-16 h-16 flex items-center justify-center">
+                <Lock className="h-7 w-7 text-primary-foreground" />
+              </div>
+              <div className="max-w-lg">
+                <h2 className="text-2xl font-bold mb-2">Acesse sua Área do Cliente</h2>
+                <p className="text-muted-foreground">
+                  Consulte seus atendimentos, certificados e relatórios através do portal seguro da Bioforte.
+                </p>
+              </div>
+              <a
+                href="https://www.benuerp.com.br/new/loginCliente.benu?empresa=bioforte"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-8 py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors shadow-lg hover-glow"
+              >
+                <Lock className="h-4 w-4" />
+                Entrar no Sistema
+              </a>
             </CardContent>
           </Card>
         </div>
