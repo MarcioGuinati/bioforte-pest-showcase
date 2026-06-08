@@ -17,12 +17,21 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import pestBiology from "@/assets/biology-hero.jpeg";
+import formigaIcon from "@/assets/Icones-site_02-Formiga.svg";
+import barataIcon from "@/assets/Icones-site_03-Barata.svg";
+import pomboIcon from "@/assets/Icones-site_04-Pombo.svg";
+import moscaIcon from "@/assets/Icones-site_05-Mosca.svg";
+import ratoIcon from "@/assets/Icones-site_06-Rato.svg";
+import aranhaIcon from "@/assets/Icones-site_07-Aranha.svg";
+import cupimIcon from "@/assets/Icones-site_08-Cupim.svg";
+import carrapatoIcon from "@/assets/Icones-site_09-Carrapato.svg";
+import piolhoIcon from "@/assets/Icones-site_10-Piolho.svg";
 
 const pests = [
   {
     name: "Baratas",
     scientificName: "Blattodea",
-    emoji: "🪳",
+    img: barataIcon,
     description: "Insetos noturnos que se reproduzem rapidamente e transmitem diversas doenças.",
     habitat: "Locais úmidos, quentes e escuros",
     risks: ["Salmonela", "E. coli", "Hepatite A", "Disenteria"],
@@ -36,7 +45,7 @@ const pests = [
   {
     name: "Formigas",
     scientificName: "Formicidae",
-    emoji: "🐜",
+    img: formigaIcon,
     description: "Insetos sociais organizados que formam trilhas e atacam em grupos.",
     habitat: "Jardins, frestas de paredes, sob pisos",
     risks: ["Contaminação de alimentos", "Mordidas dolorosas", "Danos estruturais"],
@@ -50,7 +59,7 @@ const pests = [
   {
     name: "Cupins",
     scientificName: "Isoptera",
-    emoji: "🪵",
+    img: cupimIcon,
     description: "Insetos que se alimentam de celulose, causando danos estruturais graves.",
     habitat: "Madeira, papelão, livros, estruturas",
     risks: ["Danos estruturais", "Prejuízos financeiros", "Colapso de estruturas"],
@@ -64,7 +73,7 @@ const pests = [
   {
     name: "Ratos",
     scientificName: "Rattus",
-    emoji: "🐀",
+    img: ratoIcon,
     description: "Roedores adaptáveis que se reproduzem rapidamente e transmitem doenças graves.",
     habitat: "Porões, sótãos, esgotos, depósitos",
     risks: ["Leptospirose", "Peste", "Hantavírus", "Salmonelose"],
@@ -78,7 +87,7 @@ const pests = [
   {
     name: "Mosquitos",
     scientificName: "Culicidae",
-    emoji: "🦟",
+    img: moscaIcon,
     description: "Insetos voadores que se reproduzem em água parada e transmitem doenças.",
     habitat: "Água parada, vasos, caixas d'água",
     risks: ["Dengue", "Zika", "Chikungunya", "Febre Amarela"],
@@ -92,7 +101,7 @@ const pests = [
   {
     name: "Aranhas",
     scientificName: "Araneae",
-    emoji: "🕷️",
+    img: aranhaIcon,
     description: "Aracnídeos predadores, algumas espécies são venenosas e perigosas.",
     habitat: "Cantos escuros, atrás de móveis, jardins",
     risks: ["Picadas venenosas", "Reações alérgicas", "Necrose tissular"],
@@ -120,7 +129,7 @@ const pests = [
   {
     name: "Pombos",
     scientificName: "Columba livia",
-    emoji: "🕊️",
+    img: pomboIcon,
     description: "Aves urbanas que causam sujeira, transmitem doenças e danificam estruturas.",
     habitat: "Telhados, beirais, sótãos, marquises",
     risks: ["Criptococose", "Histoplasmose", "Salmonela", "Ácaros e parasitas"],
@@ -129,6 +138,34 @@ const pests = [
     gradient: "from-slate-500/20 via-gray-400/10 to-transparent",
     accentColor: "text-slate-600",
     borderColor: "border-slate-500/30",
+    dangerLevel: "Médio"
+  },
+  {
+    name: "Carrapatos",
+    scientificName: "Ixodida",
+    img: carrapatoIcon,
+    description: "Parasitas hematófagos que se fixam em animais e humanos, transmitindo doenças graves.",
+    habitat: "Vegetação, gramados, animais domésticos",
+    risks: ["Febre Maculosa", "Doença de Lyme", "Anaplasmose", "Babesiose"],
+    prevention: ["Usar repelentes", "Verificar animais", "Cortar grama", "Roupas compridas"],
+    icon: Shield,
+    gradient: "from-teal-500/20 via-emerald-500/10 to-transparent",
+    accentColor: "text-teal-600",
+    borderColor: "border-teal-500/30",
+    dangerLevel: "Alto"
+  },
+  {
+    name: "Piolho de Pássaros",
+    scientificName: "Dermanyssus gallinae",
+    img: piolhoIcon,
+    description: "Ácaros parasitas que vivem em aves e podem infestar ambientes humanos, causando dermatites.",
+    habitat: "Ninhos de pombos, galinheiros, forros de telhado",
+    risks: ["Dermatite", "Reações alérgicas", "Infestação doméstica", "Anemia em aves"],
+    prevention: ["Eliminar ninhos", "Controlar pombos", "Vedar acessos", "Higienizar ambientes"],
+    icon: Bug,
+    gradient: "from-pink-500/20 via-rose-500/10 to-transparent",
+    accentColor: "text-pink-600",
+    borderColor: "border-pink-500/30",
     dangerLevel: "Médio"
   }
 ];
@@ -304,9 +341,18 @@ const BiologiaPragas = () => {
                     <div className="flex items-center gap-4">
                       <div className="relative">
                         <div className={`absolute inset-0 ${pest.accentColor} opacity-20 blur-xl rounded-full group-hover:opacity-40 transition-opacity`} />
-                        <div className="relative text-5xl lg:text-6xl group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500" aria-hidden="true">
-                          {pest.emoji}
-                        </div>
+                        {'img' in pest ? (
+                          <img
+                            src={(pest as any).img}
+                            alt={pest.name}
+                            className="relative w-14 h-14 lg:w-16 lg:h-16 object-contain group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500 dark:invert"
+                            aria-hidden="true"
+                          />
+                        ) : (
+                          <div className="relative text-5xl lg:text-6xl group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500" aria-hidden="true">
+                            {(pest as any).emoji}
+                          </div>
+                        )}
                       </div>
                       <div>
                         <h3 className="text-2xl font-bold group-hover:text-primary transition-colors">
