@@ -24,10 +24,25 @@ const Header = () => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        // Hysteresis: only change state at clear thresholds to avoid oscillation.
+        // Hide top bar after 60px, show it again only below 10px.
+        setScrolled(prev => {
+          if (!prev && y > 60) return true;
+          if (prev && y < 10) return false;
+          return prev;
+        });
+        ticking = false;
+      });
     };
-    window.addEventListener("scroll", handleScroll);
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
