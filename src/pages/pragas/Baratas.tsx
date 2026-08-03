@@ -294,7 +294,7 @@ const BaratasPage = () => {
                 <div>
                   <p className="font-bold text-red-300 mb-1">Fato alarmante</p>
                   <p className="text-muted-foreground text-sm leading-relaxed">
-                    Uma fêmea de barata produz <strong className="text-foreground">até 400 descendentes por ano</strong>.
+                    Uma fêmea de barata produz <strong className="text-foreground">até 400 filhotes por ano</strong>.
                     Em condições ideais de umidade e calor — como cozinhas e banheiros — a reprodução é ainda mais acelerada.
                     Sem tratamento profissional, uma infestação domina o ambiente em semanas.
                   </p>
