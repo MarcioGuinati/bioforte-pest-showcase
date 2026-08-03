@@ -82,7 +82,7 @@ const BaratasPage = () => {
       />
 
       {/* ── HERO ── */}
-      <section className="relative min-h-[580px] lg:min-h-[660px] flex items-center overflow-hidden">
+      <section className="relative min-h-[520px] sm:min-h-[580px] lg:min-h-[660px] flex items-center overflow-hidden">
         <div className="absolute inset-0">
           <img
             src={heroImage}
@@ -93,8 +93,8 @@ const BaratasPage = () => {
             className="w-full h-full object-cover object-center"
             loading="eager"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-background/97 via-background/80 to-background/30" />
-          <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/20" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
         </div>
 
         {/* Tech grid overlay */}
@@ -111,35 +111,36 @@ const BaratasPage = () => {
           <div className="absolute bottom-10 right-10 w-40 h-40 bg-red-500/10 rounded-full blur-3xl animate-float" style={{ animationDelay: "2s" }} />
         </div>
 
-        <div className="relative container mx-auto px-4 py-20 lg:py-28">
+        <div className="relative container mx-auto px-4 py-14 sm:py-20 lg:py-28">
           <div className="max-w-3xl">
-            <Badge variant="outline" className="mb-6 border-red-500/50 text-red-400 bg-red-500/10 animate-fade-in">
+            <Badge variant="outline" className="mb-6 border-red-400 text-red-300 bg-red-600/30 animate-fade-in">
               <AlertTriangle className="h-3.5 w-3.5 mr-1.5" />
               Risco à Saúde Pública
             </Badge>
-            <h1 className="text-5xl lg:text-7xl font-bold mb-4 animate-fade-in-up leading-tight">
-              <span className="text-gradient">Baratas</span>
+            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold mb-4 animate-fade-in-up leading-tight">
+              <span className="text-white drop-shadow-lg">Baratas</span>
             </h1>
-            <p className="text-xl text-muted-foreground italic mb-2 animate-fade-in">
+            <p className="text-lg text-white/80 italic mb-2 animate-fade-in drop-shadow">
               Blattodea — o inimigo silencioso da sua saúde
             </p>
-            <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed animate-blur-in max-w-2xl mt-4">
-              Uma barata carrega mais de <strong className="text-foreground">30 tipos de bactérias</strong> no corpo e nas patas.
+            <p className="text-lg lg:text-xl text-white/90 leading-relaxed animate-blur-in max-w-2xl mt-4 drop-shadow">
+              Uma barata carrega mais de <strong className="text-white font-bold">30 tipos de bactérias</strong> no corpo e nas patas.
               Ela circula pelo esgoto, entra na sua cozinha e contamina tudo que toca — sem que você perceba.
             </p>
 
-            <div className="flex flex-wrap gap-4 mt-10 animate-fade-in" style={{ animationDelay: "0.4s" }}>
+            <div className="flex flex-col sm:flex-row gap-3 mt-8 animate-fade-in w-full sm:w-auto" style={{ animationDelay: "0.4s" }}>
               <a
                 href="https://wa.me/551637230808?text=Olá! Preciso eliminar baratas. Gostaria de um orçamento."
                 target="_blank" rel="noopener noreferrer"
+                className="w-full sm:w-auto"
               >
-                <Button variant="hero" size="lg" className="font-bold pulse-ring hover-shine">
+                <Button variant="hero" size="lg" className="font-bold pulse-ring hover-shine w-full sm:w-auto">
                   <Phone className="mr-2 h-5 w-5" />
                   Solicitar Vistoria Gratuita
                 </Button>
               </a>
-              <Link to="/biologia-pragas">
-                <Button variant="outline" size="lg" className="font-semibold">
+              <Link to="/biologia-pragas" className="w-full sm:w-auto">
+                <Button variant="outline" size="lg" className="font-semibold w-full sm:w-auto">
                   Ver Todas as Pragas
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
@@ -150,18 +151,18 @@ const BaratasPage = () => {
       </section>
 
       {/* ── ALERTA URGÊNCIA ── */}
-      <section className="py-8 bg-red-950/40 border-y border-red-500/20">
+      <section className="py-8 bg-red-700 border-y border-red-800">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-center gap-6 text-center md:text-left">
             <div className="flex items-center gap-3">
-              <AlertTriangle className="h-8 w-8 text-red-400 flex-shrink-0 animate-pulse" />
-              <p className="text-base font-semibold text-red-300">
-                Uma única barata pode indicar uma colônia de <strong>centenas</strong> escondidas nas paredes e frestas.
+              <AlertTriangle className="h-8 w-8 text-white flex-shrink-0 animate-pulse" />
+              <p className="text-base font-semibold text-white">
+                Uma única barata pode indicar uma colônia de <strong className="underline decoration-yellow-300">centenas</strong> escondidas nas paredes e frestas.
               </p>
             </div>
-            <div className="h-px md:h-8 w-full md:w-px bg-red-500/30" />
-            <p className="text-sm text-red-400/80">
-              Elas se reproduzem em <strong className="text-red-300">28 dias</strong>. Quanto mais você espera, pior fica.
+            <div className="h-px md:h-8 w-full md:w-px bg-white/30" />
+            <p className="text-sm text-white/90">
+              Elas se reproduzem em <strong className="text-yellow-300">28 dias</strong>. Quanto mais você espera, pior fica.
             </p>
           </div>
         </div>
@@ -189,7 +190,7 @@ const BaratasPage = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {risks.map((risk, i) => (
               <Card
                 key={i}
@@ -227,7 +228,7 @@ const BaratasPage = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {signs.map((sign, i) => (
               <div
                 key={i}
@@ -264,7 +265,7 @@ const BaratasPage = () => {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
               {lifecycle.map((phase, i) => (
                 <div key={i} className="relative">
                   {i < lifecycle.length - 1 && (
@@ -317,7 +318,7 @@ const BaratasPage = () => {
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-5xl mx-auto">
             {[
               { emoji: "🍽️", local: "Cozinha", desc: "Atrás da geladeira, fogão, pia e sob armários" },
               { emoji: "🚿", local: "Banheiro", desc: "Dentro de ralos, sob pias e atrás de azulejos soltos" },
@@ -354,7 +355,7 @@ const BaratasPage = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-16">
             {whyBioforte.map((item, i) => (
               <Card key={i} className="glass-strong hover-lift group animate-scale-bounce" style={{ animationDelay: `${i * 0.08}s` }}>
                 <CardContent className="p-6">
@@ -371,7 +372,7 @@ const BaratasPage = () => {
           {/* Process steps */}
           <div className="max-w-4xl mx-auto">
             <h3 className="text-2xl font-bold text-center mb-10">Como funciona nosso tratamento</h3>
-            <div className="grid md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
               {[
                 { n: "1", title: "Vistoria", desc: "Mapeamos todos os focos e espécies presentes" },
                 { n: "2", title: "Plano", desc: "Definimos a metodologia e produtos adequados" },
@@ -427,7 +428,7 @@ const BaratasPage = () => {
                 </Button>
               </a>
             </div>
-            <div className="flex items-center justify-center gap-6 mt-10 text-primary-foreground/70 text-sm">
+            <div className="flex flex-wrap items-center justify-center gap-4 mt-10 text-primary-foreground/70 text-sm">
               <span className="flex items-center gap-2"><CheckCircle className="h-4 w-4" /> Vistoria gratuita</span>
               <span className="flex items-center gap-2"><CheckCircle className="h-4 w-4" /> Orçamento sem compromisso</span>
               <span className="flex items-center gap-2"><CheckCircle className="h-4 w-4" /> Atendimento rápido</span>

@@ -289,7 +289,7 @@ const QuemSomos = () => {
             {[
               { value: "30+", label: "Anos de história", icon: Clock },
               { value: "5K+", label: "Clientes atendidos", icon: Users },
-              { value: "5", label: "Cidades atendidas", icon: MapPin },
+              { value: "103", label: "Cidades atendidas", icon: MapPin },
               { value: "98%", label: "Satisfação", icon: Heart }
             ].map((stat, idx) => (
               <div

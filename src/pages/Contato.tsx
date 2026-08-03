@@ -25,6 +25,7 @@ import {
   Loader2
 } from "lucide-react";
 import SEO from "@/components/SEO";
+import contatoHero from "@/assets/contato.png";
 
 const contactInfo = [
   {
@@ -168,23 +169,35 @@ Telefone: ${formData.phone || "Não informado"}`;
 
       {/* Hero Section */}
       <section
-        className="py-20 lg:py-32 gradient-hero relative overflow-hidden"
+        className="py-20 lg:py-32 relative overflow-hidden"
         aria-labelledby="contact-heading"
       >
+        {/* Background image */}
+        <div className="absolute inset-0">
+          <img
+            src={contatoHero}
+            alt="Contato Bioforte"
+            className="w-full h-full object-cover object-center"
+            fetchPriority="high"
+          />
+          {/* Dark mode overlay so white text stays visible */}
+          <div className="absolute inset-0 hidden dark:block bg-black/60" />
+        </div>
+
         <div className="absolute inset-0 opacity-10" aria-hidden="true">
           <div className="absolute top-20 right-20 w-64 h-64 bg-white rounded-full blur-3xl animate-float" />
           <div className="absolute bottom-10 left-10 w-48 h-48 bg-accent rounded-full blur-3xl animate-float" style={{ animationDelay: "2s" }} />
         </div>
         <div className="container mx-auto px-4 text-center relative">
-          <Badge variant="outline" className="mb-6 border-primary-foreground text-primary-foreground animate-fade-in">
+          <Badge variant="outline" className="mb-6 border-foreground/40 text-foreground dark:border-white/50 dark:text-white animate-fade-in">
             Entre em Contato
           </Badge>
-          <h1 id="contact-heading" className="text-4xl lg:text-6xl font-bold text-primary-foreground mb-6 animate-fade-in-up">
+          <h1 id="contact-heading" className="text-4xl lg:text-6xl font-bold text-foreground dark:text-white mb-6 animate-fade-in-up drop-shadow-sm">
             Solicite seu
             <br />
-            <span className="text-accent"> Orçamento Gratuito</span>
+            <span className="text-gradient"> Orçamento Gratuito</span>
           </h1>
-          <p className="text-lg lg:text-xl text-primary-foreground/90 leading-relaxed max-w-3xl mx-auto animate-blur-in">
+          <p className="text-lg lg:text-xl text-foreground/80 dark:text-white/80 leading-relaxed max-w-3xl mx-auto animate-blur-in drop-shadow-sm">
             Entre em contato conosco e receba um orçamento personalizado.
             Nossa equipe está pronta para resolver seu problema com pragas.
           </p>

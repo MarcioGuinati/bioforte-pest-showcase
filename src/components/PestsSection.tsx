@@ -10,17 +10,19 @@ import aranhaIcon from "@/assets/Icones-site_07-Aranha.svg";
 import cupimIcon from "@/assets/Icones-site_08-Cupim.svg";
 import carrapatoIcon from "@/assets/Icones-site_09-Carrapato.svg";
 import piolhoIcon from "@/assets/Icones-site_10-Piolho.svg";
+import cxIcon from "@/assets/Icones-site_cx.svg";
 
 const pests = [
-  { name: "Formiga",          img: formigaIcon,   path: "/biologia-pragas" },
-  { name: "Barata",           img: barataIcon,    path: "/pragas/baratas" },
-  { name: "Pombo",            img: pomboIcon,     path: "/biologia-pragas" },
-  { name: "Mosca",            img: moscaIcon,     path: "/biologia-pragas" },
-  { name: "Rato",             img: ratoIcon,      path: "/biologia-pragas" },
-  { name: "Aranha",           img: aranhaIcon,    path: "/biologia-pragas" },
-  { name: "Cupim",            img: cupimIcon,     path: "/biologia-pragas" },
-  { name: "Carrapato",        img: carrapatoIcon, path: "/biologia-pragas" },
-  { name: "Piolho de pássaros", img: piolhoIcon,  path: "/biologia-pragas" },
+  { name: "Formiga", img: formigaIcon, path: "/biologia-pragas" },
+  { name: "Barata", img: barataIcon, path: "/pragas/baratas" },
+  { name: "Pombo", img: pomboIcon, path: "/biologia-pragas" },
+  { name: "Mosca", img: moscaIcon, path: "/biologia-pragas" },
+  { name: "Rato", img: ratoIcon, path: "/biologia-pragas" },
+  { name: "Aranha", img: aranhaIcon, path: "/biologia-pragas" },
+  { name: "Cupim", img: cupimIcon, path: "/biologia-pragas" },
+  { name: "Carrapato", img: carrapatoIcon, path: "/biologia-pragas" },
+  { name: "Piolho de pássaros", img: piolhoIcon, path: "/biologia-pragas" },
+  { name: "Caixa D'Água", img: cxIcon, path: "/biologia-pragas" },
 ];
 
 const PestsSection = () => {

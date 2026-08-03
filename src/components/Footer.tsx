@@ -8,6 +8,7 @@ import {
   Facebook,
   Instagram,
   Youtube,
+  Linkedin,
   ArrowRight
 } from "lucide-react";
 import anosIcon from "@/assets/Icones-site_11-30-anos.svg";
@@ -38,7 +39,8 @@ const Footer = () => {
   const socialLinks = [
     { icon: Facebook, href: "https://www.facebook.com/BioforteDedetizadora?locale=pt_BR", label: "Facebook", color: "hover:bg-[#1877F2]" },
     { icon: Instagram, href: "https://www.instagram.com/biofortededetizadora/", label: "Instagram", color: "hover:bg-gradient-to-tr hover:from-[#f9ce34] hover:via-[#ee2a7b] hover:to-[#6228d7]" },
-    { icon: Youtube, href: "https://www.youtube.com/@biofortesaneamentoambienta3867", label: "YouTube", color: "hover:bg-[#FF0000]" }
+    { icon: Youtube, href: "https://www.youtube.com/@biofortesaneamentoambienta3867", label: "YouTube", color: "hover:bg-[#FF0000]" },
+    { icon: Linkedin, href: "https://linkedin.com/company/biofortededetizadora", label: "LinkedIn", color: "hover:bg-[#0A66C2]" }
   ];
 
   return (
