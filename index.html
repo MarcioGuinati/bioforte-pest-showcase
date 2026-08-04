@@ -2,17 +2,33 @@
 <html lang="pt-BR">
 
 <head>
-  <!-- Google Tag Manager (Deferred) -->
+  <!-- Google Tag Manager (Deferred via User Interaction) -->
   <script>
-    window.addEventListener('load', function() {
-      setTimeout(function() {
+    (function() {
+      var gtmLoaded = false;
+      function loadGTM() {
+        if (gtmLoaded) return;
+        gtmLoaded = true;
         (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
         j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
         })(window,document,'script','dataLayer','GTM-5PJ9NKS');
-      }, 2500); // Adiado por 2.5s após o load para não bloquear a Thread Principal
-    });
+        
+        // Remove listeners once loaded
+        ['scroll', 'mousemove', 'touchstart', 'keydown'].forEach(function(event) {
+          window.removeEventListener(event, loadGTM, { passive: true });
+        });
+      }
+      
+      // Add interaction listeners
+      ['scroll', 'mousemove', 'touchstart', 'keydown'].forEach(function(event) {
+        window.addEventListener(event, loadGTM, { passive: true, once: true });
+      });
+      
+      // Fallback: load after 5 seconds if no interaction
+      setTimeout(loadGTM, 5000);
+    })();
   </script>
   <!-- End Google Tag Manager -->
 
