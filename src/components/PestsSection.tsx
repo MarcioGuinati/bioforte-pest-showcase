@@ -35,7 +35,7 @@ const PestsSection = () => {
 
     let animationId: number;
     let startTime: number | null = null;
-    const speed = 0.15; // px per ms
+    const speed = 0.1; // px per ms
 
     const step = (timestamp: number) => {
       if (!startTime) startTime = timestamp;
