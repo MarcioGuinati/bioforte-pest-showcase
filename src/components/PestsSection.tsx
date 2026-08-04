@@ -122,6 +122,8 @@ const PestsSection = () => {
                   <img
                     src={pest.img}
                     alt={pest.name}
+                    width={48}
+                    height={48}
                     className="w-10 h-10 lg:w-12 lg:h-12 transition-all duration-300 dark:invert group-hover:opacity-0"
                   />
                   {/* "Ver mais" overlay on hover */}

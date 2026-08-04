@@ -1,7 +1,10 @@
+import { lazy, Suspense } from "react";
 import HeroSlider from "@/components/HeroSlider";
-import PestsSection from "@/components/PestsSection";
-import UnitsMap from "@/components/UnitsMap";
-import SealsSection from "@/components/SealsSection";
+
+// Lazy load below-the-fold components to improve TBT and unused JS metrics
+const PestsSection = lazy(() => import("@/components/PestsSection"));
+const UnitsMap = lazy(() => import("@/components/UnitsMap"));
+const SealsSection = lazy(() => import("@/components/SealsSection"));
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -163,7 +166,9 @@ const Home = () => {
       <HeroSlider />
 
       {/* Pests Icons Section */}
-      <PestsSection />
+      <Suspense fallback={<div className="py-20 min-h-[300px]" />}>
+        <PestsSection />
+      </Suspense>
 
       {/* Stats Section */}
       <section className="py-20 bg-primary relative overflow-hidden" aria-labelledby="stats-heading">
@@ -321,7 +326,9 @@ const Home = () => {
       </section>
 
       {/* Seals/Certifications Section */}
-      <SealsSection />
+      <Suspense fallback={<div className="py-10 min-h-[150px]" />}>
+        <SealsSection />
+      </Suspense>
 
       {/* Google Reviews Section */}
       <section className="py-20 bg-muted/30 relative overflow-hidden" aria-labelledby="reviews-heading">
@@ -408,7 +415,9 @@ const Home = () => {
       </section>
 
       {/* Units Map */}
-      <UnitsMap />
+      <Suspense fallback={<div className="min-h-[500px]" />}>
+        <UnitsMap />
+      </Suspense>
 
       {/* CTA Section */}
       <section className="py-20 gradient-hero relative overflow-hidden" aria-labelledby="cta-heading">

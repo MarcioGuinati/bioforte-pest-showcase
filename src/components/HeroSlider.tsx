@@ -71,21 +71,12 @@ const features = [
   }
 ];
 
-// Preload all images immediately on module load
-const preloadedImages: HTMLImageElement[] = [];
-slides.forEach((slide, index) => {
-  const img = new Image();
-  img.src = slide.image;
-  if (index === 0) {
-    img.fetchPriority = "high";
-  }
-  preloadedImages.push(img);
-});
+// We removed the synchronous JS preloading here to unblock the main thread.
+// The first image (01.webp) is now preloaded via <link rel="preload"> in index.html instead.
 
 const HeroSlider = memo(() => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [firstImageLoaded, setFirstImageLoaded] = useState(false);
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -93,15 +84,6 @@ const HeroSlider = memo(() => {
 
   const prevSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-  }, []);
-
-  // Check if first image is loaded
-  useEffect(() => {
-    if (preloadedImages[0].complete) {
-      setFirstImageLoaded(true);
-    } else {
-      preloadedImages[0].onload = () => setFirstImageLoaded(true);
-    }
   }, []);
 
   useEffect(() => {
@@ -136,17 +118,12 @@ const HeroSlider = memo(() => {
             aria-hidden={index !== currentSlide}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/70 to-transparent z-10" />
-            {/* Show placeholder until first image loads */}
-            {index === 0 && !firstImageLoaded && (
-              <div className="absolute inset-0 bg-primary/20 animate-pulse" />
-            )}
             <img
               src={slide.image}
               alt={slide.title}
               width={1920}
               height={1080}
-              className={`w-full h-full object-cover object-center transition-opacity duration-300 ${index === 0 && !firstImageLoaded ? 'opacity-0' : 'opacity-100'
-                }`}
+              className="w-full h-full object-cover object-center transition-opacity duration-300 opacity-100"
               loading={index === 0 ? "eager" : "lazy"}
               fetchPriority={index === 0 ? "high" : "auto"}
               decoding="async"
