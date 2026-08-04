@@ -52,7 +52,7 @@ const contactInfo = [
   {
     icon: MapPin,
     title: "Nossas Unidades",
-    content: "Ribeirão Preto, Franca, Uberaba, Araraquara e Guarapuava",
+    content: "Ribeirão Preto, Franca, Uberaba e Guarapuava",
     description: "Atendemos em todas as regiões",
     action: null
   }
@@ -567,7 +567,7 @@ Telefone: ${formData.phone || "Não informado"}`;
                 },
                 {
                   question: "Atendem em que regiões?",
-                  answer: "Atendemos nas unidades de Ribeirão Preto, Franca, Uberaba, Araraquara e Guarapuava, e suas respectivas regiões."
+                  answer: "Atendemos nas unidades de Ribeirão Preto, Franca, Uberaba e Guarapuava, e suas respectivas regiões."
                 }
               ].map((faq, index) => (
                 <Card key={index} className="glass">
