@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import aliceImg from "@/assets/perfil_alice_chat.png";
+import aliceImg from "@/assets/perfil_alice_chat.webp";
 
 const WHATSAPP_NUMBER = "551637230808";
 const WHATSAPP_MESSAGE = "Olá, Alice! Gostaria de solicitar um orçamento para controle de pragas.";

@@ -1,8 +1,11 @@
+import { Suspense, lazy } from "react";
 import { Outlet } from "react-router-dom";
 import Header from "./Header";
-import Footer from "./Footer";
-import ChatWidget from "./ChatWidget";
 import SkipLink from "./SkipLink";
+
+// Lazy load non-critical UI components to boost FCP and TBT
+const Footer = lazy(() => import("./Footer"));
+const ChatWidget = lazy(() => import("./ChatWidget"));
 
 const Layout = () => {
   return (
@@ -12,8 +15,10 @@ const Layout = () => {
       <main id="main-content" tabIndex={-1}>
         <Outlet />
       </main>
-      <Footer />
-      <ChatWidget />
+      <Suspense fallback={null}>
+        <Footer />
+        <ChatWidget />
+      </Suspense>
     </div>
   );
 };
