@@ -12,8 +12,10 @@ import cupimIcon from "@/assets/Icones-site_08-Cupim.svg";
 import carrapatoIcon from "@/assets/Icones-site_09-Carrapato.svg";
 import piolhoIcon from "@/assets/Icones-site_10-Piolho.svg";
 import cxIcon from "@/assets/Icones-site_cx.svg";
+import escorpiaoIcon from "@/assets/Icones-site-01-escorpiao.svg";
 
 const pests = [
+  { name: "Escorpião", img: escorpiaoIcon, path: "/biologia-pragas" },
   { name: "Formiga", img: formigaIcon, path: "/biologia-pragas" },
   { name: "Barata", img: barataIcon, path: "/pragas/baratas" },
   { name: "Pombo", img: pomboIcon, path: "/biologia-pragas" },

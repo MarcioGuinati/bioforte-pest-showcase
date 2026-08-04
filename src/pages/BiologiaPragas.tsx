@@ -26,6 +26,7 @@ import aranhaIcon from "@/assets/Icones-site_07-Aranha.svg";
 import cupimIcon from "@/assets/Icones-site_08-Cupim.svg";
 import carrapatoIcon from "@/assets/Icones-site_09-Carrapato.svg";
 import piolhoIcon from "@/assets/Icones-site_10-Piolho.svg";
+import escorpiaoIcon from "@/assets/Icones-site-01-escorpiao.svg";
 
 const pests = [
   {
@@ -115,7 +116,7 @@ const pests = [
   {
     name: "Escorpiões",
     scientificName: "Scorpiones",
-    emoji: "🦂",
+    img: escorpiaoIcon,
     description: "Aracnídeos peçonhentos extremamente perigosos, especialmente para crianças e idosos.",
     habitat: "Entulhos, terrenos baldios, frestas, encanamentos",
     risks: ["Picadas peçonhentas", "Risco de morte", "Reações graves", "Emergência médica"],
