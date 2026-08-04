@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
+import { MousePointerClick } from "lucide-react";
 import formigaIcon from "@/assets/Icones-site_02-Formiga.svg";
 import barataIcon from "@/assets/Icones-site_03-Barata.svg";
 import pomboIcon from "@/assets/Icones-site_04-Pombo.svg";
@@ -79,6 +80,13 @@ const PestsSection = () => {
             Combatemos as pragas
             <span className="text-gradient"> mais comuns</span>
           </h2>
+
+          {/* ── CTA hint ── */}
+          <div className="mt-4 flex items-center justify-center gap-2 text-primary font-semibold text-sm lg:text-base">
+            <MousePointerClick className="h-4 w-4 animate-bounce" aria-hidden="true" />
+            <span>Clique em uma praga para saber mais sobre ela</span>
+            <MousePointerClick className="h-4 w-4 animate-bounce" aria-hidden="true" />
+          </div>
         </div>
       </div>
 
@@ -107,13 +115,19 @@ const PestsSection = () => {
                 tabIndex={index >= pests.length ? -1 : 0}
                 aria-label={`Ver informações sobre ${pest.name}`}
               >
-                <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center mb-3 group-hover:bg-primary/20 group-hover:border-primary/40 group-hover:scale-110 transition-all duration-300 shadow-md">
+                {/* Icon circle with hover overlay */}
+                <div className="relative w-20 h-20 lg:w-24 lg:h-24 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center mb-3 group-hover:bg-primary group-hover:border-primary group-hover:scale-110 transition-all duration-300 shadow-md">
                   <img
                     src={pest.img}
                     alt={pest.name}
-                    className="w-10 h-10 lg:w-12 lg:h-12 group-hover:scale-110 transition-transform duration-300 dark:invert"
+                    className="w-10 h-10 lg:w-12 lg:h-12 transition-all duration-300 dark:invert group-hover:opacity-0"
                   />
+                  {/* "Ver mais" overlay on hover */}
+                  <div className="absolute inset-0 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    <span className="text-white text-xs font-bold tracking-wide">Ver mais →</span>
+                  </div>
                 </div>
+
                 <span className="text-sm lg:text-base font-semibold text-foreground group-hover:text-primary transition-colors">
                   {pest.name}
                 </span>
