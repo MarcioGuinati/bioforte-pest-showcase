@@ -54,12 +54,13 @@ const ChatWidget = () => {
             alt=""
             aria-hidden="true"
             className="chat-widget-bubble-img"
-            width={68}
-            height={68}
+            width={82}
+            height={82}
             loading="lazy"
           />
-          <span className="chat-widget-bubble-dot" aria-hidden="true" />
         </button>
+        {/* Online dot — outside button so it's not clipped */}
+        <span className="chat-widget-bubble-dot" aria-hidden="true" />
       </div>
     </div>
   );

@@ -634,8 +634,8 @@
 .chat-widget-bubble-wrap {
   position: relative;
   flex-shrink: 0;
-  width: 68px;
-  height: 68px;
+  width: 82px;
+  height: 82px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -666,8 +666,8 @@
 /* ── Bubble (avatar trigger) ── */
 .chat-widget-bubble {
   position: relative;
-  width: 68px;
-  height: 68px;
+  width: 82px;
+  height: 82px;
   border-radius: 50%;
   border: 3px solid #fff;
   cursor: pointer;
@@ -695,18 +695,19 @@
   display: block;
 }
 
-/* green online dot on bubble */
+/* green online dot — positioned on the wrapper div (not clipped by button overflow) */
 .chat-widget-bubble-dot {
   position: absolute;
   bottom: 4px;
-  right: 2px;
-  width: 14px;
-  height: 14px;
+  right: 4px;
+  width: 17px;
+  height: 17px;
   background: #22c55e;
   border-radius: 50%;
   border: 2.5px solid #fff;
   display: block;
-  z-index: 2;
+  z-index: 10;
+  pointer-events: none;
 }
 
 /* remove old ring span — keep it invisible */
