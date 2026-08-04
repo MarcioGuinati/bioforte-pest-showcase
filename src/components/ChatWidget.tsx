@@ -33,6 +33,7 @@ const ChatWidget = () => {
           onClick={handleOpen}
           className="chat-widget-card-inner"
           aria-label="Abrir conversa com Alice no WhatsApp"
+          tabIndex={expanded ? 0 : -1}
         >
           <div className="chat-widget-text">
             <span className="chat-widget-label">Atendimento online</span>

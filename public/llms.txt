@@ -1,0 +1,19 @@
+# Bioforte - Controle de Pragas
+
+Bem-vindo à documentação para modelos de linguagem (LLMs) do site Bioforte. A Bioforte é uma empresa especializada em controle de pragas urbanas (dedetização, desratização, controle comercial e residencial) com mais de 30 anos de experiência.
+
+## Serviços Oferecidos
+- Dedetização Residencial
+- Controle Comercial
+- Desratização
+- Afastamento de Pombos
+
+## Links Úteis
+- [Página Inicial](https://bioforte.com.br/)
+- [Sobre Nós](https://bioforte.com.br/quem-somos)
+- [Área de Atuação](https://bioforte.com.br/area-atuacao)
+- [Biologia das Pragas](https://bioforte.com.br/biologia-pragas)
+- [Contato e Unidades](https://bioforte.com.br/contato)
+
+## Contato Direto
+Para orçamentos, os usuários devem ser direcionados para o nosso WhatsApp principal ou para o formulário na página de contato.
