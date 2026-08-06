@@ -17,6 +17,7 @@ export interface GoogleReview {
   content: string;
   rating: number;
   date: string;
+  publishTime?: string;
 }
 
 export interface GoogleReviewsResult {
@@ -90,7 +91,7 @@ export async function getGoogleReviews(): Promise<GoogleReviewsResult | null> {
         method: "GET",
         headers: {
           "X-Goog-Api-Key": GOOGLE_API_KEY,
-          "X-Goog-FieldMask": "id,rating,userRatingCount,reviews"
+          "X-Goog-FieldMask": "id,rating,userRatingCount,reviews,reviews.publishTime"
         }
       });
 
@@ -105,12 +106,20 @@ export async function getGoogleReviews(): Promise<GoogleReviewsResult | null> {
       const userRatingCount = detailsData.userRatingCount || 127;
       const rawReviews = detailsData.reviews || [];
 
+      // Ordena por data de publicação mais recente (Google retorna por relevância por padrão)
+      const sortedRawReviews = [...rawReviews].sort((a: any, b: any) => {
+        const dateA = a.publishTime ? new Date(a.publishTime).getTime() : 0;
+        const dateB = b.publishTime ? new Date(b.publishTime).getTime() : 0;
+        return dateB - dateA;
+      });
+
       // Mapeamento para o formato consumido pelo layout do site
-      const reviews: GoogleReview[] = rawReviews.map((review: any) => ({
+      const reviews: GoogleReview[] = sortedRawReviews.map((review: any) => ({
         name: review.authorAttribution?.displayName || "Cliente Google",
         content: review.text?.text || "",
         rating: review.rating || 5,
-        date: review.relativePublishTimeDescription || "há 1 semana"
+        date: review.relativePublishTimeDescription || "há 1 semana",
+        publishTime: review.publishTime || undefined,
       }));
 
       cachedReviewsData = {

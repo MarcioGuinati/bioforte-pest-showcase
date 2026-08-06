@@ -77,6 +77,18 @@ const features = [
 const HeroSlider = memo(() => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== "undefined" && window.innerWidth < 640
+  );
+
+  // Detect mobile breakpoint reactively
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)");
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    setIsMobile(mq.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -86,16 +98,19 @@ const HeroSlider = memo(() => {
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
   }, []);
 
+  // On mobile: no autoplay — always show first slide
+  const displaySlide = isMobile ? 0 : currentSlide;
+
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || isMobile) return;
 
     const timer = setInterval(nextSlide, 7000);
     return () => clearInterval(timer);
-  }, [isPaused, nextSlide]);
+  }, [isPaused, isMobile, nextSlide]);
 
   return (
     <section
-      className="relative min-h-[90vh] overflow-hidden"
+      className="relative overflow-hidden"
       aria-roledescription="carrossel"
       aria-label="Apresentação da Bioforte Controle de Pragas"
       onMouseEnter={() => setIsPaused(true)}
@@ -103,27 +118,26 @@ const HeroSlider = memo(() => {
       onFocus={() => setIsPaused(true)}
       onBlur={() => setIsPaused(false)}
     >
-      {/* Slides */}
+      {/* Background slides — on mobile only slide 0 is shown */}
       <div className="absolute inset-0" aria-live="polite">
         {slides.map((slide, index) => (
           <div
             key={slide.id}
-            className={`absolute inset-0 transition-opacity duration-700 ${index === currentSlide
-                ? "opacity-100 z-10"
-                : "opacity-0 z-0"
-              }`}
+            className={`absolute inset-0 transition-opacity duration-700 ${
+              index === displaySlide ? "opacity-100 z-10" : "opacity-0 z-0"
+            }`}
             role="group"
             aria-roledescription="slide"
             aria-label={`Slide ${index + 1} de ${slides.length}: ${slide.title}`}
-            aria-hidden={index !== currentSlide}
+            aria-hidden={index !== displaySlide}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/70 to-transparent z-10" />
+            <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/75 to-background/40 z-10" />
             <img
               src={slide.image}
               alt={slide.title}
               width={1920}
               height={1080}
-              className="w-full h-full object-cover object-center transition-opacity duration-300 opacity-100"
+              className="w-full h-full object-cover object-center"
               loading={index === 0 ? "eager" : "lazy"}
               fetchPriority={index === 0 ? "high" : "auto"}
               decoding="async"
@@ -132,38 +146,42 @@ const HeroSlider = memo(() => {
         ))}
       </div>
 
-      {/* Content */}
-      <div className="relative z-20 container mx-auto px-4 h-full min-h-[90vh] flex items-center">
-        <div className="max-w-2xl animate-fade-in">
-          <div className="mb-6">
-            <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
-              {slides[currentSlide].subtitle}
-            </span>
-            <h1 className="text-4xl md:text-6xl font-bold text-foreground leading-tight mb-6">
-              <span className="text-gradient">{slides[currentSlide].title}</span>
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
-              {slides[currentSlide].description}
-            </p>
-          </div>
+      {/* Content — natural flow, not constrained to viewport height */}
+      <div className="relative z-20 container mx-auto px-4 pt-24 pb-8 sm:pt-28 lg:pt-0 lg:min-h-[90vh] lg:flex lg:items-center">
+        <div className="max-w-2xl animate-fade-in w-full">
+          {/* Subtitle badge */}
+          <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
+            {slides[displaySlide].subtitle}
+          </span>
 
-          <div className="flex flex-col sm:flex-row gap-4 mb-12">
-            {slides[currentSlide].ctaLink.startsWith('http') ? (
-              <a href={slides[currentSlide].ctaLink} target="_blank" rel="noopener noreferrer">
-                <Button variant="hero" size="lg" className="font-semibold pulse-ring group">
-                  {slides[currentSlide].cta}
+          {/* Heading */}
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-foreground leading-tight mb-4 sm:mb-6">
+            <span className="text-gradient">{slides[displaySlide].title}</span>
+          </h1>
+
+          {/* Description */}
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 leading-relaxed">
+            {slides[displaySlide].description}
+          </p>
+
+          {/* CTA buttons */}
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 sm:mb-10">
+            {slides[displaySlide].ctaLink.startsWith('http') ? (
+              <a href={slides[displaySlide].ctaLink} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto">
+                <Button variant="hero" size="lg" className="font-semibold pulse-ring group w-full sm:w-auto">
+                  {slides[displaySlide].cta}
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                 </Button>
               </a>
             ) : (
-              <Link to={slides[currentSlide].ctaLink}>
-                <Button variant="hero" size="lg" className="font-semibold pulse-ring group">
-                  {slides[currentSlide].cta}
+              <Link to={slides[displaySlide].ctaLink} className="w-full sm:w-auto">
+                <Button variant="hero" size="lg" className="font-semibold pulse-ring group w-full sm:w-auto">
+                  {slides[displaySlide].cta}
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                 </Button>
               </Link>
             )}
-            <Button variant="outline" size="lg" className="font-semibold hover-glow" asChild>
+            <Button variant="outline" size="lg" className="font-semibold hover-glow w-full sm:w-auto" asChild>
               <a href="tel:+551637230808" aria-label="Ligar para (16) 3723-0808">
                 (16) 3723-0808
               </a>
@@ -171,62 +189,65 @@ const HeroSlider = memo(() => {
           </div>
 
           {/* Features Grid */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4" role="list" aria-label="Diferenciais da Bioforte">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4" role="list" aria-label="Diferenciais da Bioforte">
             {features.map((feature, index) => (
               <div
                 key={index}
                 role="listitem"
-                className="flex flex-col items-center text-center p-4 glass-strong rounded-lg hover-lift group"
+                className="flex flex-col items-center text-center p-3 sm:p-4 glass-strong rounded-lg hover-lift group"
               >
-                <div className="gradient-animated p-3 rounded-full mb-3" aria-hidden="true">
-                  <feature.icon className="h-6 w-6 text-primary-foreground" />
+                <div className="gradient-animated p-2.5 sm:p-3 rounded-full mb-2 sm:mb-3" aria-hidden="true">
+                  <feature.icon className="h-5 w-5 sm:h-6 sm:w-6 text-primary-foreground" />
                 </div>
-                <h2 className="font-semibold text-sm mb-1 group-hover:text-primary transition-colors">{feature.title}</h2>
-                <p className="text-xs text-muted-foreground">{feature.description}</p>
+                <h2 className="font-semibold text-xs sm:text-sm mb-0.5 sm:mb-1 group-hover:text-primary transition-colors leading-tight">
+                  {feature.title}
+                </h2>
+                <p className="text-xs text-muted-foreground leading-tight hidden sm:block">{feature.description}</p>
               </div>
             ))}
           </div>
+
+          {/* Carousel Navigation — hidden on mobile, visible on sm+ */}
+          <nav className="hidden sm:flex items-center justify-center gap-4 mt-6 pb-6" aria-label="Navegação do carrossel">
+            <button
+              onClick={prevSlide}
+              className="p-2.5 glass-strong rounded-full hover:bg-primary/20 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+              aria-label="Slide anterior"
+            >
+              <ChevronLeft className="h-5 w-5" aria-hidden="true" />
+            </button>
+
+            <div className="flex gap-1" role="tablist" aria-label="Indicadores de slide">
+              {slides.map((slide, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  role="tab"
+                  aria-selected={index === displaySlide}
+                  aria-label={`Ir para slide ${index + 1}: ${slide.title}`}
+                  className="min-h-[44px] min-w-[44px] flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded"
+                >
+                  <span
+                    className={`h-2.5 rounded-full transition-all ${
+                      index === displaySlide
+                        ? "bg-primary w-7"
+                        : "bg-muted-foreground/50 w-2.5 hover:bg-primary/60"
+                    }`}
+                  />
+                </button>
+              ))}
+            </div>
+
+            <button
+              onClick={nextSlide}
+              className="p-2.5 glass-strong rounded-full hover:bg-primary/20 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+              aria-label="Próximo slide"
+            >
+              <ChevronRight className="h-5 w-5" aria-hidden="true" />
+            </button>
+          </nav>
         </div>
       </div>
-
-      {/* Navigation */}
-      <nav className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30 flex items-center gap-4" aria-label="Navegação do carrossel">
-        <button
-          onClick={prevSlide}
-          className="p-3 glass-strong rounded-full hover:bg-primary/20 transition-colors min-h-[48px] min-w-[48px] flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-          aria-label="Slide anterior"
-        >
-          <ChevronLeft className="h-5 w-5" aria-hidden="true" />
-        </button>
-
-        <div className="flex gap-1" role="tablist" aria-label="Indicadores de slide">
-          {slides.map((slide, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentSlide(index)}
-              role="tab"
-              aria-selected={index === currentSlide}
-              aria-label={`Ir para slide ${index + 1}: ${slide.title}`}
-              className="min-h-[48px] min-w-[48px] flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded"
-            >
-              <span
-                className={`h-3 rounded-full transition-all ${index === currentSlide
-                    ? "bg-primary w-8"
-                    : "bg-muted-foreground/50 w-3 hover:bg-primary/60"
-                  }`}
-              />
-            </button>
-          ))}
-        </div>
-
-        <button
-          onClick={nextSlide}
-          className="p-3 glass-strong rounded-full hover:bg-primary/20 transition-colors min-h-[48px] min-w-[48px] flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-          aria-label="Próximo slide"
-        >
-          <ChevronRight className="h-5 w-5" aria-hidden="true" />
-        </button>
-      </nav>
     </section>
   );
 });

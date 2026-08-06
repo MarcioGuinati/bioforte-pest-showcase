@@ -360,7 +360,6 @@ const BiologiaPragas = () => {
                   </a>
                 </div>
                 <div className="flex flex-wrap justify-center gap-4 mt-6 text-primary-foreground/65 text-xs">
-                  <span className="flex items-center gap-1.5"><CheckCircle className="h-3.5 w-3.5" /> Vistoria gratuita</span>
                   <span className="flex items-center gap-1.5"><CheckCircle className="h-3.5 w-3.5" /> Orçamento sem compromisso</span>
                   <span className="flex items-center gap-1.5"><CheckCircle className="h-3.5 w-3.5" /> Atendimento rápido</span>
                 </div>
