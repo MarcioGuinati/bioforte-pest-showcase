@@ -13,6 +13,15 @@ const QuemSomos = lazy(() => import("./pages/QuemSomos"));
 const BiologiaPragas = lazy(() => import("./pages/BiologiaPragas"));
 const AreaAtuacao = lazy(() => import("./pages/AreaAtuacao"));
 const BaratasPage = lazy(() => import("./pages/pragas/Baratas"));
+const FormigasPage = lazy(() => import("./pages/pragas/Formigas"));
+const CupinsPage = lazy(() => import("./pages/pragas/Cupins"));
+const RatosPage = lazy(() => import("./pages/pragas/Ratos"));
+const MosquitosPage = lazy(() => import("./pages/pragas/Mosquitos"));
+const AranhasPage = lazy(() => import("./pages/pragas/Aranhas"));
+const EscopioesPage = lazy(() => import("./pages/pragas/Escorpioes"));
+const PombosPage = lazy(() => import("./pages/pragas/Pombos"));
+const CarrapatosPage = lazy(() => import("./pages/pragas/Carrapatos"));
+const PiolhoPassarosPage = lazy(() => import("./pages/pragas/PiolhoPassaros"));
 const TrabalheConosco = lazy(() => import("./pages/TrabalheConosco"));
 const AreaCliente = lazy(() => import("./pages/AreaCliente"));
 const Contato = lazy(() => import("./pages/Contato"));
@@ -66,6 +75,15 @@ const App = () => (
               <Route path="biologia-pragas" element={<Suspense fallback={<PageLoader />}><BiologiaPragas /></Suspense>} />
               <Route path="area-atuacao" element={<Suspense fallback={<PageLoader />}><AreaAtuacao /></Suspense>} />
               <Route path="pragas/baratas" element={<Suspense fallback={<PageLoader />}><BaratasPage /></Suspense>} />
+              <Route path="pragas/formigas" element={<Suspense fallback={<PageLoader />}><FormigasPage /></Suspense>} />
+              <Route path="pragas/cupins" element={<Suspense fallback={<PageLoader />}><CupinsPage /></Suspense>} />
+              <Route path="pragas/ratos" element={<Suspense fallback={<PageLoader />}><RatosPage /></Suspense>} />
+              <Route path="pragas/mosquitos" element={<Suspense fallback={<PageLoader />}><MosquitosPage /></Suspense>} />
+              <Route path="pragas/aranhas" element={<Suspense fallback={<PageLoader />}><AranhasPage /></Suspense>} />
+              <Route path="pragas/escorpioes" element={<Suspense fallback={<PageLoader />}><EscopioesPage /></Suspense>} />
+              <Route path="pragas/pombos" element={<Suspense fallback={<PageLoader />}><PombosPage /></Suspense>} />
+              <Route path="pragas/carrapatos" element={<Suspense fallback={<PageLoader />}><CarrapatosPage /></Suspense>} />
+              <Route path="pragas/piolho-passaros" element={<Suspense fallback={<PageLoader />}><PiolhoPassarosPage /></Suspense>} />
               <Route path="nosso-time" element={<Navigate to="/trabalhe-conosco" replace />} />
               <Route path="trabalhe-conosco" element={<Suspense fallback={<PageLoader />}><TrabalheConosco /></Suspense>} />
               <Route path="area-cliente" element={<Suspense fallback={<PageLoader />}><AreaCliente /></Suspense>} />

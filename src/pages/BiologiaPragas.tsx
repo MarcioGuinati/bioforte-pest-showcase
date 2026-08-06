@@ -1,21 +1,18 @@
-import { Card, CardContent } from "@/components/ui/card";
+import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Bug,
   Shield,
   AlertTriangle,
-  Eye,
-  Zap,
-  Home,
-  ArrowRight,
+  ChevronRight,
   Microscope,
-  MapPin,
-  Lightbulb,
+  Phone,
+  CheckCircle,
+  ArrowRight,
   Skull,
-  Sparkles
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import SEO from "@/components/SEO";
 import pestBiology from "@/assets/biology-hero.jpeg";
 import formigaIcon from "@/assets/Icones-site_02-Formiga.svg";
 import barataIcon from "@/assets/Icones-site_03-Barata.svg";
@@ -31,186 +28,148 @@ import escorpiaoIcon from "@/assets/Icones-site-01-escorpiao.svg";
 const pests = [
   {
     name: "Baratas",
+    slug: "baratas",
     scientificName: "Blattodea",
     img: barataIcon,
-    description: "Insetos noturnos que se reproduzem rapidamente e transmitem diversas doenças.",
-    habitat: "Locais úmidos, quentes e escuros",
-    risks: ["Salmonela", "E. coli", "Hepatite A", "Disenteria"],
-    prevention: ["Manter ambiente seco", "Vedar frestas", "Limpar restos de comida", "Usar desentupidores"],
-    icon: Bug,
-    gradient: "from-red-500/20 via-orange-500/10 to-transparent",
-    accentColor: "text-red-500",
-    borderColor: "border-red-500/30",
-    dangerLevel: "Alto"
+    description: "Insetos noturnos que carregam mais de 30 tipos de bactérias e transmitem doenças como Salmonela, Hepatite A e E. coli.",
+    dangerLevel: "Alto" as const,
+    accentColor: "red",
   },
   {
     name: "Formigas",
+    slug: "formigas",
     scientificName: "Formicidae",
     img: formigaIcon,
-    description: "Insetos sociais organizados que formam trilhas e atacam em grupos.",
-    habitat: "Jardins, frestas de paredes, sob pisos",
-    risks: ["Contaminação de alimentos", "Mordidas dolorosas", "Danos estruturais"],
-    prevention: ["Vedar entrada", "Limpar migalhas", "Remover umidade", "Podar plantas"],
-    icon: Bug,
-    gradient: "from-orange-500/20 via-amber-500/10 to-transparent",
-    accentColor: "text-orange-500",
-    borderColor: "border-orange-500/30",
-    dangerLevel: "Médio"
+    description: "Insetos sociais que formam colônias com centenas de milhares de indivíduos e contaminam alimentos.",
+    dangerLevel: "Médio" as const,
+    accentColor: "orange",
   },
   {
     name: "Cupins",
+    slug: "cupins",
     scientificName: "Isoptera",
     img: cupimIcon,
-    description: "Insetos que se alimentam de celulose, causando danos estruturais graves.",
-    habitat: "Madeira, papelão, livros, estruturas",
-    risks: ["Danos estruturais", "Prejuízos financeiros", "Colapso de estruturas"],
-    prevention: ["Controlar umidade", "Tratar madeiras", "Inspeções regulares", "Ventilação adequada"],
-    icon: Home,
-    gradient: "from-yellow-500/20 via-amber-500/10 to-transparent",
-    accentColor: "text-yellow-600",
-    borderColor: "border-yellow-500/30",
-    dangerLevel: "Alto"
+    description: "Destroem madeiras, estruturas e documentos silenciosamente. Causam bilhões em prejuízo por ano no Brasil.",
+    dangerLevel: "Alto" as const,
+    accentColor: "yellow",
   },
   {
     name: "Ratos",
-    scientificName: "Rattus",
+    slug: "ratos",
+    scientificName: "Rattus spp.",
     img: ratoIcon,
-    description: "Roedores adaptáveis que se reproduzem rapidamente e transmitem doenças graves.",
-    habitat: "Porões, sótãos, esgotos, depósitos",
-    risks: ["Leptospirose", "Peste", "Hantavírus", "Salmonelose"],
-    prevention: ["Vedar buracos", "Remover alimentos", "Controlar lixo", "Desentupir ralos"],
-    icon: Zap,
-    gradient: "from-gray-500/20 via-slate-500/10 to-transparent",
-    accentColor: "text-gray-600",
-    borderColor: "border-gray-500/30",
-    dangerLevel: "Crítico"
+    description: "Transmitem leptospirose, hantavírus e salmonela. Corroem fios elétricos e causam incêndios.",
+    dangerLevel: "Crítico" as const,
+    accentColor: "gray",
   },
   {
     name: "Mosquitos",
+    slug: "mosquitos",
     scientificName: "Culicidae",
     img: moscaIcon,
-    description: "Insetos voadores que se reproduzem em água parada e transmitem doenças.",
-    habitat: "Água parada, vasos, caixas d'água",
-    risks: ["Dengue", "Zika", "Chikungunya", "Febre Amarela"],
-    prevention: ["Eliminar água parada", "Usar repelentes", "Telas nas janelas", "Manter quintal limpo"],
-    icon: Eye,
-    gradient: "from-blue-500/20 via-cyan-500/10 to-transparent",
-    accentColor: "text-blue-500",
-    borderColor: "border-blue-500/30",
-    dangerLevel: "Crítico"
+    description: "Vetores de dengue, Zika, chikungunya e febre amarela. Reproduzem-se em qualquer acúmulo de água parada.",
+    dangerLevel: "Crítico" as const,
+    accentColor: "blue",
   },
   {
     name: "Aranhas",
+    slug: "aranhas",
     scientificName: "Araneae",
     img: aranhaIcon,
-    description: "Aracnídeos predadores, algumas espécies são venenosas e perigosas.",
-    habitat: "Cantos escuros, atrás de móveis, jardins",
-    risks: ["Picadas venenosas", "Reações alérgicas", "Necrose tissular"],
-    prevention: ["Limpar teias", "Vedar frestas", "Reduzir esconderijos", "Manter organização"],
-    icon: Shield,
-    gradient: "from-purple-500/20 via-violet-500/10 to-transparent",
-    accentColor: "text-purple-500",
-    borderColor: "border-purple-500/30",
-    dangerLevel: "Alto"
+    description: "Espécies como a aranha-marrom e armadeira causam acidentes graves com necrose e comprometimento neurológico.",
+    dangerLevel: "Alto" as const,
+    accentColor: "purple",
   },
   {
     name: "Escorpiões",
+    slug: "escorpioes",
     scientificName: "Scorpiones",
     img: escorpiaoIcon,
-    description: "Aracnídeos peçonhentos extremamente perigosos, especialmente para crianças e idosos.",
-    habitat: "Entulhos, terrenos baldios, frestas, encanamentos",
-    risks: ["Picadas peçonhentas", "Risco de morte", "Reações graves", "Emergência médica"],
-    prevention: ["Vedar ralos", "Eliminar entulhos", "Telas em ralos", "Manter quintal limpo"],
-    icon: Skull,
-    gradient: "from-amber-600/20 via-yellow-700/10 to-transparent",
-    accentColor: "text-amber-700",
-    borderColor: "border-amber-600/30",
-    dangerLevel: "Crítico"
+    description: "O Tityus serrulatus é o animal peçonhento mais letal do Brasil, com risco de morte para crianças e idosos.",
+    dangerLevel: "Crítico" as const,
+    accentColor: "amber",
   },
   {
     name: "Pombos",
+    slug: "pombos",
     scientificName: "Columba livia",
     img: pomboIcon,
-    description: "Aves urbanas que causam sujeira, transmitem doenças e danificam estruturas.",
-    habitat: "Telhados, beirais, sótãos, marquises",
-    risks: ["Criptococose", "Histoplasmose", "Salmonela", "Ácaros e parasitas"],
-    prevention: ["Espantadores físicos", "Telas de proteção", "Limpeza periódica", "Vedar acessos"],
-    icon: Bug,
-    gradient: "from-slate-500/20 via-gray-400/10 to-transparent",
-    accentColor: "text-slate-600",
-    borderColor: "border-slate-500/30",
-    dangerLevel: "Médio"
+    description: "Excrementos transmitem criptococose e histoplasmose. Corroem fachadas e atraem ácaros parasitas.",
+    dangerLevel: "Médio" as const,
+    accentColor: "slate",
   },
   {
     name: "Carrapatos",
+    slug: "carrapatos",
     scientificName: "Ixodida",
     img: carrapatoIcon,
-    description: "Parasitas hematófagos que se fixam em animais e humanos, transmitindo doenças graves.",
-    habitat: "Vegetação, gramados, animais domésticos",
-    risks: ["Febre Maculosa", "Doença de Lyme", "Anaplasmose", "Babesiose"],
-    prevention: ["Usar repelentes", "Verificar animais", "Cortar grama", "Roupas compridas"],
-    icon: Shield,
-    gradient: "from-teal-500/20 via-emerald-500/10 to-transparent",
-    accentColor: "text-teal-600",
-    borderColor: "border-teal-500/30",
-    dangerLevel: "Alto"
+    description: "Vetores da Febre Maculosa, com letalidade superior a 20%. Parasitam humanos e animais domésticos.",
+    dangerLevel: "Alto" as const,
+    accentColor: "teal",
   },
   {
     name: "Piolho de Pássaros",
+    slug: "piolho-passaros",
     scientificName: "Dermanyssus gallinae",
     img: piolhoIcon,
-    description: "Ácaros parasitas que vivem em aves e podem infestar ambientes humanos, causando dermatites.",
-    habitat: "Ninhos de pombos, galinheiros, forros de telhado",
-    risks: ["Dermatite", "Reações alérgicas", "Infestação doméstica", "Anemia em aves"],
-    prevention: ["Eliminar ninhos", "Controlar pombos", "Vedar acessos", "Higienizar ambientes"],
-    icon: Bug,
-    gradient: "from-pink-500/20 via-rose-500/10 to-transparent",
-    accentColor: "text-pink-600",
-    borderColor: "border-pink-500/30",
-    dangerLevel: "Médio"
-  }
+    description: "Ácaro parasita de aves que invade residências próximas a ninhos de pombos, causando dermatite intensa.",
+    dangerLevel: "Médio" as const,
+    accentColor: "pink",
+  },
 ];
 
-const dangerColors: Record<string, string> = {
-  "Médio": "bg-yellow-500/20 text-yellow-700 dark:text-yellow-400 border-yellow-500/40",
-  "Alto": "bg-orange-500/20 text-orange-700 dark:text-orange-400 border-orange-500/40",
-  "Crítico": "bg-red-500/20 text-red-700 dark:text-red-400 border-red-500/40"
+const dangerConfig: Record<string, { badge: string; dot: string; label: string; icon: React.ReactNode }> = {
+  Médio: {
+    badge: "border-yellow-500/40 bg-yellow-500/10 text-yellow-700 dark:text-yellow-400",
+    dot: "bg-yellow-500",
+    label: "Risco Médio",
+    icon: <AlertTriangle className="h-3 w-3" />,
+  },
+  Alto: {
+    badge: "border-orange-500/40 bg-orange-500/10 text-orange-700 dark:text-orange-400",
+    dot: "bg-orange-500",
+    label: "Risco Alto",
+    icon: <AlertTriangle className="h-3 w-3" />,
+  },
+  Crítico: {
+    badge: "border-red-500/40 bg-red-500/10 text-red-700 dark:text-red-400",
+    dot: "bg-red-500",
+    label: "Risco Crítico",
+    icon: <Skull className="h-3 w-3" />,
+  },
 };
 
-import SEO from "@/components/SEO";
+const allPestNav = pests.map((p) => ({ name: p.name, slug: p.slug }));
 
 const BiologiaPragas = () => {
   return (
     <div className="min-h-screen overflow-hidden">
       <SEO
         title="Biologia das Pragas"
-        description="Aprenda sobre a biologia, comportamento e riscos das principais pragas urbanas como baratas, ratos, cupins e mosquitos. Controle baseado em ciência."
+        description="Conheça a biologia, comportamento e riscos das principais pragas urbanas. Clique em cada praga para informações detalhadas sobre prevenção e controle."
         canonical="/biologia-pragas"
       />
 
-      {/* Hero Section */}
-      <section className="relative py-20 lg:py-32 overflow-hidden">
+      {/* ── HERO ── */}
+      <section className="relative min-h-[480px] sm:min-h-[540px] lg:min-h-[580px] flex items-center overflow-hidden">
         <div className="absolute inset-0">
           <img
             src={pestBiology}
             alt="Biologia das Pragas"
             width="1920"
-            height="1080"
+            height="580"
             fetchPriority="high"
             className="w-full h-full object-cover object-center"
+            loading="eager"
           />
-          {/* Deep dark overlay with green tint */}
-          <div className="absolute inset-0 bg-gradient-to-r from-background/97 via-background/85 to-background/50" />
-          <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-background/30" />
-          {/* Extra dark overlay on the left to ensure white text is always legible */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent dark:from-black/75 dark:via-black/40 dark:to-transparent" />
-          {/* Green neon tint on far right */}
-          <div className="absolute inset-0 bg-gradient-to-l from-primary/10 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-black/60" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
         </div>
 
         {/* Tech grid overlay */}
         <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-          <svg className="absolute inset-0 w-full h-full opacity-[0.07]" xmlns="http://www.w3.org/2000/svg">
+          <svg className="absolute inset-0 w-full h-full opacity-[0.06]" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <pattern id="bio-grid" width="50" height="50" patternUnits="userSpaceOnUse">
                 <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#4ade80" strokeWidth="0.6" />
@@ -218,311 +177,195 @@ const BiologiaPragas = () => {
             </defs>
             <rect width="100%" height="100%" fill="url(#bio-grid)" />
           </svg>
-          <div className="absolute top-20 right-20 w-40 h-40 bg-primary/20 rounded-full blur-3xl animate-float" />
-          <div className="absolute bottom-20 left-10 w-32 h-32 bg-accent/20 rounded-full blur-2xl animate-float" style={{ animationDelay: "2s" }} />
-          {/* Neon green accent glow on right side */}
-          <div className="absolute top-1/2 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl -translate-y-1/2" />
+          <div className="absolute top-16 right-1/3 w-64 h-64 bg-primary/15 rounded-full blur-3xl animate-float" />
+          <div className="absolute bottom-10 right-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl animate-float" style={{ animationDelay: "2s" }} />
         </div>
 
-        <div className="relative container mx-auto px-4">
+        <div className="relative container mx-auto px-4 py-14 sm:py-20 lg:py-24">
+          {/* Breadcrumb */}
+          <nav className="flex items-center gap-2 text-white/60 text-sm mb-6 animate-fade-in">
+            <Link to="/" className="hover:text-white transition-colors">Início</Link>
+            <ChevronRight className="h-3.5 w-3.5" />
+            <span className="text-white/90">Biologia das Pragas</span>
+          </nav>
+
           <div className="max-w-3xl">
-            <Badge variant="outline" className="mb-6 animate-fade-in hover-glow border-primary/50 text-primary bg-primary/10">
+            <Badge variant="outline" className="mb-6 border-primary/60 text-primary bg-primary/20 backdrop-blur-sm animate-fade-in">
               <Microscope className="h-3.5 w-3.5 mr-1.5" />
               Conheça o Inimigo
             </Badge>
-            <h1 className="text-4xl lg:text-6xl font-bold mb-6 animate-fade-in-up text-white">
-              Biologia das
-              <span className="text-gradient"> Pragas Urbanas</span>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 animate-fade-in-up leading-tight text-white [text-shadow:0_2px_12px_rgba(0,0,0,0.8)]">
+              Biologia das{" "}
+              <span className="text-gradient">Pragas Urbanas</span>
             </h1>
-            <p className="text-lg lg:text-xl text-white/80 leading-relaxed animate-blur-in">
+            <p className="text-lg lg:text-xl text-white leading-relaxed animate-blur-in max-w-2xl mt-2 [text-shadow:0_1px_8px_rgba(0,0,0,0.9)] font-medium">
               Entender a praga é o primeiro passo para eliminá-la.
             </p>
-            <p className="text-base text-white/65 leading-relaxed animate-blur-in mt-3 max-w-xl" style={{ animationDelay: "0.2s" }}>
+            <p className="text-base text-white/90 leading-relaxed animate-blur-in max-w-xl mt-3 [text-shadow:0_1px_6px_rgba(0,0,0,0.9)]" style={{ animationDelay: "0.15s" }}>
               Conhecimento científico aplicado ao controle eficaz — biologia, comportamento e ciclo de vida das principais pragas urbanas.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Introduction */}
-      <section className="py-20 bg-muted/30 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-10 left-10 w-48 h-48 bg-primary rounded-full blur-3xl animate-float" />
-        </div>
-        <div className="container mx-auto px-4 relative">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl lg:text-4xl font-bold mb-6 animate-fade-in-up">
-              Por que <span className="text-gradient">conhecer</span> as pragas?
-            </h2>
-            <p className="text-lg text-muted-foreground mb-8 leading-relaxed animate-blur-in">
-              O controle eficaz de pragas começa com o entendimento profundo de sua biologia,
-              comportamento e ciclo reprodutivo. Esse conhecimento permite desenvolver
-              estratégias direcionadas e sustentáveis.
-            </p>
+      {/* ── MAIN CONTENT ── */}
+      <section className="py-16 lg:py-20">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col lg:flex-row gap-8 xl:gap-12">
 
-            <div className="grid md:grid-cols-3 gap-8 mt-12">
-              <Card className="glass-strong hover-lift group animate-scale-bounce" style={{ animationDelay: "0.1s" }}>
-                <CardContent className="p-6 text-center">
-                  <div className="gradient-animated p-3 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <Eye className="h-8 w-8 text-primary-foreground" />
+            {/* ── SIDEBAR ── */}
+            <aside className="lg:w-64 xl:w-72 flex-shrink-0">
+              <div className="lg:sticky lg:top-24 space-y-4">
+                {/* Nav card */}
+                <div className="glass-strong rounded-2xl border border-border/60 overflow-hidden">
+                  <div className="gradient-primary p-4">
+                    <h2 className="text-sm font-bold text-primary-foreground uppercase tracking-wider flex items-center gap-2">
+                      <Bug className="h-4 w-4" />
+                      Principais Espécies
+                    </h2>
                   </div>
-                  <h3 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors">Identificação</h3>
-                  <p className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
-                    Reconhecer espécies e sinais de infestação
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="glass-strong hover-lift group animate-scale-bounce" style={{ animationDelay: "0.2s" }}>
-                <CardContent className="p-6 text-center">
-                  <div className="gradient-animated p-3 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <Shield className="h-8 w-8 text-primary-foreground" />
-                  </div>
-                  <h3 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors">Prevenção</h3>
-                  <p className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
-                    Medidas preventivas baseadas no comportamento
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="glass-strong hover-lift group animate-scale-bounce" style={{ animationDelay: "0.3s" }}>
-                <CardContent className="p-6 text-center">
-                  <div className="gradient-animated p-3 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <Zap className="h-8 w-8 text-primary-foreground" />
-                  </div>
-                  <h3 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors">Controle</h3>
-                  <p className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
-                    Tratamentos específicos e eficazes
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Pests Details */}
-      <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-40 right-20 w-64 h-64 bg-accent rounded-full blur-3xl animate-float" />
-          <div className="absolute bottom-40 left-20 w-72 h-72 bg-primary rounded-full blur-3xl animate-float" style={{ animationDelay: "2s" }} />
-        </div>
-        <div className="container mx-auto px-4 relative">
-          <div className="text-center mb-16 animate-fade-in-down">
-            <Badge variant="outline" className="mb-4 hover-glow">
-              <Microscope className="h-3 w-3 mr-1" />
-              Principais Pragas
-            </Badge>
-            <h2 className="text-3xl lg:text-5xl font-bold mb-6">
-              Guia completo das <span className="text-gradient">pragas urbanas</span>
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Conheça em detalhes cada praga que combatemos. Clique em "Solicitar Tratamento"
-              para um atendimento especializado.
-            </p>
-          </div>
-
-          {/* Modern Grid of Pest Cards */}
-          <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
-            {pests.map((pest, index) => (
-              <Card
-                key={index}
-                className={`group relative overflow-hidden border-2 ${pest.borderColor} bg-card hover-lift animate-scale-bounce transition-all duration-500 hover:shadow-2xl`}
-                style={{ animationDelay: `${index * 0.08}s` }}
-              >
-                {/* Decorative gradient overlay */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${pest.gradient} opacity-50 group-hover:opacity-80 transition-opacity duration-500`} aria-hidden="true" />
-
-                {/* Floating decorative blob */}
-                <div className={`absolute -top-12 -right-12 w-40 h-40 rounded-full bg-gradient-to-br ${pest.gradient} blur-2xl opacity-60 group-hover:scale-125 transition-transform duration-700`} aria-hidden="true" />
-
-                <CardContent className="relative p-0 flex flex-col h-full">
-                  {/* Header with emoji and danger badge */}
-                  <div className="p-6 pb-4 flex items-start justify-between">
-                    <div className="flex items-center gap-4">
-                      <div className="relative">
-                        <div className={`absolute inset-0 ${pest.accentColor} opacity-20 blur-xl rounded-full group-hover:opacity-40 transition-opacity`} />
-                        {'img' in pest ? (
-                          <img
-                            src={(pest as any).img}
-                            alt={pest.name}
-                            className="relative w-14 h-14 lg:w-16 lg:h-16 object-contain group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500 dark:invert"
-                            aria-hidden="true"
-                          />
-                        ) : (
-                          <div className="relative text-5xl lg:text-6xl group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500" aria-hidden="true">
-                            {(pest as any).emoji}
-                          </div>
-                        )}
-                      </div>
-                      <div>
-                        <h3 className="text-2xl font-bold group-hover:text-primary transition-colors">
-                          {pest.name}
-                        </h3>
-                        <p className="text-xs text-muted-foreground italic">
-                          {pest.scientificName}
-                        </p>
-                      </div>
-                    </div>
-                    <Badge
-                      variant="outline"
-                      className={`${dangerColors[pest.dangerLevel]} font-bold text-xs whitespace-nowrap`}
-                    >
-                      <AlertTriangle className="h-3 w-3 mr-1" />
-                      {pest.dangerLevel}
-                    </Badge>
-                  </div>
-
-                  {/* Description */}
-                  <div className="px-6 pb-4">
-                    <p className="text-sm text-muted-foreground leading-relaxed group-hover:text-foreground transition-colors">
-                      {pest.description}
-                    </p>
-                  </div>
-
-                  {/* Habitat */}
-                  <div className="px-6 pb-4">
-                    <div className="flex items-start gap-2 p-3 rounded-lg bg-background/60 backdrop-blur-sm border border-border/50">
-                      <MapPin className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
-                      <div className="min-w-0 flex-1">
-                        <p className="text-xs font-semibold text-foreground mb-0.5">Habitat</p>
-                        <p className="text-xs text-muted-foreground">{pest.habitat}</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Risks Pills */}
-                  <div className="px-6 pb-4">
-                    <div className="flex items-center gap-2 mb-2">
-                      <AlertTriangle className="h-4 w-4 text-destructive" />
-                      <p className="text-xs font-semibold uppercase tracking-wider text-destructive">
-                        Riscos à Saúde
-                      </p>
-                    </div>
-                    <div className="flex flex-wrap gap-1.5">
-                      {pest.risks.map((risk, idx) => (
-                        <span
-                          key={idx}
-                          className="text-xs px-2.5 py-1 rounded-full bg-destructive/10 text-destructive border border-destructive/20 font-medium"
-                        >
-                          {risk}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Prevention Tips */}
-                  <div className="px-6 pb-4 flex-1">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Lightbulb className="h-4 w-4 text-primary" />
-                      <p className="text-xs font-semibold uppercase tracking-wider text-primary">
-                        Como Prevenir
-                      </p>
-                    </div>
-                    <ul className="space-y-1.5">
-                      {pest.prevention.slice(0, 3).map((tip, idx) => (
-                        <li key={idx} className="flex items-start gap-2 text-xs text-muted-foreground group-hover:text-foreground transition-colors">
-                          <Shield className="h-3 w-3 text-primary mt-0.5 flex-shrink-0" />
-                          <span>{tip}</span>
+                  <nav aria-label="Lista de pragas">
+                    <ul className="divide-y divide-border/40">
+                      {allPestNav.map((pest) => (
+                        <li key={pest.slug}>
+                          <Link
+                            to={`/pragas/${pest.slug}`}
+                            className="flex items-center gap-3 px-4 py-3 text-sm font-medium transition-all duration-200 group hover:bg-muted/50 text-foreground/80 hover:text-foreground"
+                          >
+                            <ChevronRight className="h-3.5 w-3.5 flex-shrink-0 text-muted-foreground group-hover:translate-x-0.5 group-hover:text-primary transition-all" />
+                            {pest.name}
+                          </Link>
                         </li>
                       ))}
                     </ul>
-                  </div>
-
-                  {/* CTA */}
-                  <div className="p-6 pt-4 border-t border-border/50 mt-auto">
-                    <a href="https://wa.me/551637230808?text=Olá! Gostaria de solicitar um tratamento para controle de pragas." target="_blank" rel="noopener noreferrer" className="block">
-                      <Button
-                        variant="hero"
-                        size="sm"
-                        className="w-full font-semibold group/btn hover-shine"
-                      >
-                        Solicitar Tratamento
-                        <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
-                      </Button>
-                    </a>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          {/* Helper notice */}
-          <div className="mt-12 max-w-2xl mx-auto">
-            <div className="glass-strong rounded-2xl p-6 flex items-center gap-4 border border-primary/20">
-              <div className="gradient-animated p-3 rounded-full flex-shrink-0">
-                <Sparkles className="h-6 w-6 text-primary-foreground" />
-              </div>
-              <div>
-                <p className="font-semibold mb-1">Não encontrou sua praga?</p>
-                <p className="text-sm text-muted-foreground">
-                  Atendemos diversas outras pragas urbanas. Entre em contato e receba um diagnóstico personalizado.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Integrated Pest Management */}
-      <section className="py-20 bg-muted/30">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <Badge variant="outline" className="mb-4">Manejo Integrado</Badge>
-            <h2 className="text-3xl lg:text-4xl font-bold mb-6">
-              Controle <span className="text-primary">integrado</span> de pragas
-            </h2>
-            <p className="text-lg text-muted-foreground mb-12">
-              Nossa abordagem combina conhecimento científico, métodos sustentáveis
-              e tecnologia avançada para resultados duradouros.
-            </p>
-
-            <div className="grid md:grid-cols-4 gap-8">
-              {[
-                { title: "Inspeção", desc: "Avaliação detalhada" },
-                { title: "Identificação", desc: "Espécies e grau de infestação" },
-                { title: "Tratamento", desc: "Métodos específicos" },
-                { title: "Monitoramento", desc: "Acompanhamento contínuo" }
-              ].map((step, index) => (
-                <div key={index} className="text-center">
-                  <div className="gradient-primary text-primary-foreground rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 font-bold">
-                    {index + 1}
-                  </div>
-                  <h3 className="font-semibold mb-2">{step.title}</h3>
-                  <p className="text-sm text-muted-foreground">{step.desc}</p>
+                  </nav>
                 </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* CTA Section */}
-      <section className="py-20 gradient-hero">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold text-primary-foreground mb-6">
-            Precisa de controle profissional de pragas?
-          </h2>
-          <p className="text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
-            Nossa equipe especializada está pronta para resolver seu problema
-            com eficiência e segurança.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="https://wa.me/551637230808?text=Olá! Gostaria de solicitar um orçamento para controle de pragas." target="_blank" rel="noopener noreferrer">
-              <Button variant="secondary" size="lg" className="font-semibold">
-                Solicitar Orçamento Gratuito
-              </Button>
-            </a>
-            <Link to="/area-atuacao">
-              <Button
-                variant="outline"
-                size="lg"
-                className="font-semibold bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
-              >
-                Ver Nossos Serviços
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
+                {/* CTA card */}
+                <div className="glass-strong rounded-2xl border border-primary/20 p-5 bg-primary/5">
+                  <h3 className="font-bold mb-2 text-sm">Precisa de controle profissional?</h3>
+                  <p className="text-xs text-muted-foreground mb-4 leading-relaxed">
+                    Nossa equipe está pronta para eliminar a infestação com segurança e eficácia.
+                  </p>
+                  <a
+                    href="https://wa.me/551637230808?text=Olá! Preciso de controle de pragas. Gostaria de um orçamento."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Button variant="hero" size="sm" className="w-full font-semibold hover-shine">
+                      <Phone className="mr-2 h-4 w-4" />
+                      Falar no WhatsApp
+                    </Button>
+                  </a>
+                </div>
+              </div>
+            </aside>
+
+            {/* ── MAIN ── */}
+            <div className="flex-1 min-w-0">
+
+              {/* Intro */}
+              <div className="glass-strong rounded-2xl border border-border/60 overflow-hidden mb-8 animate-fade-in-up">
+                <div className="p-5 border-b border-border/60 flex items-center gap-3 bg-primary/5">
+                  <div className="p-2 rounded-lg bg-primary/10 border border-primary/30">
+                    <Microscope className="h-5 w-5 text-primary" />
+                  </div>
+                  <h2 className="font-bold text-lg">Por que conhecer as pragas?</h2>
+                </div>
+                <div className="p-6 space-y-3">
+                  <p className="text-muted-foreground leading-relaxed text-sm lg:text-base">
+                    O controle eficaz de pragas começa com o entendimento profundo de sua biologia, comportamento e ciclo reprodutivo. Esse conhecimento permite desenvolver estratégias direcionadas e sustentáveis, com maior eficácia e menor impacto ambiental.
+                  </p>
+                  <p className="text-muted-foreground leading-relaxed text-sm lg:text-base">
+                    Clique em qualquer praga abaixo para acessar informações detalhadas sobre sua biologia, onde é encontrada, como prevenir e como realizar o controle adequado.
+                  </p>
+                </div>
+              </div>
+
+              {/* Pest grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-5">
+                {pests.map((pest, index) => {
+                  const danger = dangerConfig[pest.dangerLevel];
+                  return (
+                    <Link
+                      key={pest.slug}
+                      to={`/pragas/${pest.slug}`}
+                      className="group block"
+                      style={{ animationDelay: `${index * 0.06}s` }}
+                    >
+                      <div className="glass-strong rounded-2xl border border-border/60 hover:border-primary/40 p-5 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 h-full flex flex-col animate-scale-bounce">
+                        {/* Header */}
+                        <div className="flex items-start justify-between mb-4">
+                          <div className="flex items-center gap-3">
+                            <div className="w-12 h-12 flex items-center justify-center flex-shrink-0">
+                              <img
+                                src={pest.img}
+                                alt={pest.name}
+                                className="w-10 h-10 object-contain group-hover:scale-110 transition-transform duration-300 dark:invert"
+                                aria-hidden="true"
+                              />
+                            </div>
+                            <div>
+                              <h3 className="font-bold text-lg leading-tight group-hover:text-primary transition-colors">
+                                {pest.name}
+                              </h3>
+                              <p className="text-xs text-muted-foreground italic">{pest.scientificName}</p>
+                            </div>
+                          </div>
+                          <Badge variant="outline" className={`text-xs font-semibold border flex-shrink-0 ml-2 ${danger.badge}`}>
+                            {danger.icon}
+                            <span className="ml-1">{pest.dangerLevel}</span>
+                          </Badge>
+                        </div>
+
+                        {/* Description */}
+                        <p className="text-sm text-muted-foreground leading-relaxed flex-1 group-hover:text-foreground/80 transition-colors">
+                          {pest.description}
+                        </p>
+
+                        {/* Footer link */}
+                        <div className="flex items-center gap-1.5 mt-4 pt-3 border-t border-border/50 text-sm font-semibold text-primary">
+                          Ver detalhes completos
+                          <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+
+              {/* Bottom CTA */}
+              <div className="mt-10 gradient-hero rounded-2xl p-8 text-center animate-fade-in-up">
+                <h3 className="text-2xl font-bold text-primary-foreground mb-3">
+                  Identificou alguma praga no seu imóvel?
+                </h3>
+                <p className="text-primary-foreground/85 mb-6 max-w-xl mx-auto">
+                  A Bioforte realiza vistoria gratuita com diagnóstico técnico completo. Atendimento rápido e seguro.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <a
+                    href="https://wa.me/551637230808?text=Olá! Identificei uma praga e gostaria de solicitar uma vistoria gratuita."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Button variant="secondary" size="lg" className="font-bold hover-shine">
+                      <Phone className="mr-2 h-5 w-5" />
+                      Chamar no WhatsApp
+                    </Button>
+                  </a>
+                  <a href="tel:+551637230808">
+                    <Button variant="outline" size="lg" className="font-semibold bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
+                      (16) 3723-0808
+                    </Button>
+                  </a>
+                </div>
+                <div className="flex flex-wrap justify-center gap-4 mt-6 text-primary-foreground/65 text-xs">
+                  <span className="flex items-center gap-1.5"><CheckCircle className="h-3.5 w-3.5" /> Vistoria gratuita</span>
+                  <span className="flex items-center gap-1.5"><CheckCircle className="h-3.5 w-3.5" /> Orçamento sem compromisso</span>
+                  <span className="flex items-center gap-1.5"><CheckCircle className="h-3.5 w-3.5" /> Atendimento rápido</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

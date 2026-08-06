@@ -39,7 +39,7 @@ const Footer = () => {
   const socialLinks = [
     { icon: Facebook, href: "https://www.facebook.com/BioforteDedetizadora?locale=pt_BR", label: "Facebook", color: "hover:bg-[#1877F2]" },
     { icon: Instagram, href: "https://www.instagram.com/biofortededetizadora/", label: "Instagram", color: "hover:bg-gradient-to-tr hover:from-[#f9ce34] hover:via-[#ee2a7b] hover:to-[#6228d7]" },
-    { icon: Youtube, href: "https://www.youtube.com/@biofortesaneamentoambienta3867", label: "YouTube", color: "hover:bg-[#FF0000]" },
+    { icon: Youtube, href: "https://www.youtube.com/@bioforte.saneamento", label: "YouTube", color: "hover:bg-[#FF0000]" },
     { icon: Linkedin, href: "https://linkedin.com/company/biofortededetizadora", label: "LinkedIn", color: "hover:bg-[#0A66C2]" }
   ];
 
@@ -84,14 +84,20 @@ const Footer = () => {
               ))}
             </div>
             {/* Certifications badges */}
-            <div className="flex items-center gap-4 pt-4">
-              <div className="flex items-center gap-2 text-xs font-semibold text-muted-foreground bg-muted/50 px-3 py-2 rounded-full border border-border/50">
-                <img src={anosIcon} alt="30+ Anos" className="h-5 w-5 object-contain" />
-                30+ Anos
+            <div className="flex items-stretch gap-3 pt-2">
+              <div className="flex items-center gap-3 bg-primary/8 border border-primary/30 rounded-xl px-4 py-3 hover:bg-primary/15 transition-colors group">
+                <img src={anosIcon} alt="30+ Anos" className="h-8 w-8 object-contain flex-shrink-0 group-hover:scale-110 transition-transform" />
+                <div>
+                  <p className="text-sm font-bold text-foreground leading-tight">30+ Anos</p>
+                  <p className="text-xs text-muted-foreground">de Experiência</p>
+                </div>
               </div>
-              <div className="flex items-center gap-2 text-xs font-semibold text-muted-foreground bg-muted/50 px-3 py-2 rounded-full border border-border/50">
-                <img src={apragIcon} alt="APRAG" className="h-5 w-5 object-contain" />
-                APRAG
+              <div className="flex items-center gap-3 bg-primary/8 border border-primary/30 rounded-xl px-4 py-3 hover:bg-primary/15 transition-colors group">
+                <img src={apragIcon} alt="APRAG" className="h-8 w-8 object-contain flex-shrink-0 group-hover:scale-110 transition-transform" />
+                <div>
+                  <p className="text-sm font-bold text-foreground leading-tight">APRAG</p>
+                  <p className="text-xs text-muted-foreground">Associada</p>
+                </div>
               </div>
             </div>
           </div>

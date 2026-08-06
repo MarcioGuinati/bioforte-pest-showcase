@@ -4,13 +4,13 @@ import { Award, Users, Star, CheckCircle } from "lucide-react";
 
 const stats = [
   { number: "30+", label: "Anos de Experiência", icon: Award },
-  { number: "5000+", label: "Clientes Atendidos", icon: Users },
+  { number: "10625+", label: "Clientes Atendidos", icon: Users },
   { number: "98%", label: "Satisfação", icon: Star },
   { number: "100%", label: "Garantia comprovada", icon: CheckCircle }
 ];
 
 const StatsSection = () => {
-  const [clientesCount, setClientesCount] = useState("5000+");
+  const [clientesCount, setClientesCount] = useState("10625+");
 
   useEffect(() => {
     let active = true;

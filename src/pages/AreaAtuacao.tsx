@@ -123,7 +123,7 @@ const services = [
 
 const stats = [
   { icon: Shield, number: "100%", label: "Segurança" },
-  { icon: Users, number: "5000+", label: "Clientes" },
+  { icon: Users, number: "10625+", label: "Clientes" },
   { icon: CheckCircle, number: "100%", label: "Garantia comprovada" },
   { icon: Award, number: "30+", label: "Anos" }
 ];
@@ -133,7 +133,7 @@ import { getClientesCount } from "@/services/clientesService";
 import SEO from "@/components/SEO";
 
 const AreaAtuacao = () => {
-  const [clientesCount, setClientesCount] = useState("5000+");
+  const [clientesCount, setClientesCount] = useState("10625+");
 
   useEffect(() => {
     let active = true;

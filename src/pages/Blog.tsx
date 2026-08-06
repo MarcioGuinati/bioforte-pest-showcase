@@ -128,66 +128,74 @@ const Blog = () => {
       <section className="py-12 lg:py-16">
         <div className="container mx-auto px-4">
           {isLoading ? (
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
+            <div className="flex flex-col gap-4">
+              {[1, 2, 3, 4].map((i) => (
                 <Card key={i} className="overflow-hidden">
-                  <Skeleton className="h-48 w-full" />
-                  <CardHeader>
-                    <Skeleton className="h-6 w-3/4" />
-                    <Skeleton className="h-4 w-full mt-2" />
-                    <Skeleton className="h-4 w-2/3 mt-1" />
-                  </CardHeader>
+                  <div className="flex gap-0">
+                    <Skeleton className="h-40 w-48 flex-shrink-0" />
+                    <CardHeader className="flex-1">
+                      <Skeleton className="h-5 w-3/4" />
+                      <Skeleton className="h-4 w-full mt-2" />
+                      <Skeleton className="h-4 w-2/3 mt-1" />
+                    </CardHeader>
+                  </div>
                 </Card>
               ))}
             </div>
           ) : posts && posts.length > 0 ? (
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="flex flex-col gap-4 max-w-4xl mx-auto">
               {posts.map((post) => (
-                <Link 
-                  key={post.id} 
+                <Link
+                  key={post.id}
                   to={`/blog/${post.slug}`}
                   onClick={() => handlePostClick(post)}
                 >
-                  <Card className="overflow-hidden h-full group">
-                    {post.cover_image_url && (
-                      <div className="relative h-48 overflow-hidden">
-                        <img
-                          src={post.cover_image_url}
-                          alt={post.title}
-                          width="400"
-                          height="200"
-                          loading="lazy"
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        />
-                      </div>
-                    )}
-                    <CardHeader>
-                      <div className="flex flex-col gap-1 text-xs text-muted-foreground mb-2">
-                        <span className="flex items-center gap-2">
-                          <Calendar className="w-3 h-3" />
-                          {format(post.created_at, "dd 'de' MMMM, yyyy", { locale: ptBR })}
-                        </span>
-                        {post.author_name && (
-                          <span className="flex items-center gap-2">
-                            <User className="w-3 h-3" />
-                            {post.author_name}
-                          </span>
-                        )}
-                      </div>
-                      <CardTitle className="text-lg group-hover:text-primary transition-colors line-clamp-2">
-                        {post.title}
-                      </CardTitle>
-                      {post.excerpt && (
-                        <CardDescription className="line-clamp-3">
-                          {post.excerpt}
-                        </CardDescription>
+                  <Card className="overflow-hidden group hover-lift transition-all duration-300 hover:border-primary/30">
+                    <div className="flex flex-col sm:flex-row">
+                      {post.cover_image_url ? (
+                        <div className="relative sm:w-52 lg:w-64 flex-shrink-0 overflow-hidden">
+                          <img
+                            src={post.cover_image_url}
+                            alt={post.title}
+                            width="256"
+                            height="160"
+                            loading="lazy"
+                            className="w-full h-44 sm:h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
+                        </div>
+                      ) : (
+                        <div className="sm:w-52 lg:w-64 flex-shrink-0 h-44 sm:h-auto bg-muted flex items-center justify-center">
+                          <Brain className="h-10 w-10 text-muted-foreground/40" />
+                        </div>
                       )}
-                    </CardHeader>
-                    <CardContent>
-                      <span className="text-primary text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all">
-                        Ler mais <ArrowRight className="w-4 h-4" />
-                      </span>
-                    </CardContent>
+                      <div className="flex flex-col justify-between p-5 flex-1 min-w-0">
+                        <div>
+                          <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground mb-3">
+                            <span className="flex items-center gap-1.5">
+                              <Calendar className="w-3 h-3" />
+                              {format(post.created_at, "dd 'de' MMMM, yyyy", { locale: ptBR })}
+                            </span>
+                            {post.author_name && (
+                              <span className="flex items-center gap-1.5">
+                                <User className="w-3 h-3" />
+                                {post.author_name}
+                              </span>
+                            )}
+                          </div>
+                          <h2 className="text-lg font-bold group-hover:text-primary transition-colors line-clamp-2 mb-2">
+                            {post.title}
+                          </h2>
+                          {post.excerpt && (
+                            <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
+                              {post.excerpt}
+                            </p>
+                          )}
+                        </div>
+                        <span className="text-primary text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all mt-4">
+                          Ler mais <ArrowRight className="w-4 h-4" />
+                        </span>
+                      </div>
+                    </div>
                   </Card>
                 </Link>
               ))}

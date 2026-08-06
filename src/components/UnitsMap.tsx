@@ -32,7 +32,7 @@ const typeConfig = {
     badgeColor: "bg-emerald-700 text-white border-transparent",
   },
   licensed: {
-    label: "Licenciado",
+    label: "Franquia",
     icon: Award,
     bgColor: "bg-slate-700 text-white",
     badgeColor: "bg-slate-700 text-white border-transparent",
@@ -112,23 +112,6 @@ const UnitsMap = () => {
 
           {/* Units List */}
           <div className="space-y-4">
-            {/* Legend */}
-            <Card className="glass">
-              <CardContent className="p-4">
-                <h3 className="font-semibold mb-3 text-sm uppercase tracking-wide">Legenda</h3>
-                <ul className="space-y-2" role="list">
-                  {Object.entries(typeConfig).map(([key, config]) => (
-                    <li key={key} className="flex items-center gap-2">
-                      <div className={`p-1.5 rounded ${config.bgColor}`} aria-hidden="true">
-                        <config.icon className="h-3 w-3" />
-                      </div>
-                      <span className="text-sm">{config.label}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
-
             {/* Units Cards */}
             <ul className="space-y-4" role="list" aria-label="Lista de unidades">
               {units.map((unit, index) => {
@@ -137,21 +120,16 @@ const UnitsMap = () => {
                   <li key={index}>
                     <Card className="glass hover-lift group">
                       <CardContent className="p-4">
-                        <div className="flex items-start gap-3">
-                          <div className={`p-2 rounded-lg ${config.bgColor} group-hover:scale-110 transition-transform`} aria-hidden="true">
-                            <config.icon className="h-4 w-4" />
-                          </div>
-                          <div className="flex-1">
-                            <div className="flex items-center justify-between">
-                              <h4 className="font-bold">{unit.city}</h4>
-                              <Badge variant="outline" className={config.badgeColor}>
-                                {unit.state}
-                              </Badge>
-                            </div>
-                            <p className="text-sm text-muted-foreground mt-1">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h4 className="font-bold">{unit.city}</h4>
+                            <p className="text-sm text-muted-foreground mt-0.5">
                               {config.label}
                             </p>
                           </div>
+                          <Badge variant="outline" className={config.badgeColor}>
+                            {unit.state}
+                          </Badge>
                         </div>
                       </CardContent>
                     </Card>

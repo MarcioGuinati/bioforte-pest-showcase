@@ -96,7 +96,7 @@ const Home = () => {
       {/* 5. About Section */}
       <LazySection height="500px">
         <Suspense fallback={<div className="py-20 min-h-[500px]" />}>
-          <AboutSection clientesCount="5000+" />
+          <AboutSection clientesCount="10625+" />
         </Suspense>
       </LazySection>
 
