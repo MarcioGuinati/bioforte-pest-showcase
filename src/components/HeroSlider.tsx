@@ -8,6 +8,7 @@ import slide06 from "@/assets/01.webp";
 import slide04 from "@/assets/04.webp";
 import slide07 from "@/assets/02.webp";
 import companyBuilding from "@/assets/03.webp";
+import mobileHero from "@/assets/time_bioforte_mobile.png";
 
 const slides = [
   {
@@ -110,7 +111,7 @@ const HeroSlider = memo(() => {
 
   return (
     <section
-      className="relative overflow-hidden"
+      className="relative overflow-hidden min-h-dvh sm:min-h-0"
       aria-roledescription="carrossel"
       aria-label="Apresentação da Bioforte Controle de Pragas"
       onMouseEnter={() => setIsPaused(true)}
@@ -118,49 +119,65 @@ const HeroSlider = memo(() => {
       onFocus={() => setIsPaused(true)}
       onBlur={() => setIsPaused(false)}
     >
-      {/* Background slides — on mobile only slide 0 is shown */}
+      {/* Background: static image on mobile, slider on desktop */}
       <div className="absolute inset-0" aria-live="polite">
-        {slides.map((slide, index) => (
-          <div
-            key={slide.id}
-            className={`absolute inset-0 transition-opacity duration-700 ${
-              index === displaySlide ? "opacity-100 z-10" : "opacity-0 z-0"
-            }`}
-            role="group"
-            aria-roledescription="slide"
-            aria-label={`Slide ${index + 1} de ${slides.length}: ${slide.title}`}
-            aria-hidden={index !== displaySlide}
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/75 to-background/40 z-10" />
+        {isMobile ? (
+          <>
             <img
-              src={slide.image}
-              alt={slide.title}
-              width={1920}
-              height={1080}
-              className="w-full h-full object-cover object-center"
-              loading={index === 0 ? "eager" : "lazy"}
-              fetchPriority={index === 0 ? "high" : "auto"}
+              src={mobileHero}
+              alt="Equipe Bioforte Controle de Pragas"
+              width={800}
+              height={1200}
+              className="w-full h-full object-cover object-top"
+              loading="eager"
+              fetchPriority="high"
               decoding="async"
             />
-          </div>
-        ))}
+            {/* Subtle gradient for text legibility on mobile */}
+            <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/20 to-background/70" />
+          </>
+        ) : (
+          slides.map((slide, index) => (
+            <div
+              key={slide.id}
+              className={`absolute inset-0 transition-opacity duration-700 ${index === displaySlide ? "opacity-100 z-10" : "opacity-0 z-0"
+                }`}
+              role="group"
+              aria-roledescription="slide"
+              aria-label={`Slide ${index + 1} de ${slides.length}: ${slide.title}`}
+              aria-hidden={index !== displaySlide}
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/75 to-background/40 z-10" />
+              <img
+                src={slide.image}
+                alt={slide.title}
+                width={1920}
+                height={1080}
+                className="w-full h-full object-cover object-center"
+                loading={index === 0 ? "eager" : "lazy"}
+                fetchPriority={index === 0 ? "high" : "auto"}
+                decoding="async"
+              />
+            </div>
+          ))
+        )}
       </div>
 
       {/* Content — natural flow, not constrained to viewport height */}
-      <div className="relative z-20 container mx-auto px-4 pt-24 pb-8 sm:pt-28 lg:pt-0 lg:min-h-[90vh] lg:flex lg:items-center">
+      <div className="relative z-20 container mx-auto px-4 pt-20 pb-8 sm:pt-28 lg:pt-0 lg:min-h-[90vh] lg:flex lg:items-center">
         <div className="max-w-2xl animate-fade-in w-full">
           {/* Subtitle badge */}
-          <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
+          <span className="inline-block px-4 py-2 bg-background/50 backdrop-blur-sm text-primary rounded-full text-sm font-medium mb-4 border border-primary/20">
             {slides[displaySlide].subtitle}
           </span>
 
           {/* Heading */}
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-foreground leading-tight mb-4 sm:mb-6">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold leading-tight mb-4 sm:mb-6">
             <span className="text-gradient">{slides[displaySlide].title}</span>
           </h1>
 
           {/* Description */}
-          <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl text-foreground/80 mb-6 sm:mb-8 leading-relaxed">
             {slides[displaySlide].description}
           </p>
 
@@ -228,11 +245,10 @@ const HeroSlider = memo(() => {
                   className="min-h-[44px] min-w-[44px] flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded"
                 >
                   <span
-                    className={`h-2.5 rounded-full transition-all ${
-                      index === displaySlide
+                    className={`h-2.5 rounded-full transition-all ${index === displaySlide
                         ? "bg-primary w-7"
                         : "bg-muted-foreground/50 w-2.5 hover:bg-primary/60"
-                    }`}
+                      }`}
                   />
                 </button>
               ))}
